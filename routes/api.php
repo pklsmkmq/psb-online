@@ -1,20 +1,20 @@
 <?php
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\{
+    AuthController,
+    CalonSiswaController,
+    PendidikanSebelumnyaController,
+    DataAyahController,
+    DataIbuController,
+    DataWaliController,
+    PrestasiBelajarController,
+    PrestasiSmpController
+};
 use App\Http\Controllers\admin\{
     UserController, 
 };
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -32,7 +32,81 @@ Route::middleware(['auth:sanctum'])->group(function () {
  
 //Fitur admin
  Route::middleware('role:admin')->group(function () {
+        // User crud
         Route::resource('user', UserController::class);
         Route::delete('user', [UserController::class, "destroy"]);
+
+        // Calon Siswa crud
+        Route::resource('calonSiswa', CalonSiswaController::class);
+        Route::delete('calonSiswa', [CalonSiswaController::class, "destroy"]);
+
+        // Pendidikan Sebelumnya crud
+        Route::resource('pendidikanSebelumnya', PendidikanSebelumnyaController::class);
+        Route::delete('pendidikanSebelumnya', [PendidikanSebelumnyaController::class, "destroy"]);
+
+        // Data Ayah crud
+        Route::resource('ayah', DataAyahController::class);
+        Route::delete('ayah', [DataAyahController::class, "destroy"]);
+
+        // Data Ibu crud
+        Route::resource('ibu', DataIbuController::class);
+        Route::delete('ibu', [DataIbuController::class, "destroy"]);
+
+        // Data Wali crud
+        Route::resource('wali', DataWaliController::class);
+        Route::delete('wali', [DataWaliController::class, "destroy"]);
+
+        // Prestasi Belajar / nilai rapot crud
+        Route::resource('prestasiBelajar', PrestasiBelajarController::class);
+        Route::delete('prestasiBelajar', [PrestasiBelajarController::class, "destroy"]);
+
+        // Prestasi SMP / Perlombaan crud
+        Route::resource('prestasiSmp', PrestasiSmpController::class);
+        Route::delete('prestasiSmp', [PrestasiSmpController::class, "destroy"]);
+     });
+
+    //  Fitur User
+     Route::middleware('role:user')->group(function () {
+        Route::prefix('dataSiswa')->group(function () {
+            Route::post('save', [CalonSiswaController::class, "store"]);
+            Route::get('detail/{id}', [CalonSiswaController::class, "show"]);
+            Route::put('update/{id}', [CalonSiswaController::class, "update"]);
+        });
+        
+        Route::prefix('dataPendidikan')->group(function () {
+            Route::post('save', [PendidikanSebelumnyaController::class, "store"]);
+            Route::get('detail/{id}', [PendidikanSebelumnyaController::class, "show"]);
+            Route::put('update/{id}', [PendidikanSebelumnyaController::class, "update"]);
+        });
+
+        Route::prefix('dataAyah')->group(function () {
+            Route::post('save', [DataAyahController::class, "store"]);
+            Route::get('detail/{id}', [DataAyahController::class, "show"]);
+            Route::put('update/{id}', [DataAyahController::class, "update"]);
+        });
+        
+        Route::prefix('dataIbu')->group(function () {
+            Route::post('save', [DataIbuController::class, "store"]);
+            Route::get('detail/{id}', [DataIbuController::class, "show"]);
+            Route::put('update/{id}', [DataIbuController::class, "update"]);
+        });
+
+        Route::prefix('dataWali')->group(function () {
+            Route::post('save', [DataWaliController::class, "store"]);
+            Route::get('detail/{id}', [DataWaliController::class, "show"]);
+            Route::put('update/{id}', [DataWaliController::class, "update"]);
+        });
+
+        Route::prefix('nilaiRapot')->group(function () {
+            Route::post('save', [PrestasiBelajarController::class, "store"]);
+            Route::get('detail/{id}', [PrestasiBelajarController::class, "show"]);
+            Route::put('update/{id}', [PrestasiBelajarController::class, "update"]);
+        });
+
+        Route::prefix('lombaSmp')->group(function () {
+            Route::post('save', [PrestasiSmpController::class, "store"]);
+            Route::get('detail/{id}', [PrestasiSmpController::class, "show"]);
+            Route::put('update/{id}', [PrestasiSmpController::class, "update"]);
+        });
      });
 });

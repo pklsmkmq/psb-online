@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\calonSiswa;
 use Validator;
 use Hash;
 
@@ -39,18 +40,23 @@ class AuthController extends Controller
             
             if($request->role == 1){
                 $user->assignRole('admin');
+                $role = "admin";
             }elseif ($request->role == 2) {
                 $user->assignRole('user');
+                $role = "user";
             }elseif ($request->role == 3) {
                 $user->assignRole('marketing & cs');
+                $role = "marketing & cs";
             }else {
                 $user->assignRole('keuangan');
+                $role = "keuangan";
             }
             
             $token = $user->createToken('token-name')->plainTextToken;
 
             return response()->json([
                 'message'   => 'Success',
+                'role'      => $role,
                 'token'      => $token
             ], 200);
         }
@@ -81,57 +87,21 @@ class AuthController extends Controller
             
             $token = $user->createToken('token-name')->plainTextToken;
             $roles = $user->getRoleNames();
-          
-            // if($user->id == 1 | 2 | 5  |6 ){
-            //     $guru = ManagemenGuru::where('user_id' , '=', $user->id)->first();
-        
-            //     if($guru == ""){
-            //         $identias = "belum terisi";
-            //     }else{
-            //         $identias ="terisi";
-                  
-            //     }
-              
-            // }
-            // if($user->id == 3 ){
-            //     $siswa = ManagemenSiswa::where('user_id' , '=', $user->id)->first();
-        
-            //     if($siswa == ""){
-            //         $identias = "belum terisi";
-            //     }else{
-            //         $identias ="terisi";
-                  
-            //     }
-              
-            // }
-            // if($user->id == 3 ){
-            //     $wali = ManagemenSiswa::where('user_id' , '=', $user->id)->first();
-        
-            //     if($wali == ""){
-            //         $identias = "belum terisi";
-            //     }else{
-            //         $identias ="terisi";
-                  
-            //     }
-              
-            // }if($user->id == 4 ){
-            //     $siswa = ManagemenWali::where('user_id' , '=', $user->id)->first();
-        
-            //     if($siswa == ""){
-            //         $identias = "belum terisi";
-            //     }else{
-            //         $identias ="terisi";
-                  
-            //     }
-              
-            // }
+            
+            $cekData = calonSiswa::where('user_id',$user->id)->first();
+
+            if($cekData){
+                $identias = "sudah terisi";
+            }else{
+                $identias = "belum terisi";
+            }
           
             return response()->json([
                 'message'   => 'Success',
                 'user'      => $user,
                 'role'      => $roles,
                 'token'      => $token,
-                // 'identias' => $identias
+                'identias' => $identias
             ], 200);
         }
     }
