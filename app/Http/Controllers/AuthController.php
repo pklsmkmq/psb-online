@@ -4,8 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\calonSiswa;
+use App\Models\{
+    User,
+    calonSiswa,
+    dataAyah,
+    dataIbu,
+    dataWali,
+    pendidikanSebelumnya,
+    prestasiBelajar,
+    prestasiSmp
+};
 use Validator;
 use Hash;
 
@@ -88,20 +96,14 @@ class AuthController extends Controller
             $token = $user->createToken('token-name')->plainTextToken;
             $roles = $user->getRoleNames();
             
-            $cekData = calonSiswa::where('user_id',$user->id)->first();
-
-            if($cekData){
-                $identias = "sudah terisi";
-            }else{
-                $identias = "belum terisi";
-            }
+            $identitas = $this->cekData($user->id);
           
             return response()->json([
                 'message'   => 'Success',
                 'user'      => $user,
                 'role'      => $roles,
                 'token'      => $token,
-                'identias' => $identias
+                'identitas' => $identitas
             ], 200);
         }
     }
@@ -140,62 +142,61 @@ class AuthController extends Controller
 
     public function authMe(Request $request)
     {
-        // $request->user()->currentAccessToken()->delete();
-        // $token= $request->user()->createToken('token-name')->plainTextToken;
-        // $user = $request->user();
-        // $roles = $user->getRoleNames();
+        $request->user()->currentAccessToken()->delete();
+        $token= $request->user()->createToken('token-name')->plainTextToken;
+        $user = $request->user();
+        $roles = $user->getRoleNames();
           
-        //     if($user->id == 1 | 2 | 5  |6 ){
-        //         $guru = ManagemenGuru::where('user_id' , '=', $user->id)->first();
-        
-        //         if($guru == ""){
-        //             $identias = "belum terisi";
-        //         }else{
-        //             $identias ="terisi";
-                  
-        //         }
-              
-        //     }
-        //     if($user->id == 3 ){
-        //         $siswa = ManagemenSiswa::where('user_id' , '=', $user->id)->first();
-        
-        //         if($siswa == ""){
-        //             $identias = "belum terisi";
-        //         }else{
-        //             $identias ="terisi";
-                  
-        //         }
-              
-        //     }
-        //     if($user->id == 3 ){
-        //         $wali = ManagemenSiswa::where('user_id' , '=', $user->id)->first();
-        
-        //         if($wali == ""){
-        //             $identias = "belum terisi";
-        //         }else{
-        //             $identias ="terisi";
-                  
-        //         }
-              
-        //     }if($user->id == 4 ){
-        //         $siswa = ManagemenWali::where('user_id' , '=', $user->id)->first();
-        
-        //         if($siswa == ""){
-        //             $identias = "belum terisi";
-        //         }else{
-        //             $identias ="terisi";
-                  
-        //         }
-              
-        //     }
+        $identitas = $this->cekData($user->id);
        
-        // return response()->json([
-        //     'message'   => 'Success',
-        //     'user'      => $user,
-        //     'token'      => $token,
-        //     'identias' => $identias
-        // ], 200);
+        return response()->json([
+            'message'   => 'Success',
+            'user'      => $user,
+            'token'      => $token,
+            'identitas' => $identitas
+        ], 200);
     }
 
-    
+    public function cekData($id)
+    {
+        $data = [];
+
+        $siswa = calonSiswa::where('user_id',$id)->first();
+        if($siswa){
+            array_push($data,"calon siswa");
+            $nik = $siswa->nik_siswa;
+
+            $pendidikan = pendidikanSebelumnya::where('nik_siswa',$nik)->first();
+            if($pendidikan){
+                array_push($data,"pendidikan sebelumnya");
+            }
+
+            $ayah = dataAyah::where('nik_siswa',$nik)->first();
+            if($ayah){
+                array_push($data,"data ayah");
+            }
+
+            $ibu = dataIbu::where('nik_siswa',$nik)->first();
+            if($ibu){
+                array_push($data,"data ibu");
+            }
+
+            $wali = dataWali::where('nik_siswa',$nik)->first();
+            if($wali){
+                array_push($data,"data wali");
+            }
+
+            $prestasiBelajar = prestasiBelajar::where('nik_siswa',$nik)->first();
+            if($prestasiBelajar){
+                array_push($data,"data prestasi belajar");
+            }
+
+            $prestasiSmp = prestasiSmp::where('nik_siswa',$nik)->first();
+            if($prestasiSmp){
+                array_push($data,"data prestasi smp");
+            }
+        }
+
+        return $data;
+    }
 }
