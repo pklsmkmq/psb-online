@@ -81,7 +81,8 @@ class AuthController extends Controller
             $token = $user->createToken('token-name')->plainTextToken;
 
             return response()->json([
-                'message'       => 'Success',
+                'status'       => 'Success',
+                'message'      => 'Berhasil Membuat Akun',
                 'role'          => $role,
                 'user'          => $user,
                 'token'         => $token,
@@ -118,7 +119,8 @@ class AuthController extends Controller
             $identitas = $this->cekData($user->id);
           
             return response()->json([
-                'message'   => 'Success',
+                'status'   => 'Success',
+                'message'   => 'Berhasil Login',
                 'user'      => $user,
                 'role'      => $roles,
                 'token'      => $token,
@@ -169,7 +171,8 @@ class AuthController extends Controller
         $identitas = $this->cekData($user->id);
        
         return response()->json([
-            'message'   => 'Success',
+            'status'   => 'Success',
+            'message'   => 'Berhasil cek data',
             'user'      => $user,
             'token'      => $token,
             'identitas' => $identitas
