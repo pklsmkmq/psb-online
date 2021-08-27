@@ -21,6 +21,7 @@ class PendaftaranController extends Controller
         $users = pendaftaran::where('no_pendaftaran', 'like', '%'.strtolower($request->keywords)."%")->orderBy("created_at", 'desc')->paginate($request->perpage, [
             'pendaftaran.no_pendaftaran',
             'pendaftaran.no_peserta',
+            'pendaftaran.nik_siswa',
             'pendaftaran.jadwal_tes',
             'pendaftaran.jenis_tes'
         ]);
@@ -53,6 +54,7 @@ class PendaftaranController extends Controller
     public function store(Request $request)
     {
         $rules = array(
+            'nik_siswa' => 'required|numeric|unique:data_ayah,nik_siswa',
             'jadwal_tes => required',
             'jenis_tes => required',
         );

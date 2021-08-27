@@ -32,6 +32,6 @@ class CreatePendidikanSebelumnyasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pendidikan_sebelumnyas');
+        Schema::dropIfExists('pendidikan_sebelumnya');
     }
 }

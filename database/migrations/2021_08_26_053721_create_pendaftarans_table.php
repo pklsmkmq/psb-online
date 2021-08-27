@@ -16,6 +16,7 @@ class CreatePendaftaransTable extends Migration
         Schema::create('pendaftaran', function (Blueprint $table) {
             $table->string('no_pendaftaran')->nullable(false)->primary();
             $table->string('no_peserta')->nullable(false);
+            $table->foreignId("nik_siswa");
             $table->date('jadwal_tes')->nullable(false);
             $table->string('jenis_tes')->nullable(false);
             $table->timestamps();

@@ -10,7 +10,7 @@ class Pendaftaran extends Model
     use HasFactory;
     protected $primaryKey = 'no_pendaftaran';
     protected $table = "pendaftaran";
-    protected $fillable = ['no_pendaftaran','no_peserta','jadwal_tes','jenis_tes'];
+    protected $fillable = ['no_pendaftaran','no_peserta','nik_siswa','jadwal_tes','jenis_tes'];
     protected $keyType = 'string';
 
     public function calonSiswa()

@@ -40,7 +40,16 @@ class AuthController extends Controller
             ], 401);
         }else{
             try {
-                \Mail::to($request->email)->send(new \App\Mail\SenderMail($details));
+                $details = [
+                    'title' => 'Selamat ' . $request->name . ' akun anda telah berhasil terbuat',
+                    'body' => 'Silahkan lengkapi data anak anda dengan menekan tombol di bawah ini untuk melanjutkan ke tahap tes masuk SMK MadinatulQuran',
+                    'email' => $request->email,
+                    'password' => $request->password
+                ];
+
+                if ($request->role == 2) {
+                    \Mail::to($request->email)->send(new \App\Mail\SenderMail($details));
+                }
             } catch (\Throwable $th) {
                 return response()->json([
                     'status'       => 'Failed',
@@ -67,15 +76,6 @@ class AuthController extends Controller
             }else {
                 $user->assignRole('keuangan');
                 $role = "keuangan";
-            }
-
-            if($user){
-                $details = [
-                    'title' => 'Selamat ' . $request->name . ' akun anda telah berhasil terbuat',
-                    'body' => 'Silahkan lengkapi data anak anda dengan menekan tombol di bawah ini untuk melanjutkan ke tahap tes masuk SMK MadinatulQuran',
-                    'email' => $request->email,
-                    'password' => $request->password
-                ];
             }
             
             $token = $user->createToken('token-name')->plainTextToken;
