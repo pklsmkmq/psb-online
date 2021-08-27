@@ -167,5 +167,48 @@ class AuthController extends Controller
             'token'      => $token,
             'identitas' => $identitas
         ], 200);
-    }    
+    }
+    
+    public function cekData($id)
+    {
+        $data = [];
+
+        $siswa = calonSiswa::where('user_id',$id)->first();
+        if($siswa){
+            array_push($data,"calon siswa");
+            $nik = $siswa->nik_siswa;
+
+            $pendidikan = pendidikanSebelumnya::where('nik_siswa',$nik)->first();
+            if($pendidikan){
+                array_push($data,"pendidikan sebelumnya");
+            }
+
+            $ayah = dataAyah::where('nik_siswa',$nik)->first();
+            if($ayah){
+                array_push($data,"data ayah");
+            }
+
+            $ibu = dataIbu::where('nik_siswa',$nik)->first();
+            if($ibu){
+                array_push($data,"data ibu");
+            }
+
+            $wali = dataWali::where('nik_siswa',$nik)->first();
+            if($wali){
+                array_push($data,"data wali");
+            }
+
+            $prestasiBelajar = prestasiBelajar::where('nik_siswa',$nik)->first();
+            if($prestasiBelajar){
+                array_push($data,"data prestasi belajar");
+            }
+
+            $prestasiSmp = prestasiSmp::where('nik_siswa',$nik)->first();
+            if($prestasiSmp){
+                array_push($data,"data prestasi smp");
+            }
+        }
+
+        return $data;
+    }
 }

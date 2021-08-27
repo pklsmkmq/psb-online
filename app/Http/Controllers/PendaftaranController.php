@@ -53,8 +53,6 @@ class PendaftaranController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'no_pendaftaran => required|unique:pendaftaran,no_pendaftaran',
-            'no_peserta => required|unique:pendaftaran,no_peserta',
             'jadwal_tes => required',
             'jenis_tes => required',
         );
@@ -67,19 +65,21 @@ class PendaftaranController extends Controller
                 'message' => $errorString
             ], 401);
         }else{
-            $time = strtotime($request->jadwal_tes);
-            $tanggal = date('Y-m-d',$time);
-            $pendaftaran = pendaftaran::create([
-                'no_pendaftaran' => $request->no_pendaftaran,
-                'no_peserta' => $request->no_peserta,
-                'jadwal_tes' => $tanggal,
-                'jenis_tes' => $request->jenis_tes,
-            ]);
+            $jumlah = pendaftaran::count();
+            return $jumlah;
+            // $time = strtotime($request->jadwal_tes);
+            // $tanggal = date('Y-m-d',$time);
+            // $pendaftaran = pendaftaran::create([
+            //     'no_pendaftaran' => $request->no_pendaftaran,
+            //     'no_peserta' => $request->no_peserta,
+            //     'jadwal_tes' => $tanggal,
+            //     'jenis_tes' => $request->jenis_tes,
+            // ]);
     
-            return response()->json([
-                "status" => "success",
-                "message" => 'Berhasil Menyimpan Data'
-            ]);
+            // return response()->json([
+            //     "status" => "success",
+            //     "message" => 'Berhasil Menyimpan Data'
+            // ]);
         }
     }
 
