@@ -39,6 +39,15 @@ class AuthController extends Controller
                 'message' => $errorString
             ], 401);
         }else{
+            try {
+                \Mail::to($request->email)->send(new \App\Mail\SenderMail($details));
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'status'       => 'Failed',
+                    'message'      => 'Email tidak di temukan'
+                ], 200);
+            }
+
             $user = User::create([
                 'name' => $request->name,
                 'password' => bcrypt($request->password),
@@ -67,8 +76,6 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => $request->password
                 ];
-
-                \Mail::to($request->email)->send(new \App\Mail\SenderMail($details));
             }
             
             $token = $user->createToken('token-name')->plainTextToken;
