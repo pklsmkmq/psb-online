@@ -54,7 +54,7 @@ class PendaftaranController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'nik_siswa' => 'required|numeric|unique:data_ayah,nik_siswa',
+            'nik_siswa' => 'required|numeric|unique:pendaftaran,nik_siswa',
             'jadwal_tes => required',
             'jenis_tes => required',
         );
@@ -77,21 +77,20 @@ class PendaftaranController extends Controller
                 $cekDataTerakhir2 = pendaftaran::orderBy('no_peserta', 'desc')->first();
                 $no_peserta = (int)$cekDataTerakhir->no_peserta + 1;
             }
-            $data = [$no_pendaftaran,$no_peserta];
-            return $data;
-            // $time = strtotime($request->jadwal_tes);
-            // $tanggal = date('Y-m-d',$time);
-            // $pendaftaran = pendaftaran::create([
-            //     'no_pendaftaran' => $request->no_pendaftaran,
-            //     'no_peserta' => $request->no_peserta,
-            //     'jadwal_tes' => $tanggal,
-            //     'jenis_tes' => $request->jenis_tes,
-            // ]);
+            $time = strtotime($request->jadwal_tes);
+            $tanggal = date('Y-m-d',$time);
+            $pendaftaran = pendaftaran::create([
+                'no_pendaftaran' => $no_pendaftaran,
+                'no_peserta' => $no_peserta,
+                'nik_siswa' => $request->nik_siswa,
+                'jadwal_tes' => $tanggal,
+                'jenis_tes' => $request->jenis_tes,
+            ]);
     
-            // return response()->json([
-            //     "status" => "success",
-            //     "message" => 'Berhasil Menyimpan Data'
-            // ]);
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data'
+            ]);
         }
     }
 
@@ -139,7 +138,7 @@ class PendaftaranController extends Controller
     public function update(Request $request, $id)
     {
         $rules = array(
-            'no_peserta => required',
+            'nik_siswa => required',
             'jadwal_tes => required',
             'jenis_tes => required',
         );
@@ -155,8 +154,9 @@ class PendaftaranController extends Controller
             $time = strtotime($request->tanggal_lahir_ayah);
             $tanggal = date('Y-m-d',$time);
             $pendaftaran = pendaftaran::where('no_pendaftaran',$id)->first();
-            $pendaftaran->no_pendaftaran = $request->no_pendaftaran;
-            $pendaftaran->no_peserta = $request->no_peserta;
+            $pendaftaran->no_pendaftaran = $pendaftaran->no_pendaftaran;
+            $pendaftaran->no_peserta = $pendaftaran->no_peserta;
+            $pendaftaran->nik_siswa = $request->nik_siswa;
             $pendaftaran->jadwal_tes = $tanggal;
             $pendaftaran->jenis_tes = $request->jenis_tes;
 

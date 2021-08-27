@@ -114,7 +114,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::put('update/{id}', [PrestasiSmpController::class, "update"]);
         });
 
-        Route::prefix('pendaftaran')->group(function () {
+        Route::prefix('tesMasuk')->group(function () {
             Route::post('save', [PendaftaranController::class, "store"]);
             Route::get('detail/{id}', [PendaftaranController::class, "show"]);
             Route::put('update/{id}', [PendaftaranController::class, "update"]);
