@@ -66,7 +66,17 @@ class PendaftaranController extends Controller
             ], 401);
         }else{
             $jumlah = pendaftaran::count();
-            return $jumlah;
+            if ($jumlah == 0) {
+                $no_pendaftaran = 45710001;
+                $no_peserta = 457001;
+            }else{
+                $cekDataTerakhir = pendaftaran::orderBy('no_pendaftaran', 'desc')->first();
+                $no_pendaftaran = (int)$cekDataTerakhir->no_pendaftaran + 1;
+                $cekDataTerakhir2 = pendaftaran::orderBy('no_peserta', 'desc')->first();
+                $no_peserta = (int)$cekDataTerakhir->no_peserta + 1;
+            }
+            $data = [$no_pendaftaran,$no_peserta];
+            return $data;
             // $time = strtotime($request->jadwal_tes);
             // $tanggal = date('Y-m-d',$time);
             // $pendaftaran = pendaftaran::create([
