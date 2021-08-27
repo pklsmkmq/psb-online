@@ -55,7 +55,7 @@ class AuthController extends Controller
                 return response()->json([
                     'status'       => 'Failed',
                     'message'      => 'Email tidak di temukan'
-                ], 200);
+                ], 401);
             }
 
             $user = User::create([
