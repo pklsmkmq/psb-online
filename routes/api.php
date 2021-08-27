@@ -74,8 +74,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
      Route::middleware('role:user')->group(function () {
         Route::prefix('dataSiswa')->group(function () {
             Route::post('save', [CalonSiswaController::class, "store"]);
-            Route::get('detail/{id}', [CalonSiswaController::class, "show"]);
-            Route::put('update/{id}', [CalonSiswaController::class, "update"]);
+            Route::get('detail', [CalonSiswaController::class, "showData"]);
+            Route::put('update', [CalonSiswaController::class, "updateData"]);
         });
         
         Route::prefix('dataPendidikan')->group(function () {
