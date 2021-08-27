@@ -38,6 +38,11 @@ class calonSiswa extends Model
         return $this->hasOne(prestasiBelajar::class);
     }
 
+    public function pendaftaran()
+    {
+        return $this->hasOne(pendaftaran::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -9,7 +9,8 @@ use App\Http\Controllers\{
     DataIbuController,
     DataWaliController,
     PrestasiBelajarController,
-    PrestasiSmpController
+    PrestasiSmpController,
+    PendaftaranController
 };
 use App\Http\Controllers\admin\{
     UserController, 
@@ -63,6 +64,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // Prestasi SMP / Perlombaan crud
         Route::resource('prestasiSmp', PrestasiSmpController::class);
         Route::delete('prestasiSmp', [PrestasiSmpController::class, "destroy"]);
+
+        // Pendaftaran Crud
+        Route::resource('pendaftaran', PendaftaranController::class);
+        Route::delete('pendaftaran', [PendaftaranController::class, "destroy"]);
      });
 
     //  Fitur User
@@ -107,6 +112,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::post('save', [PrestasiSmpController::class, "store"]);
             Route::get('detail/{id}', [PrestasiSmpController::class, "show"]);
             Route::put('update/{id}', [PrestasiSmpController::class, "update"]);
+        });
+
+        Route::prefix('pendaftaran')->group(function () {
+            Route::post('save', [PendaftaranController::class, "store"]);
+            Route::get('detail/{id}', [PendaftaranController::class, "show"]);
+            Route::put('update/{id}', [PendaftaranController::class, "update"]);
         });
      });
 });
