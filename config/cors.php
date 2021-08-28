@@ -21,7 +21,7 @@ return [
 
     'allowed_origins' => ['*.smkmadinatulquran.sch.id'],
 
-    'allowed_origins_patterns' => ['*'],
+    'allowed_origins_patterns' => [],
 
     'allowed_headers' => ['*'],
 
