@@ -43,7 +43,7 @@ class AuthController extends Controller
             try {
                 $details = [
                     'title' => 'Selamat ' . $request->name . ' akun anda telah berhasil terbuat',
-                    'body' => 'Silahkan lengkapi data anak anda dengan menekan tombol di bawah ini untuk melanjutkan ke tahap tes masuk SMK MadinatulQuran',
+                    'body' => 'Silahkan lengkapi data anak anda dengan menekan tombol di bawah ini untuk melanjutkan ke tahap tes masuk SMK MADINATULQURAN',
                     'email' => $request->email,
                     'password' => $request->password
                 ];
