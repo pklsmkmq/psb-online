@@ -392,4 +392,14 @@ $request["user_id"] = Auth::user()->id;
             return $data;
         }
     }
+
+    public function getme(Request $request){
+        $siswa = calonSiswa::where('user_id', Auth::user()->id)->first(); 
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'sukses menampilkan data',
+            'data' => $siswa
+        ]);
+    }
 }

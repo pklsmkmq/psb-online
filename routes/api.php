@@ -40,6 +40,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // Calon Siswa crud
         Route::resource('calonSiswa', CalonSiswaController::class);
         Route::delete('calonSiswa', [CalonSiswaController::class, "destroy"]);
+       
 
         // Pendidikan Sebelumnya crud
         Route::resource('pendidikanSebelumnya', PendidikanSebelumnyaController::class);
@@ -76,6 +77,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::post('save', [CalonSiswaController::class, "saveData"]);
             Route::get('detail', [CalonSiswaController::class, "showData"]);
             Route::put('update', [CalonSiswaController::class, "updateData"]);
+            Route::get('getme', [CalonSiswaController::class, "getme"]);
         });
         
         Route::prefix('dataPendidikan')->group(function () {
