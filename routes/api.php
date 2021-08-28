@@ -87,7 +87,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
 
         Route::prefix('dataAyah')->group(function () {
-            Route::post('save', [DataAyahController::class, "store"]);
+            Route::post('save', [DataAyahController::class, "saveData"]);
+            Route::get('detail', [DataAyahController::class, "showData"]);
+            Route::put('update', [DataAyahController::class, "updateData"]);
             Route::get('detail/{id}', [DataAyahController::class, "show"]);
             Route::put('update/{id}', [DataAyahController::class, "update"]);
         });
