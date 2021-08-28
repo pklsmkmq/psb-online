@@ -73,15 +73,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //  Fitur User
      Route::middleware('role:user')->group(function () {
         Route::prefix('dataSiswa')->group(function () {
-            Route::post('save', [CalonSiswaController::class, "store"]);
+            Route::post('save', [CalonSiswaController::class, "saveData"]);
             Route::get('detail', [CalonSiswaController::class, "showData"]);
             Route::put('update', [CalonSiswaController::class, "updateData"]);
         });
         
         Route::prefix('dataPendidikan')->group(function () {
-            Route::post('save', [PendidikanSebelumnyaController::class, "store"]);
-            Route::get('detail/{id}', [PendidikanSebelumnyaController::class, "show"]);
-            Route::put('update/{id}', [PendidikanSebelumnyaController::class, "update"]);
+            Route::post('save', [PendidikanSebelumnyaController::class, "saveData"]);
+            Route::get('detail', [PendidikanSebelumnyaController::class, "showData"]);
+            Route::put('update', [PendidikanSebelumnyaController::class, "updateData"]);
         });
 
         Route::prefix('dataAyah')->group(function () {

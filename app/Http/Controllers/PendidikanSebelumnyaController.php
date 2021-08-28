@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\pendidikanSebelumnya;
 use Illuminate\Http\Request;
 use Validator;
+use Auth;
+use App\Http\Controllers\CalonSiswaController;
 
 class PendidikanSebelumnyaController extends Controller
 {
+    protected $CalonSiswaController;
+    public function __construct(CalonSiswaController $CalonSiswaController)
+    {
+        $this->CalonSiswaController = $CalonSiswaController;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -56,9 +63,9 @@ class PendidikanSebelumnyaController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'nik_siswa' => 'required|numeric',
             'asal_sekolah' => 'required|string|max:255',
             'nisn' => 'required|unique:pendidikan_sebelumnya,nisn',
+            'nik_siswa' => 'required|unique:pendidikan_sebelumnya,nik_siswa',
             'npsn' => 'required'
         );
 
@@ -70,6 +77,7 @@ class PendidikanSebelumnyaController extends Controller
                 'message' => $errorString
             ], 401);
         }else{
+            // $data = $this->CalonSiswaController->ambilData(Auth::user()->id,"nik");
             $pendidikanSebelumnya = pendidikanSebelumnya::create([
                 'nik_siswa' => $request->nik_siswa,
                 'asal_sekolah' => $request->asal_sekolah,
@@ -193,6 +201,92 @@ class PendidikanSebelumnyaController extends Controller
                 "status" => "failed",
                 "message" => 'ID tidak ditemukan'
             ]);
+        }
+    }
+
+    public function showData()
+    {
+        $nik = $this->CalonSiswaController->ambilData(Auth::user()->id,"nik");
+        $pendidikanSebelumnya = pendidikanSebelumnya::where('nik_siswa', $nik)->first(); 
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'sukses menampilkan data',
+            'data' => $pendidikanSebelumnya
+        ]);
+    }
+
+    public function saveData(Request $request)
+    {
+        $rules = array(
+            'asal_sekolah' => 'required|string|max:255',
+            'nisn' => 'required|unique:pendidikan_sebelumnya,nisn',
+            'npsn' => 'required'
+        );
+
+        $cek = Validator::make($request->all(),$rules);
+
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                'message' => $errorString
+            ], 401);
+        }else{
+            $data = $this->CalonSiswaController->ambilData(Auth::user()->id,"nik");
+            $pendidikanSebelumnya = pendidikanSebelumnya::create([
+                'nik_siswa' => $data,
+                'asal_sekolah' => $request->asal_sekolah,
+                'alamat_sekolah' => $request->alamat_sekolah,
+                'nomor_telepon_sekolah' => $request->nomor_telepon_sekolah,
+                'nisn' => $request->nisn,
+                'npsn' => $request->npsn
+            ]);
+    
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data'
+            ]);
+        }
+    }
+
+    public function updateData(Request $request)
+    {
+        $rules = array(
+            'asal_sekolah' => 'required|string|max:255',
+            'alamat_sekolah' => 'required',
+            'nomor_telepon_sekolah' => 'required',
+            'nisn' => 'required',
+            'npsn' => 'required'
+        );
+
+        $cek = Validator::make($request->all(),$rules);
+
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                'message' => $errorString
+            ], 401);
+        }else{
+            $data = $this->CalonSiswaController->ambilData(Auth::user()->id,"nik");
+            $pendidikanSebelumnya = pendidikanSebelumnya::where('nik_siswa',$data)->first();
+            $pendidikanSebelumnya->nik_siswa = $data;
+            $pendidikanSebelumnya->asal_sekolah = $request->asal_sekolah;
+            $pendidikanSebelumnya->alamat_sekolah = $request->alamat_sekolah;
+            $pendidikanSebelumnya->nomor_telepon_sekolah = $request->nomor_telepon_sekolah;
+            $pendidikanSebelumnya->nisn = $request->nisn;
+            $pendidikanSebelumnya->npsn = $request->npsn;    
+
+            if($pendidikanSebelumnya->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Menyimpan Data'
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
         }
     }
 }

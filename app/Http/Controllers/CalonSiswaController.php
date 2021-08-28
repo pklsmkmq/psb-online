@@ -162,6 +162,7 @@ class CalonSiswaController extends Controller
     {
         $rules = array(
             'name_siswa' => 'required|string|max:255',
+            'user_id' => 'required',
             'tempat_lahir_siswa' => 'required|string|max:255',
             'tanggal_lahir_siswa' => 'required',
             'agama' => 'required|string|max:30',
@@ -188,7 +189,7 @@ class CalonSiswaController extends Controller
             $tanggal = date('Y-m-d',$time);
             $calonSiswa = calonSiswa::where('nik_siswa',$id)->first();
             $calonSiswa->name_siswa = $request->name_siswa;
-            $calonSiswa->user_id = Auth::user()->id;
+            $calonSiswa->user_id = $request->user_id;
             $calonSiswa->tempat_lahir_siswa = $request->tempat_lahir_siswa;
             $calonSiswa->tanggal_lahir_siswa = $tanggal;
             $calonSiswa->jenis_kelamin = $jenis_kelamin;
@@ -253,9 +254,63 @@ class CalonSiswaController extends Controller
         }
     }
 
+    public function saveData(Request $request)
+    {
+        $rules = array(
+            'nik_siswa' => 'required|numeric|unique:calon_siswa,nik_siswa',
+            'name_siswa' => 'required|string|max:255',
+            'tempat_lahir_siswa' => 'required|string|max:255',
+            'tanggal_lahir_siswa' => 'required',
+            'agama' => 'required|string|max:30',
+            'alamat_siswa' => 'required|string',
+            'pihak_yg_dihubungi' => 'required|string|max:30',
+        );
+
+        $cek = Validator::make($request->all(),$rules);
+
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                'message' => $errorString
+            ], 401);
+        }else{
+            $jenis_kelamin = $this->cekData($request->jenis_kelamin, "-");
+            $golongan_darah = $this->cekData($request->golongan_darah, "-");
+            $tinggi_badan = $this->cekData($request->tinggi_badan, "0");
+            $berat_badan = $this->cekData($request->berat_badan, "0");
+            $nomor_telepon_siswa = $this->cekData($request->nomor_telepon_siswa, "0");
+            $ukuran_baju = $this->cekData($request->ukuran_baju, "-");
+            $cita_cita = $this->cekData($request->cita_cita, "-");
+            $time = strtotime($request->tanggal_lahir_siswa);
+            $tanggal = date('Y-m-d',$time);
+            $calonSiswa = calonSiswa::create([
+                'nik_siswa' => $request->nik_siswa,
+                'name_siswa' => $request->name_siswa,
+                'user_id' => Auth::user()->id,
+                'tempat_lahir_siswa' => $request->tempat_lahir_siswa,
+                'tanggal_lahir_siswa' => $tanggal,
+                'jenis_kelamin' => $jenis_kelamin,
+                'agama' => $request->agama,
+                'golongan_darah' => $golongan_darah,
+                'alamat_siswa' => $request->alamat_siswa,
+                'nomor_telepon_siswa' => $nomor_telepon_siswa,
+                'pihak_yg_dihubungi' => $request->pihak_yg_dihubungi,
+                'tinggi_badan' => $tinggi_badan,
+                'berat_badan' => $berat_badan,
+                'ukuran_baju' => $ukuran_baju,
+                'cita_cita' => $cita_cita,
+            ]);
+    
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data'
+            ]);
+        }
+    }
+
     public function showData()
     {
-        $siswa = $this->ambilData(Auth::user()->id,"");
+        $siswa = $this->ambilData(Auth::user()->id,"all");
 
         return response()->json([
             'status' => 'success',
