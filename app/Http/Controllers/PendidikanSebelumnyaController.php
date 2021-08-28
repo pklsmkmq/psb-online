@@ -219,11 +219,12 @@ class PendidikanSebelumnyaController extends Controller
     public function saveData(Request $request)
     {
         $rules = array(
+            'user_id' => 'unique:pendidikan_sebelumnya,user_id',
             'asal_sekolah' => 'required|string|max:255',
             'nisn' => 'required|unique:pendidikan_sebelumnya,nisn',
             'npsn' => 'required'
         );
-
+        $request["user_id"] = Auth::user()->id;
         $cek = Validator::make($request->all(),$rules);
 
         if($cek->fails()){
@@ -234,7 +235,7 @@ class PendidikanSebelumnyaController extends Controller
         }else{
             $data = $this->CalonSiswaController->ambilData(Auth::user()->id,"nik");
             $pendidikanSebelumnya = pendidikanSebelumnya::create([
-                'nik_siswa' => $data,
+                'user_id' => Auth::user()->id,
                 'asal_sekolah' => $request->asal_sekolah,
                 'alamat_sekolah' => $request->alamat_sekolah,
                 'nomor_telepon_sekolah' => $request->nomor_telepon_sekolah,

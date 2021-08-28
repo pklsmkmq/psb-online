@@ -14,14 +14,15 @@ class CreateDataIbusTable extends Migration
     public function up()
     {
         Schema::create('data_ibu', function (Blueprint $table) {
-            $table->double('nik_ibu')->nullable(false)->primary();
-            $table->foreignId("nik_siswa");
-            $table->string('name_ibu')->nullable(false);
-            $table->string('tempat_lahir_ibu')->nullable(false);
-            $table->date('tanggal_lahir_ibu')->nullable(false);
-            $table->string('pekerjaan_ibu')->nullable(false);
-            $table->string('nomor_telepon_ibu');
-            $table->double('penghasilan_ibu');
+            $table->id();
+            $table->string('nik_ibu')->nullable();
+            $table->foreignId("user_id");
+            $table->string('name_ibu')->nullable();
+            $table->string('tempat_lahir_ibu')->nullable();
+            $table->date('tanggal_lahir_ibu')->nullable();
+            $table->string('pekerjaan_ibu')->nullable();
+            $table->string('nomor_telepon_ibu')->nullable();
+            $table->string('penghasilan_ibu')->nullable();
             $table->timestamps();
         });
     }

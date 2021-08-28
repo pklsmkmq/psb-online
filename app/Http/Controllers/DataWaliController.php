@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\dataWali;
 use Illuminate\Http\Request;
 use Validator;
-
+use Auth;
 class DataWaliController extends Controller
 {
     /**
@@ -57,16 +57,16 @@ class DataWaliController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'nik_wali' => 'required|numeric|unique:data_wali,nik_wali',
-            'nik_siswa' => 'required|numeric|unique:data_wali,nik_siswa',
-            'name_wali' => 'required|string|max:255',
-            'tempat_lahir_wali' => 'required|string|max:255',
-            'tanggal_lahir_wali' => 'required',
-            'pekerjaan_wali' => 'required|string|max:50',
+            'nik_wali' => 'unique:data_wali,nik_wali',
+            'user_id' => 'unique:data_wali,user_id',
+            // 'name_wali' => 'required|string|max:255',
+            // 'tempat_lahir_wali' => 'required|string|max:255',
+            // 'tanggal_lahir_wali' => 'required',
+            // 'pekerjaan_wali' => 'required|string|max:50',
             'nomor_telepon_wali' => 'required',
-            'penghasilan_wali' => 'required|numeric',
+            // 'penghasilan_wali' => 'required|string',
         );
-
+        $request["user_id"] = Auth::user()->id;
         $cek = Validator::make($request->all(),$rules);
 
         if($cek->fails()){
@@ -79,7 +79,7 @@ class DataWaliController extends Controller
             $tanggal = date('Y-m-d',$time);
             $dataWali = dataWali::create([
                 'nik_wali' => $request->nik_wali,
-                'nik_siswa' => $request->nik_siswa,
+                'user_id' => Auth::user()->id,
                 'name_wali' => $request->name_wali,
                 'tempat_lahir_wali' => $request->tempat_lahir_wali,
                 'tanggal_lahir_wali' => $tanggal,

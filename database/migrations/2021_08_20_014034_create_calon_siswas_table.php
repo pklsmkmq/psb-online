@@ -14,7 +14,8 @@ class CreateCalonSiswasTable extends Migration
     public function up()
     {
         Schema::create('calon_siswa', function (Blueprint $table) {
-            $table->double('nik_siswa')->nullable(false)->primary();
+            $table->id();
+            $table->string('nik_siswa')->nullable();
             $table->string('name_siswa')->nullable(false);
             $table->foreignId("user_id");
             $table->string('tempat_lahir_siswa')->nullable(false);
@@ -25,10 +26,11 @@ class CreateCalonSiswasTable extends Migration
             $table->text('alamat_siswa')->nullable(false);
             $table->string('nomor_telepon_siswa');
             $table->string('pihak_yg_dihubungi')->nullable(false);
-            $table->integer('tinggi_badan');
-            $table->integer('berat_badan');
-            $table->string('ukuran_baju');
-            $table->string('cita_cita');
+            $table->integer('tinggi_badan')->nullable();
+            $table->integer('berat_badan')->nullable();
+            $table->string('ukuran_baju')->nullable();
+            $table->string('cita_cita')->nullable();
+            $table->integer('jurusan');
             $table->timestamps();
         });
     }

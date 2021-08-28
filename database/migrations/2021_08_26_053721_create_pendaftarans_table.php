@@ -14,11 +14,12 @@ class CreatePendaftaransTable extends Migration
     public function up()
     {
         Schema::create('pendaftaran', function (Blueprint $table) {
-            $table->string('no_pendaftaran')->nullable(false)->primary();
-            $table->string('no_peserta')->nullable(false);
-            $table->foreignId("nik_siswa");
-            $table->date('jadwal_tes')->nullable(false);
-            $table->string('jenis_tes')->nullable(false);
+            $table->id();
+            $table->string('no_pendaftaran')->nullable();
+            $table->string('no_peserta')->nullable();
+            $table->foreignId("user_id");
+            $table->date('jadwal_tes')->nullable();
+            $table->string('jenis_tes')->nullable();
             $table->timestamps();
         });
     }

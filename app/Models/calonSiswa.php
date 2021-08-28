@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class calonSiswa extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'nik_siswa';
+   
     protected $table = "calon_siswa";
-    protected $fillable = ['nik_siswa','name_siswa','user_id','tempat_lahir_siswa','tanggal_lahir_siswa','jenis_kelamin','agama','golongan_darah','alamat_siswa','nomor_telepon_siswa','pihak_yg_dihubungi','tinggi_badan','berat_badan','ukuran_baju','cita_cita'];
+    protected $fillable = ['nik_siswa','jurusan','name_siswa','user_id','tempat_lahir_siswa','tanggal_lahir_siswa','jenis_kelamin','agama','golongan_darah','alamat_siswa','nomor_telepon_siswa','pihak_yg_dihubungi','tinggi_badan','berat_badan','ukuran_baju','cita_cita'];
     protected $keyType = 'string';
 
     public function pendidikanSebelumnya()

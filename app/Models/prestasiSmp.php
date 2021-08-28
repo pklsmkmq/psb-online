@@ -9,7 +9,7 @@ class prestasiSmp extends Model
 {
     use HasFactory;
     protected $table = "prestasi_smp";
-    protected $fillable = ['nik_siswa','cabang_lomba','peringkat_tingkat_kab','peringkat_tingkat_provinsi','peringkat_tingkat_nasional'];
+    protected $fillable = ['user_id','cabang_lomba','peringkat_tingkat_kab','peringkat_tingkat_provinsi','peringkat_tingkat_nasional'];
     protected $keyType = 'string';
 
     public function calonSiswa()

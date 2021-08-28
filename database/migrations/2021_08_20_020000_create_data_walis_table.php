@@ -14,14 +14,15 @@ class CreateDataWalisTable extends Migration
     public function up()
     {
         Schema::create('data_wali', function (Blueprint $table) {
-            $table->double('nik_wali')->nullable(false)->primary();
-            $table->foreignId("nik_siswa");
-            $table->string('name_wali')->nullable(false);
-            $table->string('tempat_lahir_wali')->nullable(false);
-            $table->date('tanggal_lahir_wali')->nullable(false);
-            $table->string('pekerjaan_wali')->nullable(false);
-            $table->string('nomor_telepon_wali');
-            $table->double('penghasilan_wali');
+            $table->id();
+            $table->string('nik_wali')->nullable();
+            $table->foreignId("user_id");
+            $table->string('name_wali')->nullable();
+            $table->string('tempat_lahir_wali')->nullable();
+            $table->date('tanggal_lahir_wali')->nullable();
+            $table->string('pekerjaan_wali')->nullable();
+            $table->string('nomor_telepon_wali')->nullable();
+            $table->string('penghasilan_wali')->nullable();
             $table->timestamps();
         });
     }

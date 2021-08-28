@@ -15,13 +15,13 @@ class CreatePrestasiBelajarsTable extends Migration
     {
         Schema::create('prestasi_belajar', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("nik_siswa");
-            $table->string('mata_pelajaran');
-            $table->integer('nilai_kelas1_semester1');
-            $table->integer('nilai_kelas1_semester2');
-            $table->integer('nilai_kelas2_semester1');
-            $table->integer('nilai_kelas2_semester2');
-            $table->integer('nilai_kelas3_semester1');
+            $table->foreignId("user_id");
+            $table->string('mata_pelajaran')->nullable();
+            $table->integer('nilai_kelas1_semester1')->nullable();
+            $table->integer('nilai_kelas1_semester2')->nullable();
+            $table->integer('nilai_kelas2_semester1')->nullable();
+            $table->integer('nilai_kelas2_semester2')->nullable();
+            $table->integer('nilai_kelas3_semester1')->nullable();
             $table->timestamps();
         });
     }

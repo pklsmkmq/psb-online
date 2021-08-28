@@ -15,12 +15,12 @@ class CreatePendidikanSebelumnyasTable extends Migration
     {
         Schema::create('pendidikan_sebelumnya', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("nik_siswa");
-            $table->string('asal_sekolah');
-            $table->text('alamat_sekolah');
-            $table->string('nomor_telepon_sekolah');
-            $table->double('nisn');
-            $table->double('npsn');
+            $table->foreignId("user_id");
+            $table->string('asal_sekolah')->nullable();
+            $table->text('alamat_sekolah')->nullable();
+            $table->string('nomor_telepon_sekolah')->nullable();
+            $table->double('nisn')->nullable();
+            $table->double('npsn')->nullable();
             $table->timestamps();
         });
     }

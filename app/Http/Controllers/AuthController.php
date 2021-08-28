@@ -140,6 +140,8 @@ class AuthController extends Controller
             'status' => 'required|max:1'
         );
 
+      
+
         $cek = Validator::make($request->all(),$rules);
 
         if($cek->fails()){
@@ -189,32 +191,32 @@ class AuthController extends Controller
             array_push($data,"calon siswa");
             $nik = $siswa->nik_siswa;
 
-            $pendidikan = pendidikanSebelumnya::where('nik_siswa',$nik)->first();
+            $pendidikan = pendidikanSebelumnya::where('user_id',$id)->first();
             if($pendidikan){
                 array_push($data,"pendidikan sebelumnya");
             }
 
-            $ayah = dataAyah::where('nik_siswa',$nik)->first();
+            $ayah = dataAyah::where('user_id',$id)->first();
             if($ayah){
                 array_push($data,"data ayah");
             }
 
-            $ibu = dataIbu::where('nik_siswa',$nik)->first();
+            $ibu = dataIbu::where('user_id',$id)->first();
             if($ibu){
                 array_push($data,"data ibu");
             }
 
-            $wali = dataWali::where('nik_siswa',$nik)->first();
+            $wali = dataWali::where('user_id',$id)->first();
             if($wali){
                 array_push($data,"data wali");
             }
 
-            $prestasiBelajar = prestasiBelajar::where('nik_siswa',$nik)->first();
+            $prestasiBelajar = prestasiBelajar::where('user_id',$id)->first();
             if($prestasiBelajar){
                 array_push($data,"data prestasi belajar");
             }
 
-            $prestasiSmp = prestasiSmp::where('nik_siswa',$nik)->first();
+            $prestasiSmp = prestasiSmp::where('user_id',$id)->first();
             if($prestasiSmp){
                 array_push($data,"data prestasi smp");
             }

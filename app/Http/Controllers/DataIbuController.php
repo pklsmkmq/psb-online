@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\dataIbu;
 use Illuminate\Http\Request;
 use Validator;
-
+use Auth;
 class DataIbuController extends Controller
 {
     /**
@@ -57,16 +57,16 @@ class DataIbuController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'nik_ibu' => 'required|numeric|unique:data_ibu,nik_ibu',
-            'nik_siswa' => 'required|numeric|unique:data_ibu,nik_siswa',
+            'nik_ibu' => 'unique:data_ibu,nik_ibu',
+            'user_id' => 'unique:data_ibu,user_id',
             'name_ibu' => 'required|string|max:255',
-            'tempat_lahir_ibu' => 'required|string|max:255',
-            'tanggal_lahir_ibu' => 'required',
-            'pekerjaan_ibu' => 'required|string|max:50',
+            // 'tempat_lahir_ibu' => 'required|string|max:255',
+            // 'tanggal_lahir_ibu' => 'required',
+            // 'pekerjaan_ibu' => 'required|string|max:50',
             'nomor_telepon_ibu' => 'required',
-            'penghasilan_ibu' => 'required|numeric',
+            // 'penghasilan_ibu' => 'required|string',
         );
-
+        $request["user_id"] = Auth::user()->id;
         $cek = Validator::make($request->all(),$rules);
 
         if($cek->fails()){
@@ -79,7 +79,7 @@ class DataIbuController extends Controller
             $tanggal = date('Y-m-d',$time);
             $dataIbu = dataIbu::create([
                 'nik_ibu' => $request->nik_ibu,
-                'nik_siswa' => $request->nik_siswa,
+                'user_id' => Auth::user()->id,
                 'name_ibu' => $request->name_ibu,
                 'tempat_lahir_ibu' => $request->tempat_lahir_ibu,
                 'tanggal_lahir_ibu' => $tanggal,

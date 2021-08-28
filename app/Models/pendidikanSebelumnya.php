@@ -9,7 +9,7 @@ class pendidikanSebelumnya extends Model
 {
     use HasFactory;
     protected $table = "pendidikan_sebelumnya";
-    protected $fillable = ['nik_siswa','asal_sekolah','alamat_sekolah','nomor_telepon_sekolah','nisn','npsn'];
+    protected $fillable = ['user_id','asal_sekolah','alamat_sekolah','nomor_telepon_sekolah','nisn','npsn'];
     protected $keyType = 'string';
 
     public function calonSiswa()

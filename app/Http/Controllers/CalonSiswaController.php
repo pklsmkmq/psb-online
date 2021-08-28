@@ -64,8 +64,9 @@ class CalonSiswaController extends Controller
      */
     public function store(Request $request)
     {
+        return "ok";
         $rules = array(
-            'nik_siswa' => 'required|numeric|unique:calon_siswa,nik_siswa',
+            'nik_siswa' => 'unique:calon_siswa',
             'name_siswa' => 'required|string|max:255',
             'user_id' => 'required|unique:calon_siswa,user_id',
             'tempat_lahir_siswa' => 'required|string|max:255',
@@ -76,7 +77,7 @@ class CalonSiswaController extends Controller
         );
 
         $cek = Validator::make($request->all(),$rules);
-
+return "ok";
         if($cek->fails()){
             $errorString = implode(",",$cek->messages()->all());
             return response()->json([
@@ -92,8 +93,10 @@ class CalonSiswaController extends Controller
             $cita_cita = $this->cekData($request->cita_cita, "-");
             $time = strtotime($request->tanggal_lahir_siswa);
             $tanggal = date('Y-m-d',$time);
+            return "ok";
             $calonSiswa = calonSiswa::create([
                 'nik_siswa' => $request->nik_siswa,
+                'jurusan' => $request->jurusan,
                 'name_siswa' => $request->name_siswa,
                 'user_id' => $request->user_id,
                 'tempat_lahir_siswa' => $request->tempat_lahir_siswa,
@@ -257,7 +260,8 @@ class CalonSiswaController extends Controller
     public function saveData(Request $request)
     {
         $rules = array(
-            'nik_siswa' => 'required|numeric|unique:calon_siswa,nik_siswa',
+            'nik_siswa' => 'unique:calon_siswa,nik_siswa',
+            'user_id' => 'unique:calon_siswa,user_id',
             'name_siswa' => 'required|string|max:255',
             'tempat_lahir_siswa' => 'required|string|max:255',
             'tanggal_lahir_siswa' => 'required',
@@ -265,7 +269,8 @@ class CalonSiswaController extends Controller
             'alamat_siswa' => 'required|string',
             'pihak_yg_dihubungi' => 'required|string|max:30',
         );
-
+        
+$request["user_id"] = Auth::user()->id;
         $cek = Validator::make($request->all(),$rules);
 
         if($cek->fails()){
@@ -290,6 +295,7 @@ class CalonSiswaController extends Controller
                 'tempat_lahir_siswa' => $request->tempat_lahir_siswa,
                 'tanggal_lahir_siswa' => $tanggal,
                 'jenis_kelamin' => $jenis_kelamin,
+                'jurusan' => $request->jurusan,
                 'agama' => $request->agama,
                 'golongan_darah' => $golongan_darah,
                 'alamat_siswa' => $request->alamat_siswa,

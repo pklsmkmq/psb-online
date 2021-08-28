@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\dataAyah;
 use Illuminate\Http\Request;
 use Validator;
-
+use Auth;
 class DataAyahController extends Controller
 {
     /**
@@ -57,16 +57,16 @@ class DataAyahController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'nik_ayah' => 'required|numeric|unique:data_ayah,nik_ayah',
-            'nik_siswa' => 'required|numeric|unique:data_ayah,nik_siswa',
+            'nik_ayah' => 'unique:data_ayah,nik_ayah',
+            'user_id' => 'unique:data_ayah,user_id',
             'name_ayah' => 'required|string|max:255',
-            'tempat_lahir_ayah' => 'required|string|max:255',
-            'tanggal_lahir_ayah' => 'required',
-            'pekerjaan_ayah' => 'required|string|max:50',
+            // 'tempat_lahir_ayah' => 'required|string|max:255',
+            // 'tanggal_lahir_ayah' => 'required',
+            // 'pekerjaan_ayah' => 'required|string|max:50',
             'nomor_telepon_ayah' => 'required',
-            'penghasilan_ayah' => 'required|numeric',
+            // 'penghasilan_ayah' => 'required|string',
         );
-
+        $request["user_id"] = Auth::user()->id;
         $cek = Validator::make($request->all(),$rules);
 
         if($cek->fails()){
@@ -79,7 +79,7 @@ class DataAyahController extends Controller
             $tanggal = date('Y-m-d',$time);
             $dataAyah = dataAyah::create([
                 'nik_ayah' => $request->nik_ayah,
-                'nik_siswa' => $request->nik_siswa,
+                'user_id' => Auth::user()->id,
                 'name_ayah' => $request->name_ayah,
                 'tempat_lahir_ayah' => $request->tempat_lahir_ayah,
                 'tanggal_lahir_ayah' => $tanggal,

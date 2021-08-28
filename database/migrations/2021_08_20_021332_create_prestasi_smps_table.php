@@ -15,11 +15,11 @@ class CreatePrestasiSmpsTable extends Migration
     {
         Schema::create('prestasi_smp', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("nik_siswa");
-            $table->string('cabang_lomba');
-            $table->integer('peringkat_tingkat_kab');
-            $table->integer('peringkat_tingkat_provinsi');
-            $table->integer('peringkat_tingkat_nasional');
+            $table->foreignId("user_id");
+            $table->string('cabang_lomba')->nullable();
+            $table->integer('peringkat_tingkat_kab')->nullable();
+            $table->integer('peringkat_tingkat_provinsi')->nullable();
+            $table->integer('peringkat_tingkat_nasional')->nullable();
             $table->timestamps();
         });
     }
