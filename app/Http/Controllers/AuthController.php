@@ -12,7 +12,8 @@ use App\Models\{
     dataWali,
     pendidikanSebelumnya,
     prestasiBelajar,
-    prestasiSmp
+    prestasiSmp,
+    bukti
 };
 use Validator;
 use Hash;
@@ -121,14 +122,17 @@ class AuthController extends Controller
             $roles = $user->getRoleNames();
             
             $identitas = $this->cekData($user->id);
+
+            $bayar = $this->cekBayar($user->id);
           
             return response()->json([
                 'status'   => 'Success',
-                'message'   => 'Berhasil Login',
-                'user'      => $user,
-                'role'      => $roles,
-                'token'      => $token,
-                'identitas' => $identitas
+                'message'     => 'Berhasil Login',
+                'user'        => $user,
+                'role'        => $roles,
+                'token'       => $token,
+                'identitas'   => $identitas,
+                'pendaftaran' => $bayar
             ], 200);
         }
     }
@@ -175,14 +179,34 @@ class AuthController extends Controller
         $roles = $user->getRoleNames();
           
         $identitas = $this->cekData($user->id);
+        $bayar = $this->cekBayar($user->id);
        
         return response()->json([
             'status'   => 'Success',
             'message'   => 'Berhasil cek data',
             'user'      => $user,
             'token'      => $token,
-            'identitas' => $identitas
+            'identitas' => $identitas,
+            'pendaftaran' => $bayar
         ], 200);
+    }
+
+    public function cekBayar($id)
+    {
+        $query = bukti::where('user_id',$id);
+        $jumlah = $query->count();
+
+        if ($jumlah != 0) {
+            $cek = $query->first();
+            if ($cek->status == 0) {
+                $bayar = 0;
+            }else{
+                $bayar = 1;
+            }
+        } else {
+            $bayar = 0;
+        }
+        return $bayar;
     }
     
     public function cekData($id)

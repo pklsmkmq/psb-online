@@ -55,7 +55,6 @@ class BuktiController extends Controller
         $rules = array(
             'user_id' => 'unique:bukti,user_id',
             'url_img' => 'required|mimes:png,jpg,jpeg,pdf|max:2048',
-            'status' => 'required',
         );
         $request["user_id"] = Auth::user()->id;
         $cek = Validator::make($request->all(),$rules);
@@ -66,6 +65,9 @@ class BuktiController extends Controller
                 'message' => $errorString
             ], 401);
         }else{
+            if (!$request->status) {
+                $request->status = 0;
+            }
             $gambar = $request->file('url_img');
             $response = cloudinary()->upload($gambar->path())->getSecurePath();
             $bukti = bukti::create([
@@ -73,6 +75,13 @@ class BuktiController extends Controller
                 'url_img' => $response,
                 'status' => $request->status,
             ]);
+
+            $details = [
+                'name' => Auth::user()->name,
+                'bukti' => $response
+            ];
+
+            \Mail::to("psbsmkmq@gmail.com")->send(new \App\Mail\BayarMail($details));
 
             return response()->json([
                 "status" => "success",
