@@ -10,7 +10,8 @@ use App\Http\Controllers\{
     DataWaliController,
     PrestasiBelajarController,
     PrestasiSmpController,
-    PendaftaranController
+    PendaftaranController,
+    BuktiController
 };
 use App\Http\Controllers\admin\{
     UserController, 
@@ -122,6 +123,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::post('save', [PendaftaranController::class, "store"]);
             Route::get('detail/{id}', [PendaftaranController::class, "show"]);
             Route::put('update/{id}', [PendaftaranController::class, "update"]);
+        });
+
+        Route::prefix('uploadBukti')->group(function () {
+            Route::post('save', [BuktiController::class, "store"]);
+            Route::get('detail', [BuktiController::class, "show"]);
+            Route::put('update', [BuktiController::class, "update"]);
         });
      });
 });
