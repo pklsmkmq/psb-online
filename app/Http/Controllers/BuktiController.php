@@ -54,7 +54,7 @@ class BuktiController extends Controller
     {
         $rules = array(
             'user_id' => 'unique:bukti,user_id',
-            'url_img' => 'required',
+            'url_img' => 'required|mimes:png,jpg,jpeg,pdf|max:2048',
             'status' => 'required',
         );
         $request["user_id"] = Auth::user()->id;
@@ -126,7 +126,6 @@ class BuktiController extends Controller
     public function update(Request $request)
     {
         $rules = array(
-            // 'url_img' => 'string|max:255',
             'status' => 'required',
         );
         $cek = Validator::make($request->all(),$rules);
@@ -161,6 +160,30 @@ class BuktiController extends Controller
                 ]);
             }
         }
+    }
+
+    public function updateStatus()
+    {
+        $bukti = bukti::where('user_id', Auth::user()->id)->first(); 
+        if ($bukti->status == 0 || $bukti->status == false) {
+            $bukti->status = 1;
+
+            if($bukti->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Merubah Status'
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Merubah Status'
+                ]);
+            }
+        }
+        return response()->json([
+            "status" => "success",
+            "message" => 'Data Sudah Terubah'
+        ]);
     }
 
     /**

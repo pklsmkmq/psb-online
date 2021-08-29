@@ -128,6 +128,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::prefix('uploadBukti')->group(function () {
             Route::post('save', [BuktiController::class, "store"]);
             Route::get('detail', [BuktiController::class, "show"]);
+            Route::get('status', [BuktiController::class, "updateStatus"]);
             Route::put('update', [BuktiController::class, "update"]);
         });
      });
