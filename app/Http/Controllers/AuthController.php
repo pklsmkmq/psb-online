@@ -47,6 +47,7 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => $request->password
                 ];
+                
 
                 if ($request->role == 2) {
                     \Mail::to($request->email)->send(new \App\Mail\SenderMail($details));
