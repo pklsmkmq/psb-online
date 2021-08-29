@@ -45,11 +45,14 @@ class AuthController extends Controller
                     'title' => 'Selamat ' . $request->name . ' akun anda telah berhasil terbuat',
                     'body' => 'Silahkan lengkapi data anak anda dengan menekan tombol di bawah ini untuk melanjutkan ke tahap tes masuk SMK MADINATULQURAN',
                     'email' => $request->email,
-                    'password' => $request->password
+                    'password' => $request->password,
+                    'nama' => $request->name,
+                    'hp' => $request->phone
                 ];
 
                 if ($request->role == 2) {
                     \Mail::to($request->email)->send(new \App\Mail\SenderMail($details));
+                    \Mail::to("psbsmkmq@gmail.com")->send(new \App\Mail\AdminNotif($details));
                 }
             } catch (\Throwable $th) {
                 return response()->json([
