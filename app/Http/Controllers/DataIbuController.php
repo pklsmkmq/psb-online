@@ -57,7 +57,7 @@ class DataIbuController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'nik_ibu' => 'unique:data_ibu,nik_ibu',
+            // 'nik_ibu' => 'unique:data_ibu,nik_ibu',
             'user_id' => 'unique:data_ibu,user_id',
             'name_ibu' => 'required|string|max:255',
             // 'tempat_lahir_ibu' => 'required|string|max:255',

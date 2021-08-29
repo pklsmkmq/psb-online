@@ -260,7 +260,7 @@ return "ok";
     public function saveData(Request $request)
     {
         $rules = array(
-            'nik_siswa' => 'unique:calon_siswa,nik_siswa',
+            // 'nik_siswa' => 'unique:calon_siswa,nik_siswa',
             'user_id' => 'unique:calon_siswa,user_id',
             'name_siswa' => 'required|string|max:255',
             'tempat_lahir_siswa' => 'required|string|max:255',

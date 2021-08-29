@@ -57,7 +57,7 @@ class DataWaliController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'nik_wali' => 'unique:data_wali,nik_wali',
+            // 'nik_wali' => 'unique:data_wali,nik_wali',
             'user_id' => 'unique:data_wali,user_id',
             // 'name_wali' => 'required|string|max:255',
             // 'tempat_lahir_wali' => 'required|string|max:255',
