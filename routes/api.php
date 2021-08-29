@@ -10,7 +10,8 @@ use App\Http\Controllers\{
     DataWaliController,
     PrestasiBelajarController,
     PrestasiSmpController,
-    PendaftaranController
+    PendaftaranController,
+    BuktiController
 };
 use App\Http\Controllers\admin\{
     UserController, 
@@ -87,7 +88,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
 
         Route::prefix('dataAyah')->group(function () {
-            Route::post('save', [DataAyahController::class, "store"]);
+            Route::post('save', [DataAyahController::class, "saveData"]);
+            Route::get('detail', [DataAyahController::class, "showData"]);
+            Route::put('update', [DataAyahController::class, "updateData"]);
             Route::get('detail/{id}', [DataAyahController::class, "show"]);
             Route::put('update/{id}', [DataAyahController::class, "update"]);
         });
@@ -120,6 +123,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::post('save', [PendaftaranController::class, "store"]);
             Route::get('detail/{id}', [PendaftaranController::class, "show"]);
             Route::put('update/{id}', [PendaftaranController::class, "update"]);
+        });
+
+        Route::prefix('uploadBukti')->group(function () {
+            Route::post('save', [BuktiController::class, "store"]);
+            Route::get('detail', [BuktiController::class, "show"]);
+            Route::get('status', [BuktiController::class, "updateStatus"]);
+            Route::put('update', [BuktiController::class, "update"]);
         });
      });
 });

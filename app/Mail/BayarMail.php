@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SenderMail extends Mailable
+class BayarMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,8 +29,7 @@ class SenderMail extends Mailable
      */
     public function build()
     {
-        // return $this->view('view.name');
-        return $this->subject('Registrasi Berhasil, Apa Selanjutnya?')
-                    ->view('email/email');
+        return $this->subject('Alhamdulillah, ada pembayaran masuk nih')
+                    ->view('email/bayar');
     }
 }

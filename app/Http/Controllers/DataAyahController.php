@@ -20,7 +20,7 @@ class DataAyahController extends Controller
         $request->role;
         $users = dataAyah::where('name_ayah', 'like', '%'.strtolower($request->keywords)."%")->orderBy("created_at", 'desc')->paginate($request->perpage, [
             'data_ayah.nik_ayah',
-            'data_ayah.nik_siswa',
+            'data_ayah.user_id',
             'data_ayah.name_ayah',
             'data_ayah.tempat_lahir_ayah',
             'data_ayah.tanggal_lahir_ayah',
@@ -54,19 +54,19 @@ class DataAyahController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    // ------------------------------------------------------------------------------
+    // Store Khusus Admin
+    // ------------------------------------------------------------------------------
     public function store(Request $request)
     {
         $rules = array(
-            'nik_ayah' => 'unique:data_ayah,nik_ayah',
-            'user_id' => 'unique:data_ayah,user_id',
+            // 'nik_ayah' => 'unique:data_ayah,nik_ayah',
+            // Penjelasan kenapa di komen ada di function saveData
+            'user_id' => 'required|unique:data_ayah,user_id',
             'name_ayah' => 'required|string|max:255',
-            // 'tempat_lahir_ayah' => 'required|string|max:255',
-            // 'tanggal_lahir_ayah' => 'required',
-            // 'pekerjaan_ayah' => 'required|string|max:50',
             'nomor_telepon_ayah' => 'required',
-            // 'penghasilan_ayah' => 'required|string',
         );
-        $request["user_id"] = Auth::user()->id;
         $cek = Validator::make($request->all(),$rules);
 
         if($cek->fails()){
@@ -79,7 +79,7 @@ class DataAyahController extends Controller
             $tanggal = date('Y-m-d',$time);
             $dataAyah = dataAyah::create([
                 'nik_ayah' => $request->nik_ayah,
-                'user_id' => Auth::user()->id,
+                'user_id' => $request->user_id,
                 'name_ayah' => $request->name_ayah,
                 'tempat_lahir_ayah' => $request->tempat_lahir_ayah,
                 'tanggal_lahir_ayah' => $tanggal,
@@ -206,6 +206,100 @@ class DataAyahController extends Controller
                 "status" => "failed",
                 "message" => 'NIK Ayah tidak ditemukan'
             ]);
+        }
+    }
+
+    // ---------------------------------------------------------------------------
+    // Khusus USER
+    // di bedakan soalnya beda validasi
+    // ---------------------------------------------------------------------------
+
+    public function saveData(Request $request)
+    {
+        $rules = array(
+            // 'nik_ayah' => 'unique:data_ayah,nik_ayah',
+            // jika tidak di required maka ga boleh unique maka akan error pada saat diisi 2 data kosong
+            'user_id' => 'unique:data_ayah,user_id',
+            'name_ayah' => 'required|string|max:255',
+            'nomor_telepon_ayah' => 'required',
+        );
+        $request["user_id"] = Auth::user()->id;
+        $cek = Validator::make($request->all(),$rules);
+
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                'message' => $errorString
+            ], 401);
+        }else{
+            $time = strtotime($request->tanggal_lahir_ayah);
+            $tanggal = date('Y-m-d',$time);
+            $dataAyah = dataAyah::create([
+                'nik_ayah' => $request->nik_ayah,
+                'user_id' => Auth::user()->id,
+                'name_ayah' => $request->name_ayah,
+                'tempat_lahir_ayah' => $request->tempat_lahir_ayah,
+                'tanggal_lahir_ayah' => $tanggal,
+                'pekerjaan_ayah' => $request->pekerjaan_ayah,
+                'nomor_telepon_ayah' => $request->nomor_telepon_ayah,
+                'penghasilan_ayah' => $request->penghasilan_ayah,
+            ]);
+    
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data'
+            ]);
+        }
+    }
+
+    public function showData()
+    {
+        $dataAyah = dataAyah::where('user_id', Auth::user()->id)->first(); 
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'sukses menampilkan data',
+            'data' => $dataAyah
+        ]);
+    }
+
+    public function updateData(Request $request)
+    {
+        $rules = array(
+            'name_ayah' => 'required|string|max:255',
+            'nomor_telepon_ayah' => 'required',
+        );
+        $cek = Validator::make($request->all(),$rules);
+
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                'message' => $errorString
+            ], 401);
+        }else{
+            $time = strtotime($request->tanggal_lahir_ayah);
+            $tanggal = date('Y-m-d',$time);
+            $dataAyah = dataAyah::where('user_id',Auth::user()->id)->first();
+            $dataAyah->nik_ayah = $request->nik_ayah;
+            $dataAyah->user_id = Auth::user()->id;
+            $dataAyah->name_ayah = $request->name_ayah;
+            $dataAyah->tempat_lahir_ayah = $request->tempat_lahir_ayah;
+            $dataAyah->tanggal_lahir_ayah = $tanggal;
+            $dataAyah->pekerjaan_ayah = $request->pekerjaan_ayah;
+            $dataAyah->nomor_telepon_ayah = $request->nomor_telepon_ayah;
+            $dataAyah->penghasilan_ayah = $request->penghasilan_ayah;
+    
+            if($dataAyah->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Menyimpan Data'
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
         }
     }
 }

@@ -12,7 +12,8 @@ use App\Models\{
     dataWali,
     pendidikanSebelumnya,
     prestasiBelajar,
-    prestasiSmp
+    prestasiSmp,
+    bukti
 };
 use Validator;
 use Hash;
@@ -45,12 +46,15 @@ class AuthController extends Controller
                     'title' => 'Selamat ' . $request->name . ' akun anda telah berhasil terbuat',
                     'body' => 'Silahkan lengkapi data anak anda dengan menekan tombol di bawah ini untuk melanjutkan ke tahap tes masuk SMK MADINATULQURAN',
                     'email' => $request->email,
-                    'password' => $request->password
+                    'password' => $request->password,
+                    'nama' => $request->name,
+                    'hp' => $request->phone
                 ];
                 
 
                 if ($request->role == 2) {
                     \Mail::to($request->email)->send(new \App\Mail\SenderMail($details));
+                    \Mail::to("psbsmkmq@gmail.com")->send(new \App\Mail\AdminNotif($details));
                 }
             } catch (\Throwable $th) {
                 return response()->json([
@@ -119,14 +123,17 @@ class AuthController extends Controller
             $roles = $user->getRoleNames();
             
             $identitas = $this->cekData($user->id);
+
+            $bayar = $this->cekBayar($user->id);
           
             return response()->json([
                 'status'   => 'Success',
-                'message'   => 'Berhasil Login',
-                'user'      => $user,
-                'role'      => $roles,
-                'token'      => $token,
-                'identitas' => $identitas
+                'message'     => 'Berhasil Login',
+                'user'        => $user,
+                'role'        => $roles,
+                'token'       => $token,
+                'identitas'   => $identitas,
+                'pendaftaran' => $bayar
             ], 200);
         }
     }
@@ -173,14 +180,34 @@ class AuthController extends Controller
         $roles = $user->getRoleNames();
           
         $identitas = $this->cekData($user->id);
+        $bayar = $this->cekBayar($user->id);
        
         return response()->json([
             'status'   => 'Success',
             'message'   => 'Berhasil cek data',
             'user'      => $user,
             'token'      => $token,
-            'identitas' => $identitas
+            'identitas' => $identitas,
+            'pendaftaran' => $bayar
         ], 200);
+    }
+
+    public function cekBayar($id)
+    {
+        $query = bukti::where('user_id',$id);
+        $jumlah = $query->count();
+
+        if ($jumlah != 0) {
+            $cek = $query->first();
+            if ($cek->status == 0) {
+                $bayar = 0;
+            }else{
+                $bayar = 1;
+            }
+        } else {
+            $bayar = 0;
+        }
+        return $bayar;
     }
     
     public function cekData($id)
