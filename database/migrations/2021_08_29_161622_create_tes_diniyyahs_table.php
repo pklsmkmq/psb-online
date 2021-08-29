@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBuktisTable extends Migration
+class CreateTesDiniyyahsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateBuktisTable extends Migration
      */
     public function up()
     {
-        Schema::create('bukti', function (Blueprint $table) {
+        Schema::create('tes_diniyyah', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id");
-            $table->string('url_img');
+            $table->dateTime('tanggal');
+            $table->boolean("metode");
             $table->boolean('status');
-            $table->boolean('upload_ulang');
+            $table->longText('catatan')->nullable();
+            $table->boolean('jadwal_ulang')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateBuktisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bukti');
+        Schema::dropIfExists('tes_diniyyah');
     }
 }

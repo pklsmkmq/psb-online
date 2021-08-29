@@ -11,7 +11,9 @@ use App\Http\Controllers\{
     PrestasiBelajarController,
     PrestasiSmpController,
     PendaftaranController,
-    BuktiController
+    BuktiController,
+    TesDiniyyahController
+   
 };
 use App\Http\Controllers\admin\{
     UserController, 
@@ -130,6 +132,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('detail', [BuktiController::class, "show"]);
             Route::get('status', [BuktiController::class, "updateStatus"]);
             Route::put('update', [BuktiController::class, "update"]);
+        });
+
+        Route::resource('tesDiniyah', TesDiniyyahController::class);
+        Route::prefix('tesDiniyahSaya')->group(function () {
+            Route::get('tes-saya', [ TesDiniyyahController::class, "tesSaya"]);
+           
         });
      });
 });

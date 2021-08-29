@@ -53,7 +53,7 @@ class BuktiController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'user_id' => 'unique:bukti,user_id',
+            // 'user_id' => 'unique:bukti,user_id',
             'url_img' => 'required|mimes:png,jpg,jpeg,pdf|max:2048',
         );
         $request["user_id"] = Auth::user()->id;
@@ -74,6 +74,7 @@ class BuktiController extends Controller
                 'user_id' => Auth::user()->id,
                 'url_img' => $response,
                 'status' => $request->status,
+                'upload_ulang' => 0,
             ]);
 
             $details = [

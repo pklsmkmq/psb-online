@@ -9,6 +9,6 @@ class bukti extends Model
 {
     use HasFactory;
     protected $table = "bukti";
-    protected $fillable = ['user_id','url_img','status'];
+    protected $fillable = ['user_id','url_img','status', 'upload_ulang'];
     protected $keyType = 'string';
 }
