@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\{
+    User,
+    bukti,
+    TesDiniyyah
+};
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
@@ -21,13 +25,17 @@ class UserController extends Controller
         $request->keywords;
         $request->page;
         $request->role;
-        $users = User::where('name', 'like', '%'.strtolower($request->keywords)."%")->orderBy("created_at", 'desc')->paginate($request->perpage, [
-            'users.id',
-            'users.name',
-            'users.email',
-            'users.phone',
-            'users.created_at'
-        ]);
+        $users = User::where('name', 'like', '%'.strtolower($request->keywords)."%")
+                 ->orderBy("created_at", 'desc')
+                 ->with('bukti')
+                 ->with('tesDiniyyah')
+                 ->paginate($request->perpage, [
+                    'users.id',
+                    'users.name',
+                    'users.email',
+                    'users.phone',
+                    'users.created_at'
+                ]);
 
         return response()->json([
             'status' => 'success',
@@ -218,5 +226,29 @@ class UserController extends Controller
                 "message" => 'Gagal Mengubah status'
             ]);
         }   
+    }
+
+    public function updateStatus($id)
+    {
+        $bukti = bukti::where('user_id', $id)->first(); 
+        if ($bukti->status == 0 || $bukti->status == false) {
+            $bukti->status = 1;
+
+            if($bukti->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Merubah Status'
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Merubah Status'
+                ]);
+            }
+        }
+        return response()->json([
+            "status" => "success",
+            "message" => 'Data Sudah Terubah'
+        ]);
     }
 }

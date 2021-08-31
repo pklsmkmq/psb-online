@@ -49,4 +49,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(calonSiswa::class);
     }
+
+    public function bukti()
+    {
+        return $this->hasOne(bukti::class);
+    }
+
+    public function tesDiniyyah()
+    {
+        return $this->hasOne(TesDiniyyah::class);
+    }
 }

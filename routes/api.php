@@ -39,6 +39,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // User crud
         Route::resource('user', UserController::class);
         Route::delete('user', [UserController::class, "destroy"]);
+        Route::get('users/updateStatus/{id}', [UserController::class, "updateStatus"]);
 
         // Calon Siswa crud
         Route::resource('calonSiswa', CalonSiswaController::class);

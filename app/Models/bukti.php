@@ -11,4 +11,9 @@ class bukti extends Model
     protected $table = "bukti";
     protected $fillable = ['user_id','url_img','status', 'upload_ulang'];
     protected $keyType = 'string';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
