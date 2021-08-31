@@ -145,6 +145,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::prefix('tesMasuk')->group(function () {
             Route::post('save', [TesMasukController::class, "store"]);
             Route::get('cek', [TesMasukController::class, "cekTes"]);
+            Route::get('/{code}', [TesMasukController::class, "cekTesSantri"]);
         });
      });
 });

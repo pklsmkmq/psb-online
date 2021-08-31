@@ -57,12 +57,13 @@ class TesMasukController extends Controller
                 $tesMasuk = TesMasuk::create([
                     'user_id' => Auth::user()->id,
                     'kode_mapel' => $request->kode_mapel,
+                    'ulangi' => 0,
                     'nilai' => $request->nilai,
                 ]);
 
                 return response()->json([
                     "status" => "success",
-                    "message" => 'Berhasil Menyimpan Data'
+                    "message" => 'Berhasil Menyimpan Nilai'
                 ]);
             }else{
                 return response()->json([
@@ -117,6 +118,30 @@ class TesMasukController extends Controller
     {
         //
     }
+    public function cekTesSantri($code){
+        
+        $data = TesMasuk::where('user_id',Auth::user()->id)->where("kode_mapel" , $code)->orderBy('id' , 'desc')->get();
+        if(count($data) === 0){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Santi belum tes',
+               
+            ]);
+        }
+       if($data[0]->ulangi === 0){
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Sudah mengikuti tes ini',
+           
+        ]);
+       }
+       return response()->json([
+        'status' => 'success',
+        'message' => 'Santi belum tes',
+       
+    ]);
+     
+    }
 
     public function cekTes()
     {
@@ -142,4 +167,6 @@ class TesMasukController extends Controller
             'sudahTes' => $sudah
         ]);
     }
+
+    
 }
