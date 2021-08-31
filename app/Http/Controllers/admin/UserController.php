@@ -233,6 +233,7 @@ class UserController extends Controller
         $bukti = bukti::where('user_id', $id)->first(); 
         if ($bukti->status == 0 || $bukti->status == false) {
             $bukti->status = 1;
+            $bukti->approved_by = Auth::user()->id;
 
             if($bukti->save()){
                 return response()->json([
