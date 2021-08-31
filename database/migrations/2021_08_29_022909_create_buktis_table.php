@@ -19,6 +19,7 @@ class CreateBuktisTable extends Migration
             $table->string('url_img');
             $table->boolean('status');
             $table->boolean('upload_ulang');
+            $table->string("approved_by");
             $table->timestamps();
         });
     }

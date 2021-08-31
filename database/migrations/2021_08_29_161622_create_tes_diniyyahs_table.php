@@ -20,6 +20,7 @@ class CreateTesDiniyyahsTable extends Migration
             $table->boolean("metode");
             $table->boolean('status');
             $table->longText('catatan')->nullable();
+            $table->string('approved_by');
             $table->boolean('jadwal_ulang')->nullable();
             $table->timestamps();
         });
