@@ -16,10 +16,10 @@ class CreateBuktisTable extends Migration
         Schema::create('bukti', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id");
-            $table->string('url_img');
-            $table->boolean('status');
-            $table->boolean('upload_ulang');
-            $table->string("approved_by");
+            $table->string('url_img')->nullable();
+            $table->boolean('status')->nullable();
+            $table->boolean('upload_ulang'->nullable());
+            $table->string("approved_by")->nullable();
             $table->timestamps();
         });
     }
