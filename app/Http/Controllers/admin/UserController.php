@@ -24,9 +24,13 @@ class UserController extends Controller
     {
         $request->keywords;
         $request->page;
-        $request->role;
+        $rolesss = [$request->role];
         $users = User::where('name', 'like', '%'.strtolower($request->keywords)."%")
                  ->orderBy("created_at", 'desc')
+                 ->with('roles')
+                 ->whereHas('roles', function($q) use ($rolesss){
+                     $q->whereIn('name', $rolesss);
+                 })
                  ->with('bukti')
                  ->with('tesDiniyyah')
                  ->paginate($request->perpage, [
