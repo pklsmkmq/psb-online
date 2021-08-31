@@ -18,10 +18,10 @@ class CreateTesDiniyyahsTable extends Migration
             $table->foreignId("user_id");
             $table->dateTime('tanggal');
             $table->boolean("metode");
-            $table->boolean('status')->nullable();
+            $table->boolean('status');
             $table->longText('catatan')->nullable();
             $table->string('approved_by')->nullable();
-            $table->boolean('jadwal_ulang')->nullable();
+            $table->boolean('jadwal_ulang');
             $table->timestamps();
         });
     }

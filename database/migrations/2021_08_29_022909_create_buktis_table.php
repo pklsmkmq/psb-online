@@ -17,8 +17,8 @@ class CreateBuktisTable extends Migration
             $table->id();
             $table->foreignId("user_id");
             $table->string('url_img')->nullable();
-            $table->boolean('status')->nullable();
-            $table->boolean('upload_ulang'->nullable());
+            $table->boolean('status');
+            $table->boolean('upload_ulang');
             $table->string("approved_by")->nullable();
             $table->timestamps();
         });
