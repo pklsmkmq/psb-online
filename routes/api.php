@@ -12,7 +12,8 @@ use App\Http\Controllers\{
     PrestasiSmpController,
     PendaftaranController,
     BuktiController,
-    TesDiniyyahController
+    TesDiniyyahController,
+    TesMasukController
    
 };
 use App\Http\Controllers\admin\{
@@ -122,11 +123,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::put('update/{id}', [PrestasiSmpController::class, "update"]);
         });
 
-        Route::prefix('tesMasuk')->group(function () {
-            Route::post('save', [PendaftaranController::class, "store"]);
-            Route::get('detail/{id}', [PendaftaranController::class, "show"]);
-            Route::put('update/{id}', [PendaftaranController::class, "update"]);
-        });
+        // Route::prefix('tesMasuk')->group(function () {
+        //     Route::post('save', [PendaftaranController::class, "store"]);
+        //     Route::get('detail/{id}', [PendaftaranController::class, "show"]);
+        //     Route::put('update/{id}', [PendaftaranController::class, "update"]);
+        // });
 
         Route::prefix('uploadBukti')->group(function () {
             Route::post('save', [BuktiController::class, "store"]);
@@ -139,6 +140,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::prefix('tesDiniyahSaya')->group(function () {
             Route::get('tes-saya', [ TesDiniyyahController::class, "tesSaya"]);
            
+        });
+
+        Route::prefix('tesMasuk')->group(function () {
+            Route::post('save', [TesMasukController::class, "store"]);
+            Route::get('cek', [TesMasukController::class, "cekTes"]);
         });
      });
 });

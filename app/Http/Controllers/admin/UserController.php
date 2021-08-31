@@ -240,6 +240,13 @@ class UserController extends Controller
             $bukti->approved_by = Auth::user()->id;
 
             if($bukti->save()){
+                $user = User::where('user_id',id)->with('tesDiniyyah')->first();
+                $details = [
+                    'tanggal' => $user->tesDiniyyah->tanggal,
+                    'materi'  => "Matematika, Diniyyah, Logika"
+                ];
+                
+                \Mail::to($user->email)->send(new \App\Mail\konfirmasi($details));
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Merubah Status'
