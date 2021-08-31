@@ -21,8 +21,7 @@
             <td>{{ $details['password'] }}</td>
         </tr>
     </table>
-    <center><a href=""><button style="padding: 20px; background: green; color: white; border-radius: 20px">Jadwalkan Tes Masuk</button></a></center>
-
+    <br>
     <p>Barakallahu fiikum</p>
     <b>جَزَا كُمُ الله خَيْرًاكَثِيْرًا</b>
 </body>
