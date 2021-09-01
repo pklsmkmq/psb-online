@@ -235,7 +235,6 @@ class UserController extends Controller
 
     public function updateStatus($id)
     {
-        
         $bukti = bukti::where('user_id', $id)->first(); 
         if ($bukti->status == 0 || $bukti->status == false) {
             $bukti->status = 1;
