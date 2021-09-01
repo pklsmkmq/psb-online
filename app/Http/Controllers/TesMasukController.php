@@ -103,9 +103,39 @@ class TesMasukController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $rules = array(
+            'kode_mapel' => 'required',
+            'nilai' => 'required',
+        );
+        $request->user_id = Auth::user()->id;
+        $cek = Validator::make($request->all(),$rules);
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                'message' => $errorString
+            ], 401);
+        }else{
+            $data = TesMasuk::where('user_id',Auth::user()->id)
+                        ->where('kode_mapel',$request->kode_mapel)
+                        ->first();
+            $data->user_id = Auth::user()->id;
+            $data->kode_mapel = $request->kode_mapel;
+            $data->ulangi = 1;
+            $data->nilai = $request->nilai;
+            if($data->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Menyimpan Data'
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
+        }
     }
 
     /**
