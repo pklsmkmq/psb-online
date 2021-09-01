@@ -101,7 +101,7 @@ class BuktiController extends Controller
     public function show(bukti $bukti)
     {
         $bukti = bukti::where('user_id', Auth::user()->id)->first(); 
-
+return $bukti;
         return response()->json([
             'status' => 'success',
             'message' => 'sukses menampilkan data',
@@ -175,6 +175,10 @@ class BuktiController extends Controller
     public function updateStatus()
     {
         $bukti = bukti::where('user_id', Auth::user()->id)->first(); 
+         return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Merubah Status'
+                ]);
         if ($bukti->status == 0 || $bukti->status == false) {
             $bukti->status = 1;
 

@@ -17,7 +17,7 @@
         <tr>
             <td>Tanggal Tes</td>
             <td>:</td>
-            <td>{{ $details['tanggal'] }}</td>
+            <!-- <td>{{ $details['tanggal'] }}</td> -->
         </tr>
     </table>
     <br>

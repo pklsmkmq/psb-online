@@ -235,6 +235,7 @@ class UserController extends Controller
 
     public function updateStatus($id)
     {
+        
         $bukti = bukti::where('user_id', $id)->first(); 
         if ($bukti->status == 0 || $bukti->status == false) {
             $bukti->status = 1;
@@ -242,12 +243,12 @@ class UserController extends Controller
 
             if($bukti->save()){
                 $user = User::where('id',$id)->with('tesDiniyyah')->first();
-                $details = [
-                    'tanggal' => $user->tesDiniyyah->tanggal,
-                    'materi'  => "Matematika, Diniyyah, Logika"
-                ];
+                // $details = [
+                //     // 'tanggal' => $user->tesDiniyyah->tanggal,
+                //     'materi'  => "Matematika, Diniyyah, Logika"
+                // ];
                 
-                \Mail::to($user->email)->send(new \App\Mail\konfirmasi($details));
+                // \Mail::to($user->email)->send(new \App\Mail\konfirmasi($details));
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Merubah Status'
