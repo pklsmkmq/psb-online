@@ -241,7 +241,7 @@ class UserController extends Controller
             $bukti->approved_by = Auth::user()->id;
 
             if($bukti->save()){
-                $user = User::where('user_id',$id)->with('tesDiniyyah')->first();
+                $user = User::where('id',$id)->with('tesDiniyyah')->first();
                 $details = [
                     'tanggal' => $user->tesDiniyyah->tanggal,
                     'materi'  => "Matematika, Diniyyah, Logika"
