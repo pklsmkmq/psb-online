@@ -124,7 +124,7 @@ class TesMasukController extends Controller
         if(count($data) === 0){
             return response()->json([
                 'status' => 'success',
-                'message' => 'Santi belum tes',
+                'message' => 'Santri belum tes',
                
             ]);
         }
@@ -137,7 +137,7 @@ class TesMasukController extends Controller
        }
        return response()->json([
         'status' => 'success',
-        'message' => 'Santi belum tes',
+        'message' => 'Santri belum tes',
        
     ]);
      
