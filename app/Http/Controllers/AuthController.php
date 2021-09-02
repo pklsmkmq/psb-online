@@ -205,7 +205,7 @@ class AuthController extends Controller
                 $bayar = 1;
             }
         } else {
-            $bayar = 0;
+            $bayar = 2;
         }
         return $bayar;
     }
