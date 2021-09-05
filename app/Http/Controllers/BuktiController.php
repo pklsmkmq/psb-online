@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\bukti;
+use App\Models\{
+    bukti,
+    User
+};
 use Illuminate\Http\Request;
 use Validator;
 use Auth;
@@ -79,7 +82,8 @@ class BuktiController extends Controller
 
             $details = [
                 'name' => Auth::user()->name,
-                'bukti' => $response
+                'bukti' => $response,
+                'telepon' => Auth::user()->phone,
             ];
 
             \Mail::to("psbsmkmq@gmail.com")->send(new \App\Mail\BayarMail($details));

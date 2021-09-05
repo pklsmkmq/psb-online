@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>ppdb.smkmadinatulquran.sch.id</title>
-</head>
-<body>
+@extends('email/template')
+
+@section('content')
     <h1>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</h1>
-    <h3>{{ $details['title'] }}</h3>
-    <p>{{ $details['body'] }}</p>
+    <br>
+    <h3>Ahlan Wa Sahlan {{ $details['nama'] }}</h3>
+    <br>
+    <p>Alhamdulillah akun telah berhasil terbuat, Silahkan lengkapi data di website untuk melanjutkan ke proses selanjutnya</p>
     <b>Gunakan Data Ini Untuk Login Ke Dalam Website</b>
     <br>
     <table>
@@ -21,7 +20,4 @@
             <td>{{ $details['password'] }}</td>
         </tr>
     </table>
-    <br>
-    <p>Barakallahu fiikum</p>
-    <b>جَزَا كُمُ الله خَيْرًاكَثِيْرًا</b>
-</body>
+@endsection

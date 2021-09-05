@@ -1,25 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>ppdb.smkmadinatulquran.sch.id</title>
-</head>
-<body>
+@extends('email/template')
+
+@section('content')
     <h1>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</h1>
-    <b>Alhamdulillah pembayaran pendaftaran sudah masuk ke kami & insyaallah sudah dapat melakukan Tes Masuk</b>
+    <p>Alhamdulillah Wa Sholatu wa salamu a'la Rasulillah Ama ba'ad</p>
     <br>
-    <p>Detail Pelaksaan Tes</p>
-    <table>
-        <tr>
-            <td>Materi yang di ujikan</td>
-            <td>:</td>
-            <td>{{ $details['materi'] }}</td>
-        </tr>
-        <tr>
-            <td>Tanggal Tes</td>
-            <td>:</td>
-            <!-- <td>{{ $details['tanggal'] }}</td> -->
-        </tr>
-    </table>
+    <b>Jazakumullahu Khairan kami telah menerima pembayaran untuk biaya pendaftaran</b>
     <br>
-    <p>Barakallahu fiikum</p>
-</body>
+    <p>Untuk tahap selanjutnya nya silahkan mengerjakan <b>tes umum secara online</b> dan jadwalkan hari untuk <b>tes membaca Alquran serta wawancara</b>.</p>
+    <p>Adapun tes membaca Alquran bisa memilih online atau bisa datang langsung ke SMK MadinatulQur'an.</p>
+    <p>Untuk yang memilih tes online bisa menjadwalkan tesnya di hari<b> Sabtu atau Ahad</b> & untuk yang memilih datang langsung bisa memilih jadwal tesnya di hari <b>Ahad</b></p>
+    <p>Adapun waktu/jam nya akan kami informasikan.</p>
+@endsection
