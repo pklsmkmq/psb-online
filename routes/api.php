@@ -30,10 +30,11 @@ Route::get('/login', function () {
 });
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/register',[AuthController::class, 'register']);
+Route::get('/getJadwal', [UserController::class, "getJadwal"]);
 
 // Auth by sanctum
 Route::middleware(['auth:sanctum'])->group(function () {
- Route::get('/authme', [AuthController::class ,'authMe']);
+Route::get('/authme', [AuthController::class ,'authMe']);
  
 //Fitur admin
  Route::middleware('role:admin')->group(function () {

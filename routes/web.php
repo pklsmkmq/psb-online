@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +21,4 @@ Route::get('/login', function () {
     return abort('404');
 })->name('login');
 
-Route::get('send-mail', function () {
-    $details = [
-        'title' => 'Mail from ppdb.smkmadinatulquran.sch.id',
-        'body' => 'This is for testing email using smtp'
-    ];
-   
-    \Mail::to('thenanungsr@gmail.com')->send(new \App\Mail\SenderMail($details));
-   
-    dd("Email is Sent.");
-});
+Route::get('test/payment',[PaymentController::class,'testPayment']);

@@ -5,7 +5,8 @@ use App\Http\Controllers\Controller;
 use App\Models\{
     User,
     bukti,
-    TesDiniyyah
+    TesDiniyyah,
+    calonSiswa
 };
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -261,6 +262,42 @@ class UserController extends Controller
         return response()->json([
             "status" => "success",
             "message" => 'Data Sudah Terubah'
+        ]);
+    }
+
+    public function getJadwal(Request $request)
+    {
+        $request->keywords;
+        $request->page;
+        if($request->sort){
+            $sort = $request->sort;
+            // echo $sort;
+        }else{
+            $sort = "desc";
+        }
+        $array = ["user"];
+        $users = User::where('name', 'like', '%'.strtolower($request->keywords)."%")
+                 ->with('roles')
+                 ->whereHas('roles', function($q) use ($array){
+                     $q->whereIn('name', $array);
+                 })
+                 ->with('calonSiswa')
+                 ->with(['tesDiniyyah' => function($query) use ($sort){
+                    $query->orderBy('tanggal', $sort);
+                 }])
+                 ->paginate($request->perpage, [
+                    'users.id',
+                    'users.name',
+                    'users.email',
+                    'users.phone',
+                    'users.created_at'
+                ]);
+
+        return response()->json([
+            'status' => 'success',
+            'perpage' => $request->perpage,
+            'message' => 'sukses menampilkan data',
+            'data' => $users 
         ]);
     }
 }
