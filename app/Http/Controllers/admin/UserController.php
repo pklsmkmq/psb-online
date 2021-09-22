@@ -6,7 +6,8 @@ use App\Models\{
     User,
     bukti,
     TesDiniyyah,
-    calonSiswa
+    calonSiswa,
+    TesMasuk
 };
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -296,6 +297,49 @@ class UserController extends Controller
         return response()->json([
             'status' => 'success',
             'perpage' => $request->perpage,
+            'message' => 'sukses menampilkan data',
+            'data' => $users 
+        ]);
+    }
+
+    public function getListNilai(Request $request)
+    {
+        $request->keywords;
+        $request->page;
+        $array = ["user"];
+
+        $users = User::where('name', 'like', '%'.strtolower($request->keywords)."%")
+                 ->with('roles')
+                 ->whereHas('roles', function($q) use ($array){
+                     $q->whereIn('name', $array);
+                 })
+                 ->with('calonSiswa')
+                 ->with('TesMasuk')
+                 ->paginate($request->perpage, [
+                    'users.id',
+                    'users.name',
+                    'users.email',
+                    'users.phone',
+                    'users.created_at'
+                ]);
+                
+        return response()->json([
+            'status' => 'success',
+            'perpage' => $request->perpage,
+            'message' => 'sukses menampilkan data',
+            'data' => $users 
+        ]);
+    }
+
+    public function getSingleListNilai()
+    {
+        $users = User::where('id', Auth::user()->id)
+                 ->with('calonSiswa')
+                 ->with('TesMasuk')
+                 ->first();
+                
+        return response()->json([
+            'status' => 'success',
             'message' => 'sukses menampilkan data',
             'data' => $users 
         ]);

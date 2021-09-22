@@ -46,7 +46,7 @@ Route::get('/authme', [AuthController::class ,'authMe']);
         // Calon Siswa crud
         Route::resource('calonSiswa', CalonSiswaController::class);
         Route::delete('calonSiswa', [CalonSiswaController::class, "destroy"]);
-       
+        Route::get('listNilai', [UserController::class ,'getListNilai']);
 
         // Pendidikan Sebelumnya crud
         Route::resource('pendidikanSebelumnya', PendidikanSebelumnyaController::class);
@@ -84,6 +84,7 @@ Route::get('/authme', [AuthController::class ,'authMe']);
             Route::get('detail', [CalonSiswaController::class, "showData"]);
             Route::put('update', [CalonSiswaController::class, "updateData"]);
             Route::get('getme', [CalonSiswaController::class, "getme"]);
+            Route::get('nilai', [UserController::class,"getSingleListNilai"]);
         });
         
         Route::prefix('dataPendidikan')->group(function () {

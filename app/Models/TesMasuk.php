@@ -11,4 +11,9 @@ class TesMasuk extends Model
     protected $table = "tes_masuk";
     protected $fillable = ['user_id','kode_mapel','nilai','ulangi'];
     protected $keyType = 'string';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

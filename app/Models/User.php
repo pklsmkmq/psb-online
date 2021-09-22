@@ -59,4 +59,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(TesDiniyyah::class);
     }
+
+    public function tesMasuk()
+    {
+        return $this->hasMany(TesMasuk::class);
+    }
 }
