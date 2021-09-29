@@ -273,7 +273,7 @@ return $bukti;
     public function updateStatusBukti($id)
     {
         $bukti = bukti::find($id);
-        return $bukti;
+      
         $bukti->status = 1;
         $bukti->save();
         
