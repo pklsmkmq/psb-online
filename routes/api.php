@@ -85,7 +85,7 @@ Route::get('/authme', [AuthController::class ,'authMe']);
         Route::get('semuaData', [UserController::class, "getAll"]);
 
         //Bukti
-        Route::get('getBuktiAll', [BuktiController::class, "index"]);
+        Route::get('getBuktiAll', [BuktiController::class, "getAllBukti"]);
      });
 
     //  Fitur User

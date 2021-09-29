@@ -255,4 +255,28 @@ return $bukti;
             'data' => $bukti
         ]);
     }
+
+    public function getAllBukti(Request $request)
+    {
+        $request->keywords;
+        $request->page;
+        $request->role;
+        $users = User::where('name', 'like', '%'.strtolower($request->keywords)."%")
+        ->with("Bukti")
+        ->paginate($request->perpage, [
+            'users.id',
+            'users.name',
+            'users.email',
+            'users.phone',
+            'users.created_at'
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'perpage' => $request->perpage,
+            'role' => $request->role,
+            'message' => 'sukses menampilkan data',
+            'data' => $users 
+        ]);
+    }
 }
