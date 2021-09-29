@@ -127,7 +127,12 @@ class AuthController extends Controller
 
             $bayar = $this->cekBayar($user->id);
 
-            $tes = TesDiniyyah::where('user_id',$user->id)->first();
+            if($roles == 'user'){
+                $tes = TesDiniyyah::where('user_id',$user->id)->first();
+            }else{
+                $tes = null;
+            }
+            
           
             return response()->json([
                 'status'   => 'Success',
