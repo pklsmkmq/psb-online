@@ -353,7 +353,7 @@ class UserController extends Controller
         $jadwal = $request->jadwal;
         $users = Bukti::leftJoin('users','bukti.user_id','=','users.id')
                     ->with('User')
-                    ->where('bukti.nominal', "=" , "")
+                    ->where('bukti.nominal', "=" , null)
                     ->get();
 
         $tes = TesDiniyyah::get();
