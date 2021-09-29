@@ -22,10 +22,14 @@ class BuktiController extends Controller
         $request->keywords;
         $request->page;
         $request->role;
-        $users = bukti::where('user_id', 'like', '%'.strtolower($request->keywords)."%")->orderBy("created_at", 'desc')->paginate($request->perpage, [
+        $users = bukti::where('user_id', 'like', '%'.strtolower($request->keywords)."%")
+        ->with("User")
+        ->orderBy("created_at", 'desc')
+        ->paginate($request->perpage, [
             'bukti.user_id',
             'bukti.url_img',
-            'bukti.status'
+            'bukti.status',
+            'bukti.nominal'
         ]);
 
         return response()->json([
@@ -73,12 +77,23 @@ class BuktiController extends Controller
             }
             $gambar = $request->file('url_img');
             $response = cloudinary()->upload($gambar->path())->getSecurePath();
-            $bukti = bukti::create([
-                'user_id' => Auth::user()->id,
-                'url_img' => $response,
-                'status' => $request->status,
-                'upload_ulang' => 0,
-            ]);
+            if($request->nominal){
+                $bukti = bukti::create([
+                    'user_id' => Auth::user()->id,
+                    'url_img' => $response,
+                    'status' => $request->status,
+                    'upload_ulang' => 0,
+                    'nominal' => $request->nominal
+                ]);
+            }else{
+                $bukti = bukti::create([
+                    'user_id' => Auth::user()->id,
+                    'url_img' => $response,
+                    'status' => $request->status,
+                    'upload_ulang' => 0,
+                ]);
+            }
+            
 
             $details = [
                 'name' => Auth::user()->name,
@@ -229,5 +244,15 @@ return $bukti;
                  "message" => 'NIK Ayah tidak ditemukan'
              ]);
         }
+    }
+
+    public function getBuktiUser()
+    {
+        $bukti = bukti::where('user_id', Auth::user()->id)->get(); 
+        return response()->json([
+            'status' => 'success',
+            'message' => 'sukses menampilkan data',
+            'data' => $bukti
+        ]);
     }
 }

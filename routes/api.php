@@ -83,6 +83,9 @@ Route::get('/authme', [AuthController::class ,'authMe']);
         Route::get('updateKelulusan/{id}', [TesDiniyyahController::class, "updateKelulusan"]);
         // Get data siswa all
         Route::get('semuaData', [UserController::class, "getAll"]);
+
+        //Bukti
+        Route::get('getBuktiAll', [BuktiController::class, "index"]);
      });
 
     //  Fitur User
@@ -145,6 +148,7 @@ Route::get('/authme', [AuthController::class ,'authMe']);
             Route::get('detail', [BuktiController::class, "show"]);
             Route::get('status', [BuktiController::class, "updateStatus"]);
             Route::put('update', [BuktiController::class, "update"]);
+            Route::get('user', [BuktiController::class, "getBuktiUser"]);
         });
 
         Route::resource('tesDiniyah', TesDiniyyahController::class);
