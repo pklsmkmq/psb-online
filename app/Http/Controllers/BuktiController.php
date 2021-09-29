@@ -269,4 +269,16 @@ return $bukti;
             'data'=> $bukti,
         ]);
     }
+
+    public function updateStatusBukti($id)
+    {
+        $bukti = bukti::where('id', $id)->first(); 
+        $bukti->status = 1;
+        $bukti->save();
+        
+        return response()->json([
+            "status" => "success",
+            "message" => 'Berhasil Merubah Status'
+        ]);
+    }
 }
