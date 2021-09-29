@@ -133,4 +133,34 @@ class TesDiniyyahController extends Controller
             'data' => $tes
         ]);
     }
+
+    public function updateKelulusan(Request $request, $id)
+    {
+        $rules = array(
+            'kelulusan' => 'required'
+        );
+        $cek = Validator::make($request->all(),$rules);
+
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                'message' => $errorString
+            ], 401);
+        }else{
+            $data = TesDiniyyah::where('user_id',$id)->first();
+            $data->kelulusan = $request->kelulusan;
+
+            if($data->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Menyimpan Data'
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
+        }
+    }
 }

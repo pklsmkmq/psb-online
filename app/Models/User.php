@@ -50,6 +50,36 @@ class User extends Authenticatable
         return $this->hasOne(calonSiswa::class);
     }
 
+    public function pendidikanSebelumnya()
+    {
+        return $this->hasOne(pendidikanSebelumnya::class);
+    }
+
+    public function dataAyah()
+    {
+        return $this->hasOne(dataAyah::class);
+    }
+
+    public function dataIbu()
+    {
+        return $this->hasOne(dataIbu::class);
+    }
+
+    public function dataWali()
+    {
+        return $this->hasOne(dataWali::class);
+    }
+
+    public function prestasiBelajar()
+    {
+        return $this->hasOne(prestasiBelajar::class);
+    }
+
+    public function prestasiSmp()
+    {
+        return $this->hasOne(prestasiSmp::class);
+    }
+
     public function bukti()
     {
         return $this->hasOne(bukti::class);
@@ -63,5 +93,10 @@ class User extends Authenticatable
     public function tesMasuk()
     {
         return $this->hasMany(TesMasuk::class);
+    }
+
+    public function kelulusan()
+    {
+        return $this->hasOne(Kelulusan::class);
     }
 }

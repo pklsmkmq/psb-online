@@ -13,7 +13,8 @@ use App\Http\Controllers\{
     PendaftaranController,
     BuktiController,
     TesDiniyyahController,
-    TesMasukController
+    TesMasukController,
+    KelulusanController
    
 };
 use App\Http\Controllers\admin\{
@@ -75,6 +76,12 @@ Route::get('/authme', [AuthController::class ,'authMe']);
         // Pendaftaran Crud
         Route::resource('pendaftaran', PendaftaranController::class);
         Route::delete('pendaftaran', [PendaftaranController::class, "destroy"]);
+
+        Route::get('/getKel', [UserController::class, "getKelulusan"]);
+        // Update Kelulusan
+        Route::get('updateKelulusan', [TesDiniyyahController::class, "updateKelulusan"]);
+        // Get data siswa all
+        Route::get('semuaData', [UserController::class, "getAll"]);
      });
 
     //  Fitur User
@@ -85,6 +92,7 @@ Route::get('/authme', [AuthController::class ,'authMe']);
             Route::put('update', [CalonSiswaController::class, "updateData"]);
             Route::get('getme', [CalonSiswaController::class, "getme"]);
             Route::get('nilai', [UserController::class,"getSingleListNilai"]);
+            Route::get('semua', [UserController::class, "getAll"]);
         });
         
         Route::prefix('dataPendidikan')->group(function () {

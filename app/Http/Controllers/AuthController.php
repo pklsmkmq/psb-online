@@ -13,7 +13,8 @@ use App\Models\{
     pendidikanSebelumnya,
     prestasiBelajar,
     prestasiSmp,
-    bukti
+    bukti,
+    Kelulusan
 };
 use Validator;
 use Hash;
@@ -125,6 +126,8 @@ class AuthController extends Controller
             $identitas = $this->cekData($user->id);
 
             $bayar = $this->cekBayar($user->id);
+
+            $kelulusan = Kelulusan::where('user_id',$user->id)->first();
           
             return response()->json([
                 'status'   => 'Success',
@@ -133,7 +136,8 @@ class AuthController extends Controller
                 'role'        => $roles,
                 'token'       => $token,
                 'identitas'   => $identitas,
-                'pendaftaran' => $bayar
+                'pendaftaran' => $bayar,
+                'kelulusan'   => $kelulusan
             ], 200);
         }
     }
