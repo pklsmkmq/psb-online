@@ -130,9 +130,11 @@ class AuthController extends Controller
          
             if($roles[0] == 'user'){
                 $tes = TesDiniyyah::where('user_id',$user->id)->first();
-                $dataTes = $tes->kelulusan;
+                $dataKelulusan = $tes->kelulusan;
+                $dataTes = $tes->status;
             }else{
                 $dataTes = null;
+                $dataKelulusan = null;
             }
             
           
@@ -144,7 +146,8 @@ class AuthController extends Controller
                 'token'       => $token,
                 'identitas'   => $identitas,
                 'pendaftaran' => $bayar,
-                'kelulusan'   => $dataTes
+                'kelulusan'   => $dataKelulusan,
+                'statusTes' => $dataTes
             ], 200);
         }
     }
@@ -194,7 +197,8 @@ class AuthController extends Controller
         $bayar = $this->cekBayar($user->id);
         if($roles[0] == 'user'){
             $tes = TesDiniyyah::where('user_id',$user->id)->first();
-            $dataTes = $tes->kelulusan;
+            $dataKelulusan = $tes->kelulusan;
+            $dataTes = $tes->status;
         }else{
             $dataTes = null;
         }
@@ -205,7 +209,8 @@ class AuthController extends Controller
             'token'      => $token,
             'identitas' => $identitas,
             'pendaftaran' => $bayar,
-            'kelulusan'   => $dataTes
+            'kelulusan'   => $dataKelulusan,
+            'statusTes' => $dataTes
         ], 200);
     }
 
