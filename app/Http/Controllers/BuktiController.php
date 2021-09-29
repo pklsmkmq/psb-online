@@ -262,7 +262,7 @@ return $bukti;
 
         $bukti = Bukti::with('user')->whereHas('user' , function($query) use($request){
             return $query -> where('name' , 'like' , "%".strtolower($request->keywords)."%");
-        })->paginate(1000);
+        }) ->orderBy("created_at", 'desc')->paginate($request->perpage);
            return response()->json([
             'status' => 'Success',
             'message' => 'sukses menampilkan data',
