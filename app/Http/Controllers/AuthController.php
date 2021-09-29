@@ -201,6 +201,7 @@ class AuthController extends Controller
             $dataTes = $tes->status;
         }else{
             $dataTes = null;
+            $dataKelulusan = null;
         }
         return response()->json([
             'status'   => 'Success',
