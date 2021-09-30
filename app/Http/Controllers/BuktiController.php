@@ -63,6 +63,7 @@ class BuktiController extends Controller
             // 'user_id' => 'unique:bukti,user_id',
             'url_img' => 'required|mimes:png,jpg,jpeg,pdf|max:2048',
         );
+        return $request->nominal;
         $request["user_id"] = Auth::user()->id;
         $cek = Validator::make($request->all(),$rules);
 
