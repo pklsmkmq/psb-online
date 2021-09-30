@@ -372,7 +372,8 @@ class UserController extends Controller
         foreach ($tesMasuk as $key2) {
             foreach ($users as $key) {
                 if ($key->user_id == $key2->user_id) {
-                    $key['tes_umum'] = $key2;
+                    $hasilTes = TesMasuk::where('user_id' , "=" , $key2->user_id)->get();
+                    $key['tes_umum'] = $hasilTes;
                     break;
                 }
             }
