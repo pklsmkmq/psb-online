@@ -29,6 +29,7 @@ class UserController extends Controller
         $request->page;
         $rolesss = [$request->role];
         $users = User::where('name', 'like', '%'.strtolower($request->keywords)."%")
+        ->orWhere('email', 'like', '%'.strtolower($request->keywords)."%")
                  ->orderBy("created_at", 'desc')
                  ->with('roles')
                  ->whereHas('roles', function($q) use ($rolesss){
