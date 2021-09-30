@@ -63,7 +63,6 @@ class BuktiController extends Controller
             // 'user_id' => 'unique:bukti,user_id',
             'url_img' => 'required|mimes:png,jpg,jpeg,pdf|max:2048',
         );
-        
         $request["user_id"] = Auth::user()->id;
         $cek = Validator::make($request->all(),$rules);
 
@@ -78,18 +77,13 @@ class BuktiController extends Controller
             }
             $gambar = $request->file('url_img');
             $response = cloudinary()->upload($gambar->path())->getSecurePath();
-            if($request->nominal === "NaN"){
-                $nominal = "";
-            }else{
-                $nominal -> $request->nominal;
-            }
             if($request->nominal){
                 $bukti = bukti::create([
                     'user_id' => Auth::user()->id,
                     'url_img' => $response,
                     'status' => $request->status,
                     'upload_ulang' => 0,
-                    'nominal' => $nominal
+                    'nominal' => $request->nominal
                 ]);
             }else{
                 $bukti = bukti::create([
