@@ -130,8 +130,14 @@ class AuthController extends Controller
          
             if($roles[0] == 'user'){
                 $tes = TesDiniyyah::where('user_id',$user->id)->first();
-                $dataKelulusan = $tes->kelulusan;
-                $dataTes = $tes->status;
+                if(is_null($tes)){
+                    $dataTes = null;
+                $dataKelulusan = null;
+                }else{
+                    $dataKelulusan = $tes->kelulusan;
+                    $dataTes = $tes->status;
+                }
+               
             }else{
                 $dataTes = null;
                 $dataKelulusan = null;
@@ -197,12 +203,19 @@ class AuthController extends Controller
         $bayar = $this->cekBayar($user->id);
         if($roles[0] == 'user'){
             $tes = TesDiniyyah::where('user_id',$user->id)->first();
-            $dataKelulusan = $tes->kelulusan;
-            $dataTes = $tes->status;
+            if(is_null($tes)){
+                $dataTes = null;
+            $dataKelulusan = null;
+            }else{
+                $dataKelulusan = $tes->kelulusan;
+                $dataTes = $tes->status;
+            }
+           
         }else{
             $dataTes = null;
             $dataKelulusan = null;
         }
+        
         return response()->json([
             'status'   => 'Success',
             'message'   => 'Berhasil cek data',
