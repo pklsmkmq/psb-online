@@ -77,7 +77,7 @@ class BuktiController extends Controller
             }
             $gambar = $request->file('url_img');
             $response = cloudinary()->upload($gambar->path())->getSecurePath();
-            if($request->nominal === null){
+            if($request->nominal === ""){
                 $nominal = "";
             }else{
                 $nominal -> $request->nominal;
