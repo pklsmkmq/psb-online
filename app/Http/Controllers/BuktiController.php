@@ -77,13 +77,18 @@ class BuktiController extends Controller
             }
             $gambar = $request->file('url_img');
             $response = cloudinary()->upload($gambar->path())->getSecurePath();
+            if($request->nominal === null){
+                $nominal = "";
+            }else{
+                $nominal -> $request->nominal;
+            }
             if($request->nominal){
                 $bukti = bukti::create([
                     'user_id' => Auth::user()->id,
                     'url_img' => $response,
                     'status' => $request->status,
                     'upload_ulang' => 0,
-                    'nominal' => $request->nominal
+                    'nominal' => $nominal
                 ]);
             }else{
                 $bukti = bukti::create([
