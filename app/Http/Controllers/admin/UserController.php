@@ -421,9 +421,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function device(Request $request){
+    public function device(Request $request, $id){
 
-        $user = User::find(Auth::user()->id);
+        $user = User::find($id);
         $user->device = $request->token;
         $user->save();
 
