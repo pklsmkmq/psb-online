@@ -6,6 +6,7 @@ use App\Models\{
     User,
     bukti,
     TesDiniyyah,
+    TesMasuk,
     calonSiswa,
     TesMasuk
 };
@@ -358,6 +359,7 @@ class UserController extends Controller
                     ->get();
 
         $tes = TesDiniyyah::get();
+        $tesMasuk = TesMasuk::get();
         // 
         foreach ($tes as $key2) {
             foreach ($users as $key) {
@@ -367,26 +369,16 @@ class UserController extends Controller
                 }
             }
         }
+        foreach ($tesMasuk as $key2) {
+            foreach ($users as $key) {
+                if ($key->user_id == $key2->user_id) {
+                    $key['tes_umum'] = $key2;
+                    break;
+                }
+            }
+        }
         
-        // $users = User::leftJoin('tes_diniyyah','users.id','=','tes_diniyyah.user_id')
-        //          ->where('users.name', 'like', '%'.strtolower($request->keywords)."%")
-        //          ->with('roles')
-        //          ->whereHas('roles', function($q) use ($rolesss){
-        //              $q->whereIn('name', $rolesss);
-        //          })
-        //          ->with('tesDiniyyah')
-        //          ->with('tesMasuk')
-        //          ->with('kelulusan');
-        // if ($request->order) {
-        //     $users = $users->orderBy('tes_diniyyah.tanggal', $order);
-        // }
-        // $users = $users->paginate($request->perpage, [
-        //             'users.id',
-        //             'users.name',
-        //             'users.email',
-        //             'users.phone',
-        //             'users.created_at'
-        //         ]);
+        
 
         return response()->json([
             'status' => 'success',
