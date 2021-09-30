@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\TesDiniyyah;
+use App\Models\calonSiswa;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
 use Validator;
@@ -181,6 +183,22 @@ class TesDiniyyahController extends Controller
             $data->kelulusan = $request->kelulusan;
 
             if($data->save()){
+                if ($request->kelulusan == 1) {
+                    $dtSiswa = calonSiswa::where('user_id',$id)->first();
+                    $dtUser = User::where('id',$id)->first();
+                    try {
+                        $details = [
+                            'name' => $dtSiswa->name_siswa,
+                        ];
+                        \Mail::to($dtUser->email)->send(new \App\Mail\kelulusan($details));
+                    } catch (\Throwable $th) {
+                        return response()->json([
+                            'status'       => 'Failed',
+                            'message'      => 'Email tidak di temukan'
+                        ], 401);
+                    }
+                }
+
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Menyimpan Data'
