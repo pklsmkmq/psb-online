@@ -41,6 +41,7 @@ Route::get('/authme', [AuthController::class ,'authMe']);
  Route::middleware('role:admin')->group(function () {
         // User crud
         Route::resource('user', UserController::class);
+        Route::get('device-update', [UserController::class, "device"]);
         Route::delete('user', [UserController::class, "destroy"]);
         Route::get('users/updateStatus/{id}', [UserController::class, "updateStatus"]);
 

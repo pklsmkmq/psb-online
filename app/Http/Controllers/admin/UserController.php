@@ -420,4 +420,13 @@ class UserController extends Controller
             'data' => $data 
         ]);
     }
+
+    public function device(Request $request){
+
+        $user = User::find(Auth::user()->id);
+        $user->device = $request->token;
+        $user->save();
+
+        return $request->token;
+    }
 }
