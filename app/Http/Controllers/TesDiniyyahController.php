@@ -136,10 +136,13 @@ class TesDiniyyahController extends Controller
         ]);
     }
 
-    public function updateStatus(Request $request, $id)
+    public function updateStatusTes(Request $request)
     {
+     
+       
         $rules = array(
-            'status' => 'required'
+            'status' => 'required',
+            'laporan' => 'required',
         );
         $cek = Validator::make($request->all(),$rules);
 
@@ -149,8 +152,10 @@ class TesDiniyyahController extends Controller
                 'message' => $errorString
             ], 401);
         }else{
-            $data = TesDiniyyah::where('user_id',$id)->first();
+            $data = TesDiniyyah::where('user_id',$request->id)->first();
             $data->status = $request->status;
+            $data->laporan = $request->laporan;
+            $data->approved_by = Auth::user()->id;
 
             if($data->save()){
                 return response()->json([

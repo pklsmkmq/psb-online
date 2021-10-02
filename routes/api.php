@@ -80,7 +80,7 @@ Route::get('/authme', [AuthController::class ,'authMe']);
 
         Route::get('/getKel', [UserController::class, "getKelulusan"]);
         // Update Kelulusan
-        Route::get('updateStatus/{id}', [TesDiniyyahController::class, "updateStatus"]);
+        Route::post('/updateStatus', [TesDiniyyahController::class, "updateStatusTes"]);
         Route::get('updateKelulusan/{id}', [TesDiniyyahController::class, "updateKelulusan"]);
         // Get data siswa all
         Route::get('semuaData', [UserController::class, "getAll"]);
