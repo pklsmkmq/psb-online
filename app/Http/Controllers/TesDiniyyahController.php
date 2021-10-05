@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
 use Validator;
-use Carbon\Carbon;
+
 class TesDiniyyahController extends Controller
 {
     /**
@@ -244,7 +244,7 @@ class TesDiniyyahController extends Controller
                 $siswa  = calonSiswa::where('user_id',$request->id)->first();
                 try {
                     $details = [
-                        'tanggal' => $dtTes->tanggal->isoFormat('dddd, D MMMM Y'),
+                        'tanggal' => $dtTes->tanggal,
                         'name' => $siswa->name_siswa,
                         'metode' => 'Online',
                         'jam_tes' => $dtTes->jam_tes,

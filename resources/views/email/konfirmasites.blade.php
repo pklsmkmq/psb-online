@@ -21,6 +21,7 @@
 			<td>Jam Tes</td>
 			<td>:</td>
 			<td>{{ $details['jam_tes'] }}</td>
+		
 		</tr>
 	</table>
 	<br>
