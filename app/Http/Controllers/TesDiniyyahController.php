@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
 use Validator;
-use Carbon\Carbon;
+
 class TesDiniyyahController extends Controller
 {
     /**
@@ -242,10 +242,9 @@ class TesDiniyyahController extends Controller
                 $dtTes = TesDiniyyah::where('user_id',$request->id)->first();
                 $dtUser = User::where('id',$request->id)->first();
                 $siswa  = calonSiswa::where('user_id',$request->id)->first();
-                $tgl = \Carbon\Carbon::createFromFormat('Y-m-d', $dtTes->tanggal)->format('d M Y') ;
                 try {
                     $details = [
-                        'tanggal' => $tgl,
+                        'tanggal' => $dtTes->tanggal,
                         'name' => $siswa->name_siswa,
                         'metode' => 'Online',
                         'jam_tes' => $dtTes->jam_tes,
