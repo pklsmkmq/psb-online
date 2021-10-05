@@ -242,9 +242,10 @@ class TesDiniyyahController extends Controller
                 $dtTes = TesDiniyyah::where('user_id',$request->id)->first();
                 $dtUser = User::where('id',$request->id)->first();
                 $siswa  = calonSiswa::where('user_id',$request->id)->first();
+                $tgl = $dtTes->tanggal->isoFormat('dddd, D MMMM Y');
                 try {
                     $details = [
-                        'tanggal' => $dtTes->tanggal->isoFormat('dddd, D MMMM Y'),
+                        'tanggal' => $tgl,
                         'name' => $siswa->name_siswa,
                         'metode' => 'Online',
                         'jam_tes' => $dtTes->jam_tes,
