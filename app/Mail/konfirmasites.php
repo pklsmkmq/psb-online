@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class konfirmasi extends Mailable
+class konfirmasites extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,7 +29,7 @@ class konfirmasi extends Mailable
      */
     public function build()
     {
-        return $this->subject('Konfiirmasi Jadwal Tes Online')
+        return $this->subject('Konfirmasi Jadwal Tes Online')
                     ->view('email/konfirmasites');
     }
 }
