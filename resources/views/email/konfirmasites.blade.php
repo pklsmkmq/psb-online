@@ -15,12 +15,12 @@
 		<tr>
 			<td>Tanggal Tes</td>
 			<td>:</td>
-			<td>{{ $details['jam_tes'] }}</td>
+			<td>{{ $details['tanggal'] }}</td>
 		</tr>
 		<tr>
 			<td>Jam Tes</td>
 			<td>:</td>
-			<td>{{ $details['tanggal'] }}</td>
+			<td>{{ $details['jam_tes'] }}</td>
 		</tr>
 	</table>
 	<br>
