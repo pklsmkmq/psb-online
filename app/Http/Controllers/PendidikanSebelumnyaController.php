@@ -66,7 +66,7 @@ class PendidikanSebelumnyaController extends Controller
             'asal_sekolah' => 'required|string|max:255',
             'nisn' => 'required|unique:pendidikan_sebelumnya,nisn',
             'nik_siswa' => 'required|unique:pendidikan_sebelumnya,nik_siswa',
-            'npsn' => 'required'
+            // 'npsn' => 'required'
         );
 
         $cek = Validator::make($request->all(),$rules);
