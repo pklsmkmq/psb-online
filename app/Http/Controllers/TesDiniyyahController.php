@@ -241,10 +241,11 @@ class TesDiniyyahController extends Controller
             if($data->save()){
                 $dtTes = TesDiniyyah::where('user_id',$request->id)->first();
                 $dtUser = User::where('id',$request->id)->first();
-               
+                $siswa  = calonSiswa::where('user_id',$request->id)->first();
                 try {
                     $details = [
                         'tanggal' => $dtTes->tanggal,
+                        'name' => $siswa->name_siswa,
                         'metode' => 'Online',
                         'jam_tes' => $dtTes->jam_tes,
                     ];

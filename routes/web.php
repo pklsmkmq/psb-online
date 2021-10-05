@@ -21,8 +21,8 @@ Route::get('/login', function () {
     return abort('404');
 })->name('login');
 
-Route::get('/kel', function () {
-    return view('email/kelulusan');
+Route::get('/kon', function () {
+    return view('email/konfirmasites');
 });
 
 Route::get('test/payment',[PaymentController::class,'testPayment']);
