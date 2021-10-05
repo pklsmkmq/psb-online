@@ -222,7 +222,7 @@ class PendidikanSebelumnyaController extends Controller
             'user_id' => 'unique:pendidikan_sebelumnya,user_id',
             'asal_sekolah' => 'required|string|max:255',
             // 'nisn' => 'required|unique:pendidikan_sebelumnya,nisn',
-            'npsn' => 'required'
+            // 'npsn' => 'required'
         );
         $request["user_id"] = Auth::user()->id;
         $cek = Validator::make($request->all(),$rules);
