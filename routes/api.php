@@ -81,6 +81,7 @@ Route::get('/authme', [AuthController::class ,'authMe']);
         Route::get('/getKel', [UserController::class, "getKelulusan"]);
         // Update Kelulusan
         Route::post('/updateStatus', [TesDiniyyahController::class, "updateStatusTes"]);
+        Route::put('/updateJamTes', [TesDiniyyahController::class, "jamTes"]);
         Route::get('updateKelulusan/{id}', [TesDiniyyahController::class, "updateKelulusan"]);
         // Get data siswa all
         Route::get('semuaData', [UserController::class, "getAll"]);

@@ -215,5 +215,56 @@ class TesDiniyyahController extends Controller
                 ]);
             }
         }
+    } 
+
+    public function jamTes(Request $request){
+       
+        $rules = array(
+            'jam' => 'required',
+            
+        );
+        $cek = Validator::make($request->all(),$rules);
+        $user = User::find(Auth::user()->id);
+
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                'message' => $errorString
+            ], 401);
+        }else{
+            $data = TesDiniyyah::where('user_id',$request->id)->first();
+          
+            $data->jam_tes = $request->jam;
+            $data->dibuat_oleh = $user->name;
+           
+
+            if($data->save()){
+                $dtTes = TesDiniyyah::where('user_id',$request->id)->first();
+                $dtUser = User::where('id',$request->id)->first();
+               
+                try {
+                    $details = [
+                        'tanggal' => $dtTes->tanggal,
+                        'metode' => 'Online',
+                        'jam_tes' => $dtTes->jam_tes,
+                    ];
+                    \Mail::to($dtUser->email)->send(new \App\Mail\konfirmasites($details));
+                } catch (\Throwable $th) {
+                    return response()->json([
+                        'status'       => 'Failed',
+                        'message'      => 'Email tidak di temukan'
+                    ], 401);
+                }
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Menyimpan Data'
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
+        }
     }
 }
