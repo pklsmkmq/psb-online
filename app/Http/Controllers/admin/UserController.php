@@ -26,19 +26,21 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $request->keywords;
         $request->page;
         $rolesss = [$request->role];
-        $users = User::where('name', 'like', '%'.strtolower($request->keywords)."%")
-        ->orWhere('email', 'like', '%'.strtolower($request->keywords)."%")
-                 ->orderBy("created_at", 'desc')
-                 ->with('roles')
-                 ->whereHas('roles', function($q) use ($rolesss){
-                     $q->whereIn('name', $rolesss);
-                 })
-                 ->with('bukti')
-                 ->with('tesDiniyyah')
-                 ->paginate($request->perpage, [
+        $users = User::whereHas('roles', function($q) use ($rolesss){
+                    $q->whereIn('name', $rolesss);
+                 });
+        if ($request->keywords) {
+            $users = $users->where('name','like', "%".strtolower($request->keywords)."%")
+            ->orWhere('email','like', "%".strtolower($request->keywords)."%");
+        }
+
+        $users = $users->orderBy("created_at", 'desc')
+                ->with('roles')
+                ->with('bukti')
+                ->with('tesDiniyyah')
+                ->paginate($request->perpage, [
                     'users.id',
                     'users.name',
                     'users.email',
