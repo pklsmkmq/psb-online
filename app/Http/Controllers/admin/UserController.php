@@ -354,6 +354,7 @@ class UserController extends Controller
         $rolesss = ["user"];
         $jadwal = $request->jadwal;
         $users = Bukti::leftJoin('users','bukti.user_id','=','users.id')
+                    ->leftJoin('calon_siswa')
                     ->with('User')
                     ->where('bukti.nominal', "=" , 350000)
                     ->get();

@@ -21,6 +21,11 @@ use App\Http\Controllers\admin\{
     UserController, 
 };
 
+use App\Events\MessageCreated;
+Route::get("/ihsan", function(){
+    MessageCreated::dispatch("ihsan");
+    return "ok";
+});
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
