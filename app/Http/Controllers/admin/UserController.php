@@ -26,19 +26,21 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $request->keywords;
         $request->page;
         $rolesss = [$request->role];
-        $users = User::where('name', 'like', '%'.strtolower($request->keywords)."%")
-        ->orWhere('email', 'like', '%'.strtolower($request->keywords)."%")
-                 ->orderBy("created_at", 'desc')
-                 ->with('roles')
-                 ->whereHas('roles', function($q) use ($rolesss){
-                     $q->whereIn('name', $rolesss);
-                 })
-                 ->with('bukti')
-                 ->with('tesDiniyyah')
-                 ->paginate($request->perpage, [
+        $users = User::whereHas('roles', function($q) use ($rolesss){
+                    $q->whereIn('name', $rolesss);
+                 });
+        if ($request->keywords) {
+            $users = $users->where('name','like', "%".strtolower($request->keywords)."%")
+            ->orWhere('email','like', "%".strtolower($request->keywords)."%");
+        }
+
+        $users = $users->orderBy("created_at", 'desc')
+                ->with('roles')
+                ->with('bukti')
+                ->with('tesDiniyyah')
+                ->paginate($request->perpage, [
                     'users.id',
                     'users.name',
                     'users.email',
@@ -246,11 +248,14 @@ class UserController extends Controller
 
             if($bukti->save()){
                 $user = User::where('id',$id)->with('tesDiniyyah')->first();
+                $siswa = calonSiswa::where('user_id',$id)->first();
                 $details = [
+                    'nominal' => $bukti->nominal,
+                    'name' => $siswa->name_siswa,
                     'materi'  => "Matematika, Diniyyah, Logika"
                 ];
                 
-                \Mail::to($user->email)->send(new \App\Mail\konfirmasi($details));
+                \Mail::to($user->email)->send(new \App\Mail\konf_pembayaran($details));
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Merubah Status'
