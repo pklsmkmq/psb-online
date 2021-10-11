@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\{
     bukti,
-    User
+    User,
+    calonSiswa
 };
 use Illuminate\Http\Request;
 use Validator;

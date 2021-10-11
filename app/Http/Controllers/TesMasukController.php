@@ -198,5 +198,31 @@ class TesMasukController extends Controller
         ]);
     }
 
-    
+    public function hapusNilai(Request $request)
+    {
+        // hapus 1 nilai
+        if ($request->user_id && $request->kode_mapel) {
+            $delete = TesMasuk::where('user_id',$request->user_id)->where('kode_mapel',$request->kode_mapel)->first();
+            $delete->delete();
+
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menghapus 1 Data By Mapel'
+            ]);
+        }elseif ($request->user_id) {
+            //hapus semua nilai
+            $delete = TesMasuk::where('user_id',$request->user_id)->get();
+            $delete->delete();
+
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menghapus Semua Data By ID'
+            ]);
+        }else{
+            return response()->json([
+                "status" => "failed",
+                "message" => 'user_id tidak ditemukan'
+            ]);
+        }
+    }
 }
