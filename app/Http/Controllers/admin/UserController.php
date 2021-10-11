@@ -44,6 +44,7 @@ class UserController extends Controller
                     'users.id',
                     'users.name',
                     'users.email',
+                    'users.device',
                     'users.phone',
                     'users.created_at'
                 ]);
