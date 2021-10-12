@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\{
     bukti,
-    User
+    User,
+    calonSiswa
 };
 use Illuminate\Http\Request;
 use Validator;
@@ -275,7 +276,15 @@ return $bukti;
         $bukti = bukti::find($id);
       
         $bukti->status = 1;
-        $bukti->save();
+        if($bukti->save()){
+            $siswa = calonSiswa::where('user_id',$id)->first();
+            $details = [
+                'nominal' => $bukti->nominal,
+                'name' => $siswa->name_siswa,
+            ];
+
+            \Mail::to($user->email)->send(new \App\Mail\konf_pembayaran($details));
+        }
         
         return response()->json([
             "status" => "success",

@@ -256,7 +256,8 @@ class UserController extends Controller
                     'materi'  => "Matematika, Diniyyah, Logika"
                 ];
                 
-                \Mail::to($user->email)->send(new \App\Mail\konf_pembayaran($details));
+                // \Mail::to($user->email)->send(new \App\Mail\konf_pembayaran($details));
+                \Mail::to($user->email)->send(new \App\Mail\konfirmasi($details));
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Merubah Status'
