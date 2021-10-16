@@ -200,6 +200,15 @@ class TesMasukController extends Controller
 
     public function hapusNilai(Request $request)
     {
+        if($request->id){
+            $delete = TesMasuk::where('id',$request->id)->first();
+            $delete->delete();
+
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menghapus 1 Data By ID'
+            ]);
+        }
         // hapus 1 nilai
         if ($request->user_id && $request->kode_mapel) {
             $delete = TesMasuk::where('user_id',$request->user_id)->where('kode_mapel',$request->kode_mapel)->first();
