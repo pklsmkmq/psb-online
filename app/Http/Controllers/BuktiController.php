@@ -274,10 +274,11 @@ return $bukti;
     public function updateStatusBukti($id)
     {
         $bukti = bukti::find($id);
-      
+    
         $bukti->status = 1;
         if($bukti->save()){
-            $siswa = calonSiswa::where('user_id',$id)->first();
+            $user = User::where('id' , $bukti->user_id)->first();
+            $siswa = calonSiswa::where('user_id',$bukti->user_id)->first();
             $details = [
                 'nominal' => $bukti->nominal,
                 'name' => $siswa->name_siswa,
