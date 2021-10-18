@@ -277,7 +277,7 @@ return $bukti;
             "name_ayah"=> "data_ayah.name_ayah",
             "asal_sekolah" => "pendidikan_sebelumnya.asal_sekolah",
             "phone" => "users.phone",
-            "url_img" => "users.url_img",
+            "url_img" => "bukti.url_img",
             "nominal"=> "bukti.nominal",
             "status" => "bukti.status",
             "created_at" => "bukti.created_at"
