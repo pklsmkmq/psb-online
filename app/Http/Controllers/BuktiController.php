@@ -264,13 +264,14 @@ return $bukti;
     {
         
 
-        $bukti = Bukti::leftJoin('users','bukti.user_id','=','users.id')
-        ->leftJoin('calon_siswa', 'bukti.user_id','=','calon_siswa.user_id')
+        $bukti = Bukti::leftJoin('calon_siswa', 'bukti.user_id','=','calon_siswa.user_id')
         ->leftJoin('pendidikan_sebelumnya', 'bukti.user_id', '=' , 'pendidikan_sebelumnya.user_id')
         ->leftJoin('data_ayah', 'bukti.user_id', '=' , 'data_ayah.user_id')
-        ->with('User')->with('user')->whereHas('user' , function($query) use($request){
+        ->with('user')->whereHas('user' , function($query) use($request){
             return $query -> where('name' , 'like' , "%".strtolower($request->keywords)."%");
-        }) ->orderBy("bukti.created_at", 'desc')->paginate($request->perpage);
+        }) ->orderBy("bukti.created_at", 'desc')->paginate($request->perpage, [
+            "id" => "bukti.id"
+        ]);
         
            return response()->json([
             'status' => 'Success',
