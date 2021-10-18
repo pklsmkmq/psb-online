@@ -270,7 +270,19 @@ return $bukti;
         ->leftJoin('data_ayah', 'bukti.user_id', '=' , 'data_ayah.user_id')
         ->with('User')->with('user')->whereHas('user' , function($query) use($request){
             return $query -> where('name' , 'like' , "%".strtolower($request->keywords)."%");
-        }) ->orderBy("bukti.created_at", 'desc')->paginate($request->perpage);
+        }) ->orderBy("bukti.created_at", 'desc')->paginate($request->perpage, [
+            "id" => "bukti.id",
+            "name_siswa" => "calon_siswa.name_siswa",
+            "jurusan" => "calon_siswa.jurusan",
+            "name_ayah"=> "data_ayah.name_ayah",
+            "asal_sekolah" => "pendidikan_sebelumnya.asal_sekolah",
+            "phone" => "users.phone",
+            "url_img" => "users.url_img",
+            "nominal"=> "bukti.nominal",
+            "status" => "bukti.status",
+            "created_at" => "bukti.created_at"
+        
+        ]);
         
            return response()->json([
             'status' => 'Success',
