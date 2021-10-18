@@ -280,6 +280,7 @@ return $bukti;
             "url_img" => "bukti.url_img",
             "nominal"=> "bukti.nominal",
             "status" => "bukti.status",
+            "approved_by" => "bukti.approved_by",
             "created_at" => "bukti.created_at",
             "device" => "users.device"
         
