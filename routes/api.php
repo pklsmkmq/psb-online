@@ -94,6 +94,7 @@ Route::get('/authme', [AuthController::class ,'authMe']);
         //Bukti
         Route::get('getBuktiAll', [BuktiController::class, "getAllBukti"]);
         Route::get('getStatusBukti/{id}', [BuktiController::class, "updateStatusBukti"]);
+        Route::get('uploadBuktiAdmin', [BuktiController::class, "buktiAdmin"]);
 
         //Tes Masuk
         Route::get('hapusNilaiTes', [TesMasukController::class, "hapusNilai"]);

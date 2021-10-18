@@ -111,8 +111,59 @@ class BuktiController extends Controller
                 "status" => "success",
                 "message" => 'Berhasil Menyimpan Data'
             ]);
-        }
-        
+        }    
+    }
+
+    public function buktiAdmin(Request $request)
+    {
+        $rules = array(
+            'url_img' => 'required|mimes:png,jpg,jpeg,pdf|max:2048',
+        );
+        $cek = Validator::make($request->all(),$rules);
+
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                'message' => $errorString
+            ], 401);
+        }else{
+            if (!$request->status) {
+                $request->status = 0;
+            }
+            $gambar = $request->file('url_img');
+            $response = cloudinary()->upload($gambar->path())->getSecurePath();
+            if($request->nominal){
+                $bukti = bukti::create([
+                    'user_id' => $request->user_id,
+                    'url_img' => $response,
+                    'status' => $request->status,
+                    'upload_ulang' => 0,
+                    'nominal' => $request->nominal
+                ]);
+            }else{
+                $bukti = bukti::create([
+                    'user_id' => $request->user_id,
+                    'url_img' => $response,
+                    'status' => $request->status,
+                    'upload_ulang' => 0,
+                ]);
+            }
+            
+            $dataUser = User::find($request->user_id);
+
+            $details = [
+                'name' => $dataUser->name,
+                'bukti' => $response,
+                'telepon' => $dataUser->phone,
+            ];
+
+            \Mail::to("psbsmkmq@gmail.com")->send(new \App\Mail\BayarMail($details));
+
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data'
+            ]);
+        }    
     }
 
     /**
