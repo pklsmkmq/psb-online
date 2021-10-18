@@ -295,7 +295,7 @@ return $bukti;
     public function updateStatusBukti($id)
     {
         $bukti = bukti::find($id);
-        $uploader = User::where('id' ,  Auth::user()->id->first());
+        $uploader = User::where('id' ,  Auth::user()->id)->first();
         $bukti->status = 1;
         $bukti->approve_by = $uploader->name;
         if($bukti->save()){
