@@ -243,9 +243,10 @@ class UserController extends Controller
     public function updateStatus($id)
     {
         $bukti = bukti::where('user_id', $id)->first(); 
+        $uploader = User::where('id' ,  Auth::user()->id)->first();
         if ($bukti->status == 0 || $bukti->status == false) {
             $bukti->status = 1;
-            $bukti->approved_by = Auth::user()->id;
+            $bukti->approved_by = $uploader->name;
 
             if($bukti->save()){
                 $user = User::where('id',$id)->with('tesDiniyyah')->first();
