@@ -270,7 +270,7 @@ return $bukti;
         ->leftJoin('data_ayah', 'bukti.user_id', '=' , 'data_ayah.user_id')
         ->with('User')->with('user')->whereHas('user' , function($query) use($request){
             return $query -> where('name' , 'like' , "%".strtolower($request->keywords)."%");
-        }) ->orderBy("created_at", 'desc')->paginate($request->perpage);
+        }) ->orderBy("bukti.created_at", 'desc')->paginate($request->perpage);
         
            return response()->json([
             'status' => 'Success',
