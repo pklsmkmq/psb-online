@@ -295,10 +295,12 @@ return $bukti;
     public function updateStatusBukti($id)
     {
         $bukti = bukti::find($id);
-    
+        $uploader = User::where('id' ,  Auth::user()->id->first());
         $bukti->status = 1;
+        $bukti->approve_by = $uploader->name;
         if($bukti->save()){
             $user = User::where('id' , $bukti->user_id)->first();
+
             $siswa = calonSiswa::where('user_id',$bukti->user_id)->first();
             $details = [
                 'nominal' => $bukti->nominal,
