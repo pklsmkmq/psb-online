@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\{
+    PaymentController,
+    UserController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +24,6 @@ Route::get('/login', function () {
     return abort('404');
 })->name('login');
 
-Route::get('/kon', function () {
-    return view('email/konfirmasites');
-});
+Route::get('/tugasDWBI', [UserController::class,'TugasKuliah']);
 
 Route::get('test/payment',[PaymentController::class,'testPayment']);

@@ -14,8 +14,8 @@ use App\Http\Controllers\{
     BuktiController,
     TesDiniyyahController,
     TesMasukController,
-    KelulusanController
-   
+    KelulusanController,
+    WaControllers
 };
 use App\Http\Controllers\admin\{
     UserController, 
@@ -26,6 +26,7 @@ Route::get("/ihsan", function(){
     MessageCreated::dispatch("ihsan");
     return "ok";
 });
+Route::get('/wates', [WaControllers::class,'wablas']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

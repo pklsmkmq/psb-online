@@ -12,7 +12,10 @@ use App\Models\{
 };
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\UsersExport;
+use App\Exports\{
+    UsersExport,
+    TugasPakNurExport
+};
 use App\Imports\UsersImport;
 use Validator;
 use Auth;
@@ -438,5 +441,11 @@ class UserController extends Controller
         $user->save();
 
         return $request->token;
+    }
+
+    // Tugas Kuliah pak nur
+    public function TugasKuliah()
+    {
+        return Excel::download(new TugasPakNurExport, "tugas_pak_nur.xlsx");
     }
 }
