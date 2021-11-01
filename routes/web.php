@@ -1,10 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{
-    PaymentController,
-    UserController
-};
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
