@@ -74,6 +74,12 @@ class AuthController extends Controller
             if ($request->role == 2) {
                 $user->assignRole('user');
                 $role = "user";
+            }else {
+                return response()->json([
+                    'status'       => 'Failed',
+                    'message'      => 'gagal',
+                    
+                ], 422);
             }
             
             $token = $user->createToken('token-name')->plainTextToken;
