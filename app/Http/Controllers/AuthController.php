@@ -71,18 +71,9 @@ class AuthController extends Controller
                 'phone' => $request->phone
             ]);
             
-            if($request->role == 1){
-                $user->assignRole('admin');
-                $role = "admin";
-            }elseif ($request->role == 2) {
+            if ($request->role == 2) {
                 $user->assignRole('user');
                 $role = "user";
-            }elseif ($request->role == 3) {
-                $user->assignRole('marketing & cs');
-                $role = "marketing & cs";
-            }else {
-                $user->assignRole('keuangan');
-                $role = "keuangan";
             }
             
             $token = $user->createToken('token-name')->plainTextToken;
