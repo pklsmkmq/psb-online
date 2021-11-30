@@ -3,23 +3,16 @@
 namespace App\Exports;
 
 use App\Models\User;
+use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class TugasPakNurExport implements FromCollection
+class TugasPakNurExport implements FromQuery
 {
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function query()
     {
-        return User::with('calonSiswa')
-        ->with('pendidikanSebelumnya')
-        ->with('dataAyah')
-        ->with('dataIbu')
-        ->with('dataWali')
-        ->with('prestasiBelajar')
-        ->with('prestasiSmp')
-        ->with('bukti')
-        ->get();
+        return User::query()->with('calonSiswa');
     }
 }
