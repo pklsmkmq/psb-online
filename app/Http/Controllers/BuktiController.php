@@ -283,9 +283,9 @@ return $bukti;
     public function destroy(Request $request)
     {
         try {
-            for($i = 0 ; $i < count($request->user_id) ; $i++){
+            for($i = 0 ; $i < count($request->id) ; $i++){
              
-             $delete = bukti::where('user_id', $request->user_id[$i])->get();
+             $delete = bukti::find($request->id[$i]);
              $delete->delete();
             }
             return response()->json([
