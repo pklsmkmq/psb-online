@@ -283,9 +283,9 @@ return $bukti;
     public function destroy(Request $request)
     {
         try {
-            for($i = 0 ; $i < count($request->id) ; $i++){
+            for($i = 0 ; $i < count($request->user_id) ; $i++){
              
-             $delete = bukti::find($request->id[$i]);
+             $delete = bukti::find($request->user_id[$i]);
              $delete -> delete();
             }
             return response()->json([
@@ -296,7 +296,7 @@ return $bukti;
              //throw $th;
              return response()->json([
                  "status" => "failed",
-                 "message" => 'NIK Ayah tidak ditemukan'
+                 "message" => 'User ID tidak ditemukan'
              ]);
         }
     }
