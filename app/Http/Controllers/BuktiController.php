@@ -285,8 +285,8 @@ return $bukti;
         try {
             for($i = 0 ; $i < count($request->user_id) ; $i++){
              
-             $delete = bukti::find($request->user_id[$i]);
-             $delete -> delete();
+             $delete = bukti::where('user_id', $request->user_id[$i])->get();
+             $delete->delete();
             }
             return response()->json([
              "status" => "success",
