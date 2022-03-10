@@ -448,4 +448,29 @@ class UserController extends Controller
     {
         return Excel::download(new TugasPakNurExport, "tugas_pak_nur.xlsx");
     }
+
+    public function changepassword($email)
+    {
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            $user->password = bcrypt("psbsmk2022");
+            if($user->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Menyimpan Data'
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
+        }else{
+            return response()->json([
+                "status" => "failed",
+                "message" => 'Email Tidak Ditemukan'
+            ]);
+        }
+    }
 }

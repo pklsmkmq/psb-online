@@ -50,6 +50,7 @@ Route::get('/authme', [AuthController::class ,'authMe']);
         
         Route::delete('user', [UserController::class, "destroy"]);
         Route::get('users/updateStatus/{id}', [UserController::class, "updateStatus"]);
+        Route::get('users/changepassword/{email}', [UserController::class, "changepassword"]);
 
         // Calon Siswa crud
         Route::resource('calonSiswa', CalonSiswaController::class);
