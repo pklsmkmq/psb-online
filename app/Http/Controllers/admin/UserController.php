@@ -39,6 +39,10 @@ class UserController extends Controller
             ->orWhere('email','like', "%".strtolower($request->keywords)."%");
         }
 
+        if ($request->tahun_ajar) {
+            $user = $user->where('tahun_ajar', $request->tahun_ajar);
+        }
+
         $users = $users->orderBy("created_at", 'desc')
                 ->with('roles')
                 ->with('bukti')
@@ -49,6 +53,7 @@ class UserController extends Controller
                     'users.email',
                     'users.device',
                     'users.phone',
+                    'users.tahun_ajar',
                     'users.created_at'
                 ]);
 
@@ -470,6 +475,26 @@ class UserController extends Controller
             return response()->json([
                 "status" => "failed",
                 "message" => 'Email Tidak Ditemukan'
+            ]);
+        }
+    }
+
+    public function updateTahun()
+    {
+        try {
+            $rolesss = ["user"];
+            $users = User::whereHas('roles', function($q) use ($rolesss){
+                $q->whereIn('name', $rolesss);
+            })->update(['tahun_ajar' => "2022 - 2023"]);
+
+            return response()->json([
+                "status" => "success",
+                "message" => 'Tahun Ajar Update'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => "failed",
+                "message" => 'Gagal update tahun ajaran'
             ]);
         }
     }

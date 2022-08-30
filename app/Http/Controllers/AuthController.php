@@ -64,11 +64,16 @@ class AuthController extends Controller
                 ], 401);
             }
 
+            $tahunAwal = ((int)date("m") > 7) ? (int)date("Y") + 1 : (int)date("Y");
+            $tahunAkhir = ((int)date("m") > 7) ? (int)date("Y") + 2 : (int)date("Y") + 1; 
+            $tahunAjar = "$tahunAwal - $tahunAkhir";
+
             $user = User::create([
                 'name' => $request->name,
                 'password' => bcrypt($request->password),
                 'email' => $request->email,
-                'phone' => $request->phone
+                'phone' => $request->phone,
+                'tahun_ajar' => $tahunAjar
             ]);
             
             if ($request->role == 2) {
