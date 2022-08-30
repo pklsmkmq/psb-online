@@ -160,40 +160,6 @@ class AuthController extends Controller
         }
     }
 
-    public function nyoba(Request $request)
-    {
-        $rules = array(
-            'nama_user' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-            'role' => 'required|max:1',
-            'status' => 'required|max:1'
-        );
-
-      
-
-        $cek = Validator::make($request->all(),$rules);
-
-        if($cek->fails()){
-            $errorString = implode(",",$cek->messages()->all());
-            return response()->json([
-                'message' => $errorString
-            ], 401);
-        }else{
-            $user = User::create([
-                'nama_user' => $request->nama_user,
-                'password' => bcrypt($request->password),
-                'email' => $request->email,
-                'role' => $request->role,
-                'status' => $request->status
-            ]);
-
-            $user->assignRole('guru');
-    
-            return "sukses";
-        }
-    }
-
     public function authMe(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
