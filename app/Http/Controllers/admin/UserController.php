@@ -40,7 +40,7 @@ class UserController extends Controller
         }
 
         if ($request->tahun_ajar) {
-            $user = $user->where('tahun_ajar', $request->tahun_ajar);
+            $users = $users->where('tahun_ajar', $request->tahun_ajar);
         }
 
         $users = $users->orderBy("created_at", 'desc')
@@ -485,7 +485,7 @@ class UserController extends Controller
             $rolesss = ["user"];
             $users = User::whereHas('roles', function($q) use ($rolesss){
                 $q->whereIn('name', $rolesss);
-            })->update(['tahun_ajar' => "2022 - 2023"]);
+            })->update(['tahun_ajar' => "2022-2023"]);
 
             return response()->json([
                 "status" => "success",

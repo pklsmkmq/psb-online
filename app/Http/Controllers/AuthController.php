@@ -66,7 +66,7 @@ class AuthController extends Controller
 
             $tahunAwal = ((int)date("m") > 7) ? (int)date("Y") + 1 : (int)date("Y");
             $tahunAkhir = ((int)date("m") > 7) ? (int)date("Y") + 2 : (int)date("Y") + 1; 
-            $tahunAjar = "$tahunAwal - $tahunAkhir";
+            $tahunAjar = $tahunAwal . "-" . $tahunAkhir;
 
             $user = User::create([
                 'name' => $request->name,
