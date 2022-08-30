@@ -268,6 +268,8 @@ class AuthController extends Controller
             'hp' => "45454545"
         ];
 
-        return \Mail::to($email)->send(new \App\Mail\SenderMail($details));
+        \Mail::to($email)->send(new \App\Mail\SenderMail($details));
+
+        return "Coba cek email deh sekarang";
     }
 }
