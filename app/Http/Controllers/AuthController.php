@@ -53,10 +53,10 @@ class AuthController extends Controller
                 ];
                 
 
-                // if ($request->role == 2) {
-                //     \Mail::to($request->email)->send(new \App\Mail\SenderMail($details));
-                //     \Mail::to("psbsmkmq@gmail.com")->send(new \App\Mail\AdminNotif($details));
-                // }
+                if ($request->role == 2) {
+                    \Mail::to($request->email)->send(new \App\Mail\SenderMail($details));
+                    // \Mail::to("psbsmkmq@gmail.com")->send(new \App\Mail\AdminNotif($details));
+                }
             } catch (\Throwable $th) {
                 return response()->json([
                     'status'       => 'Failed',
