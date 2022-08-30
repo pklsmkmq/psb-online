@@ -42,7 +42,11 @@ Route::get('/device-update/{id}', [UserController::class, "device"]);
 // Auth by sanctum
 Route::middleware(['auth:sanctum'])->group(function () {
 Route::get('/authme', [AuthController::class ,'authMe']);
+// tes mail
+Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
  
+
+
 //Fitur admin
  Route::middleware('role:admin')->group(function () {
         // User crud

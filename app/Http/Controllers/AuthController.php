@@ -256,4 +256,18 @@ class AuthController extends Controller
 
         return $data;
     }
+
+    public function tesMail($email)
+    {
+        $details = [
+            'title' => 'Selamat akun anda telah berhasil terbuat',
+            'body' => 'Silahkan lengkapi data anak anda dengan menekan tombol di bawah ini untuk melanjutkan ke tahap tes masuk SMK MADINATULQURAN',
+            'email' => $email,
+            'password' => "12345678",
+            'nama' => "fullan",
+            'hp' => "45454545"
+        ];
+
+        return \Mail::to($email)->send(new \App\Mail\SenderMail($details));
+    }
 }
