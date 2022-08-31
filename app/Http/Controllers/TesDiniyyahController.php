@@ -62,7 +62,8 @@ class TesDiniyyahController extends Controller
                     'metode' => $request->metode,
                     'status' => 0,
                     'jadwal_ulang' => 0,
-                    'catatan' => $request->catatan
+                    'catatan' => $request->catatan,
+                    'is_batal' => false
                 ]);
     
                 // $details = [
@@ -256,6 +257,38 @@ class TesDiniyyahController extends Controller
                         'message'      => 'Email tidak di temukan'
                     ], 401);
                 }
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Menyimpan Data'
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
+        }
+    }
+
+    public function batalTes(Request $request, $id)
+    {
+        $rules = array(
+            'keterangan_batal' => 'required'
+        );
+        $cek = Validator::make($request->all(),$rules);
+
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                "status" => "failed",
+                'message' => $errorString
+            ], 401);
+        }else{
+            $data = TesDiniyyah::where('user_id',$id)->first();
+            $data->is_batal = true;
+            $data->keterangan_batal = $request->keterangan_batal;
+
+            if($data->save()){
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Menyimpan Data'

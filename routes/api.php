@@ -95,6 +95,7 @@ Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
         Route::post('/updateStatus', [TesDiniyyahController::class, "updateStatusTes"]);
         Route::put('/updateJamTes', [TesDiniyyahController::class, "jamTes"]);
         Route::get('updateKelulusan/{id}', [TesDiniyyahController::class, "updateKelulusan"]);
+        Route::get('batalTes/{id}', [TesDiniyyahController::class, "batalTes"]);
         // Get data siswa all
         Route::get('semuaData', [UserController::class, "getAll"]);
 
