@@ -459,9 +459,9 @@ class UserController extends Controller
         return Excel::download(new TugasPakNurExport, "tugas_pak_nur.xlsx");
     }
 
-    public function changepassword($email, Request $request)
+    public function changepassword(Request $request)
     {
-        $user = User::where('email', $email)->first();
+        $user = User::where('email', $request->email)->first();
 
         if ($user) {
             if ($request->password) {
