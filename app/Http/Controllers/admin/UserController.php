@@ -19,6 +19,7 @@ use App\Exports\{
 use App\Imports\UsersImport;
 use Validator;
 use Auth;
+use Str;
 
 class UserController extends Controller
 {
@@ -459,21 +460,56 @@ class UserController extends Controller
         return Excel::download(new TugasPakNurExport, "tugas_pak_nur.xlsx");
     }
 
-    public function changepassword(Request $request)
+    public function resetPassword($email)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            $randomToken = Str::random(50);
+            $user->token_reset = $randomToken;
+            $user->save();
+            $details = [
+                "id" => $user->id,
+                "randomToken" => $randomToken
+            ];
+            try {
+                \Mail::to($user->email)->send(new \App\Mail\resetPassword($details));
+                return response()->json([
+                    "status" => "Success",
+                    "message" => 'Berhasil Mengirim Email Reset Password'
+                ]);
+            } catch (\Throwable $th) {
+                return response()->json([
+                    "status" => "Failed",
+                    "message" => 'Gagal Mengirim Email'
+                ]);
+            }
+            
+        } else {
+            return response()->json([
+                "status" => "Failed",
+                "message" => 'Data Tidak Ditemukan'
+            ]);
+        }
+    }
+
+    public function changepassword($id, $token_reset, Request $request)
+    {
+        $user = User::where('id', $id)->where('token_reset', $token_reset)->first();
 
         if ($user) {
             if ($request->password) {
                 $user->password = bcrypt($request->password);
+                $user->token_reset = null;
             } else {
-                $user->password = bcrypt("psbsmk2023");
+                $user->password = bcrypt("12345678");
+                $user->token_reset = null;
             }
             
             if($user->save()){
                 return response()->json([
                     "status" => "success",
-                    "message" => 'Berhasil Menyimpan Data'
+                    "message" => 'Berhasil Merubah Password'
                 ]);
             }else{
                 return response()->json([
@@ -484,7 +520,7 @@ class UserController extends Controller
         }else{
             return response()->json([
                 "status" => "failed",
-                "message" => 'Email Tidak Ditemukan'
+                "message" => 'Data Tidak Ditemukan'
             ]);
         }
     }

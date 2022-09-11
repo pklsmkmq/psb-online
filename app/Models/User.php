@@ -25,7 +25,8 @@ class User extends Authenticatable
         'phone',
         'password',
         'device',
-        'tahun_ajar'
+        'tahun_ajar',
+        'token_reset'
     ];
 
     /**
