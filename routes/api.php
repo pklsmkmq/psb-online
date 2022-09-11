@@ -39,13 +39,15 @@ Route::post('/login',[AuthController::class,'login']);
 Route::post('/register',[AuthController::class, 'register']);
 Route::get('/getJadwal', [UserController::class, "getJadwal"]);
 Route::get('/device-update/{id}', [UserController::class, "device"]);
+
+Route::post('/changepassword/{id}/{token_reset}', [UserController::class, "changepassword"]);
+Route::get('/resetpassword/{email}', [UserController::class, "resetPassword"]);
+
 // Auth by sanctum
 Route::middleware(['auth:sanctum'])->group(function () {
 Route::get('/authme', [AuthController::class ,'authMe']);
 // tes mail
 Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
- 
-Route::post('changepassword', [UserController::class, "changepassword"]);
 
 //Fitur admin
  Route::middleware('role:admin')->group(function () {
