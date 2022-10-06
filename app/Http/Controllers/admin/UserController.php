@@ -374,7 +374,8 @@ class UserController extends Controller
                     ->leftJoin('calon_siswa', 'bukti.user_id','=','calon_siswa.user_id')
                     ->leftJoin('pendidikan_sebelumnya', 'bukti.user_id', '=' , 'pendidikan_sebelumnya.user_id')
                     ->with('User')
-                    ->where('bukti.nominal', "=" , 350000);
+                    // ->where('bukti.nominal', "=" , 350000)
+                    ->Where('bukti.nominal', "<" , 450001);
         if ($request->tahun_ajar) {
             $users = $users->whereHas('user', function($q) use ($request){
                 $q->where('tahun_ajar', $request->tahun_ajar);
