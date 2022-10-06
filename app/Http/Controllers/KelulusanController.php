@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kelulusan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\WaControllers;
 use Auth;
 use Validator;
 
@@ -130,5 +131,10 @@ class KelulusanController extends Controller
     public function destroy(Kelulusan $kelulusan)
     {
         //
+    }
+    
+    public function fxas()
+    {
+        return "adjadaaaw";
     }
 }

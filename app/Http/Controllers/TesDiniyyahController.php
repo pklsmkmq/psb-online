@@ -6,6 +6,7 @@ use App\Models\TesDiniyyah;
 use App\Models\calonSiswa;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\WaControllers;
 use Auth;
 use Validator;
 
@@ -196,7 +197,43 @@ class TesDiniyyahController extends Controller
                         $details = [
                             'name' => $dtSiswa->name_siswa,
                         ];
+                        // Send Email
                         \Mail::to($dtUser->email)->send(new \App\Mail\kelulusan($details));
+
+                        // Send WA
+                        $wa = new WaControllers();
+                        $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
+ بِسْمِ اللَّهِ
+Pengumuman PPDB SMK MADINATULQURAN
+Tahun Pelajaran 2022/2023
+
+Berdasarkan Hasil tes dan wawancara yang telah dilaksanakan maka dengan ini kami menyatakan bahwa santri atas Nama $dtSiswa->name_siswa dinyatakan :
+
+                        *LULUS*
+
+Untuk tahapan selanjutnya, wali santri bisa langsung melakukan pembayaran ke rekening di bawah ini sejumlah *Rp. 18.500.000* (Delapan Belas Juta Lima Ratus Ribu Rupiah). Berikut ini nomor rekeningnya:
+Nomor Rekening : 3310006100
+Kode Bank : (147) Bank Muamalat
+Atas Nama : Yayasan Wisata Al Islam
+
+Untuk pembayaran dapat di bayar secara tunai ataupun dicicil. berikut ini adalah tahapan pembayarannya:
+Tahap 1 - Rp. 5.000.000
+Tahap 2 - Rp. 5.000.000
+Tahap 3 - Rp. 5.000.000
+Tahap 4 - Rp. 3.500.000
+
+Jika sudah melakukan pembayaran silahkan mengupload bukti pembayaran di menu Pembayaran pada website atau bisa klik link ini https://ppdb.smkmadinatulquran.sch.id/ppdb/pembayaran
+
+Jika ada pertanyaan hubungi CS kami
+085888222457 (Ustadz Dedi)
+081311868066 (Ustadz Patjri)
+
+Barakallahu fiikum
+Hormat kami,
+
+
+Panitia PPDB SMK MADINATULQURAN";
+                        $wa->wablas($dtUser->phone,$message);
                     } catch (\Throwable $th) {
                         return response()->json([
                             'status'       => 'Failed',

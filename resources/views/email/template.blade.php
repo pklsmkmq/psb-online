@@ -595,7 +595,7 @@
                         
                             Kp.Kebon kelapa, Singasari, Kec Jonggol, Bogor 16830<br>
 <br>
-<span style="font-size:14px"><strong>© 2021 SMK MADINATULQURAN</strong></span>
+<span style="font-size:14px"><strong>© 2022 SMK MADINATULQURAN</strong></span>
                         </td>
                     </tr>
                 </tbody></table>

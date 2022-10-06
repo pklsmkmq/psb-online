@@ -36,22 +36,22 @@
         <tr>
             <td>1</td>
             <td>Rp. 5.000.000,00</td>
-            <td>31 Oktober 2021</td>
+            <td>31 Oktober 2022</td>
         </tr>
         <tr>
             <td>2</td>
             <td>Rp. 5.000.000,00</td>
-            <td>31 Desember 2021</td>
+            <td>31 Desember 2022</td>
         </tr>
         <tr>
             <td>3</td>
             <td>Rp. 5.000.000,00</td>
-            <td>28 Februari 2022</td>
+            <td>28 Februari 2023</td>
         </tr>
         <tr>
             <td>4</td>
             <td>Rp. 3.500.000,00</td>
-            <td>31 Mei 2022</td>
+            <td>31 Mei 2023</td>
         </tr>
     </table>
     <p>Jika sudah melakukan pembayaran silahkan mengupload bukti pembayaran di menu Pembayaran pada website atau bisa <a style="color: black; text-decoration: none;" href="https://ppdb.smkmadinatulquran.sch.id/ppdb/pembayaran"><b>KLIK DISINI</b></a></p>
