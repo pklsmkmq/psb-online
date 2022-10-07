@@ -49,6 +49,7 @@ class TesDiniyyahController extends Controller
             );
             $request["user_id"] = Auth::user()->id;
             $cek = Validator::make($request->all(),$rules);
+            $dtSiswa = calonSiswa::where('user_id',$id)->first();
     
             if($cek->fails()){
                 $errorString = implode(",",$cek->messages()->all());
@@ -73,7 +74,22 @@ class TesDiniyyahController extends Controller
                 // ];
     
                 // \Mail::to("psbsmkmq@gmail.com")->send(new \App\Mail\BayarMail($details));
-    
+                $wa = new WaControllers();
+                $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
+
+ بِسْمِ اللَّهِ
+
+Ada yang ingin melakukan tes, berikut detailnya
+Nama : $dtSiswa->name_siswa
+Tanggal : $request->tanggal
+Metode : $request->metode
+
+Barakallahu fiikum
+Hormat kami,
+
+
+Panitia PPDB SMK MADINATULQURAN";
+                $wa->wablas($dtUser->phone,$message);
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Menyimpan Data'
