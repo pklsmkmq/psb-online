@@ -41,12 +41,13 @@ class WaControllers extends Controller
         // $curl = curl_init("https://jogja.wablas.com");
         $url = "https://jogja.wablas.com/api/send-message";
         $token = env('TOKEN_WA_BLAS');
-        if (substr($hp, 0, 1) == "0") {
-            $hp = "62" + substr($hp, 1);
-        } else if(substr($hp, 0, 1) == "+62"){
+        $hpFix = $hp;
+        $hpFix2 = $hp;
+        if (substr($hpFix, 0, 1) == "0") {
+            $hp = "62" . substr($hp, 1);
+        } else if(substr($hpFix2, 0, 3) == "+62"){
             $hp = substr($hp, 1);
         }
-
         $postInput = [
             'phone' => $hp,
             'message' => $message
