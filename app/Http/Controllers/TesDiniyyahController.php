@@ -44,10 +44,8 @@ class TesDiniyyahController extends Controller
             $rules = array(
                 // 'user_id' => 'unique:tes_diniyyah,user_id',
                 'metode' => 'required',
-              
-                'metode' => 'required',
             );
-            $request["user_id"] = Auth::user()->id;
+            $id = Auth::user()->id;
             $cek = Validator::make($request->all(),$rules);
             $dtSiswa = calonSiswa::where('user_id',$id)->first();
     
@@ -67,6 +65,13 @@ class TesDiniyyahController extends Controller
                     'catatan' => $request->catatan,
                     'is_batal' => false
                 ]);
+
+                if ($request->metode == 1) {
+                    $namaMetode = "Offline";
+                } else {
+                    $namaMetode = "Online";
+                }
+                
     
                 // $details = [
                 //     'name' => Auth::user()->name,
@@ -82,15 +87,17 @@ class TesDiniyyahController extends Controller
 Ada yang ingin melakukan tes, berikut detailnya
 Nama : $dtSiswa->name_siswa
 Tanggal : $request->tanggal
-Metode : $request->metode
+Metode : $request->namaMetode
 Catatan : $request->catatan
 
+Untuk detailnya cek kembali website PPDB SMK MadinatulQuran
 Barakallahu fiikum
 Hormat kami,
 
 
 Panitia PPDB SMK MADINATULQURAN";
-                $wa->wablas("6281311868066",$message);
+                // $wa->wablas("6281311868066",$message);
+                $wa->wablas("6287851258850",$message); 
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Menyimpan Data'

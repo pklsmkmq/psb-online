@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Validator;
+use App\Http\Controllers\WaControllers;
+use Auth;
 
 class PendaftaranController extends Controller
 {
@@ -199,6 +202,55 @@ class PendaftaranController extends Controller
                 "status" => "failed",
                 "message" => 'nomor pendaftaran tidak ditemukan'
             ]);
+        }
+    }
+
+    public function WaPendaftaran($id)
+    {
+        $dtUser = User::where('id',$id)->first();
+        if ($dtUser) {
+            $wa = new WaControllers();
+            $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
+
+ بِسْمِ اللَّهِ
+
+Alhamdulillah akun telah berhasil terbuat, untuk menyelesaikan proses pendaftaran silahkan transfer uang sejumlah *Rp. 450.000* untuk biaya pendaftaran masuk & tes ke rekening berikut
+Nomor Rekening : 3310006100
+Kode Bank : (147) Bank Muamalat
+Atas Nama : Yayasan Wisata Al Islam
+
+Jika sudah melakukan pembayaran silahkan mengupload bukti pembayaran di menu Pembayaran pada website atau bisa klik link ini https://ppdb.smkmadinatulquran.sch.id/ppdb/pembayaran
+
+Jika ada pertanyaan hubungi CS kami
+085888222457 (Ustadz Dedi)
+081311868066 (Ustadz Patjri)
+
+Barakallahu fiikum
+Hormat kami,
+
+
+Panitia PPDB SMK MADINATULQURAN";
+            if ($wa->wablas($dtUser->phone,$message)) {
+                $dtUser->wa_count = (int)$dtUser->wa_count + 1;
+                if ($dtUser->save()) {
+                    return response()->json([
+                        "status" => "success",
+                        "message" => "Berhasil Mengirim Chat Whatsapp"
+                    ]);
+                } else {
+                    return response()->json([
+                        "status" => "failed",
+                        "message" => "Gagal Mengirim Chat Whatsapp"
+                    ]);
+                }
+                
+            } else {
+                return response()->json([
+                    "status" => "failed",
+                    "message" => "Gagal Mengirim Chat Whatsapp"
+                ]);
+            }
+            
         }
     }
 }

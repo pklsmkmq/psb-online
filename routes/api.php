@@ -91,6 +91,7 @@ Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
         // Pendaftaran Crud
         Route::resource('pendaftaran', PendaftaranController::class);
         Route::delete('pendaftaran', [PendaftaranController::class, "destroy"]);
+        Route::get('kirimChat/{id}', [PendaftaranController::class, "WaPendaftaran"]);
 
         Route::get('/getKel', [UserController::class, "getKelulusan"]);
         // Update Kelulusan

@@ -26,7 +26,8 @@ class User extends Authenticatable
         'password',
         'device',
         'tahun_ajar',
-        'token_reset'
+        'token_reset',
+        'wa_count'
     ];
 
     /**
