@@ -89,7 +89,7 @@ Hormat kami,
 
 
 Panitia PPDB SMK MADINATULQURAN";
-                $wa->wablas($dtUser->phone,$message);
+                $wa->wablas("6281311868066",$message);
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Menyimpan Data'
