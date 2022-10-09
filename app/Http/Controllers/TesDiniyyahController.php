@@ -83,6 +83,7 @@ Ada yang ingin melakukan tes, berikut detailnya
 Nama : $dtSiswa->name_siswa
 Tanggal : $request->tanggal
 Metode : $request->metode
+Catatan : $request->catatan
 
 Barakallahu fiikum
 Hormat kami,
