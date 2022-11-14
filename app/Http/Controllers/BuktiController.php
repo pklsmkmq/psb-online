@@ -11,6 +11,7 @@ use App\Models\{
     
 };
 use Illuminate\Http\Request;
+use App\Http\Controllers\WaControllers;
 use Validator;
 use Auth;
 
@@ -363,12 +364,37 @@ return $bukti;
                 'name' => $siswa->name_siswa,
             ];
 
-            \Mail::to($user->email)->send(new \App\Mail\konf_pembayaran($details));
+            // \Mail::to($user->email)->send(new \App\Mail\konf_pembayaran($details));
+
+            $wa = new WaControllers();
+            $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
+
+بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
+
+Alhamdulillah Wa Sholatu wa salamu a'la Rasulillah Ama ba'ad
+Alhamdulilah pembayaran sebesar *Rp. {{$bukti->nominal}}* atas nama *{{$siswa->name_siswa}}* telah kami konfirmasi
+Jazakumullahu Khairan Wa Barakallahu fiikum
+Hormat kami,
+
+
+Panitia PPDB SMK MADINATULQURAN";
+            
+            if ($wa->wablas($user->phone,$message)) {
+                return response()->json([
+                    "status" => "Success",
+                    "message" => "Berhasil Mengkonfirmasi Pembayaran"
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => "Gagal Mengkonfirmasi Pembayaran"
+                ]);
+            }
+        }else{
+            return response()->json([
+                "status" => "failed",
+                "message" => "Gagal Merubah Status Pembayaran"
+            ]);
         }
-        
-        return response()->json([
-            "status" => "success",
-            "message" => 'Berhasil Merubah Status'
-        ]);
     }
 }
