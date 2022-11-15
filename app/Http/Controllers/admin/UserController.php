@@ -8,7 +8,7 @@ use App\Models\{
     TesDiniyyah,
     TesMasuk,
     calonSiswa,
-    
+    WaControllers
 };
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -267,11 +267,41 @@ class UserController extends Controller
                 ];
                 
                 // \Mail::to($user->email)->send(new \App\Mail\konf_pembayaran($details));
-                \Mail::to($user->email)->send(new \App\Mail\konfirmasi($details));
-                return response()->json([
-                    "status" => "success",
-                    "message" => 'Berhasil Merubah Status'
-                ]);
+                // \Mail::to($user->email)->send(new \App\Mail\konfirmasi($details));
+
+                $wa = new WaControllers();
+                $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
+
+بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
+Alhamdulillah Wa Sholatu wa salamu a'la Rasulillah Ama ba'ad
+
+Jazakumullahu Khairan kami telah menerima pembayaran untuk biaya pendaftaran
+Untuk tahap selanjutnya nya silahkan mengerjakan *Tes Umum secara online* dan jadwalkan hari untuk *Tes Membaca Alquran serta wawancara*.
+Adapun tes membaca Alquran bisa memilih online atau bisa datang langsung ke SMK MADINATULQURAN.
+Untuk yang memilih tes online bisa menjadwalkan tesnya di hari *Sabtu atau Ahad* & untuk yang memilih datang langsung bisa memilih jadwal tesnya di hari *Ahad*
+Adapun waktu/jam nya akan kami informasikan.
+
+Jika ada pertanyaan hubungi CS kami
+085888222457 (Ustadz Dedi)
+081311868066 (Ustadz Patjri)
+
+Barakallahu fiikum
+Hormat kami,
+
+
+Panitia PPDB SMK MADINATULQURAN";
+
+                if ($wa->wablas($user->phone,$message)) {
+                    return response()->json([
+                        "status" => "Success",
+                        "message" => "Berhasil Mengkonfirmasi Pembayaran"
+                    ]);
+                }else{
+                    return response()->json([
+                        "status" => "failed",
+                        "message" => "Gagal Mengkonfirmasi Pembayaran"
+                    ]);
+                }
             }else{
                 return response()->json([
                     "status" => "failed",

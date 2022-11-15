@@ -372,7 +372,7 @@ return $bukti;
 بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
 
 Alhamdulillah Wa Sholatu wa salamu a'la Rasulillah Ama ba'ad
-Alhamdulilah pembayaran sebesar *Rp. {{$bukti->nominal}}* atas nama *{{$siswa->name_siswa}}* telah kami konfirmasi
+Alhamdulilah pembayaran sebesar *Rp. $bukti->nominal* atas nama *$siswa->name_siswa* telah kami konfirmasi
 Jazakumullahu Khairan Wa Barakallahu fiikum
 Hormat kami,
 
