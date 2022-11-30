@@ -97,7 +97,8 @@ Hormat kami,
 
 Panitia PPDB SMK MADINATULQURAN";
                 // $wa->wablas("6281311868066",$message);
-                $wa->wablas("6287851258850",$message); 
+                // $wa->wablas("6287851258850",$message, false); 
+                $wa->wablas("6285720470284-1628656923",$message, true); 
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Menyimpan Data'
@@ -257,7 +258,7 @@ Hormat kami,
 
 
 Panitia PPDB SMK MADINATULQURAN";
-                        $wa->wablas($dtUser->phone,$message);
+                        $wa->wablas($dtUser->phone,$message, false);
                     } catch (\Throwable $th) {
                         return response()->json([
                             'status'       => 'Failed',

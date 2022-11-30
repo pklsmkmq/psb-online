@@ -291,7 +291,7 @@ Hormat kami,
 
 Panitia PPDB SMK MADINATULQURAN";
 
-                if ($wa->wablas($user->phone,$message)) {
+                if ($wa->wablas($user->phone,$message, false)) {
                     return response()->json([
                         "status" => "Success",
                         "message" => "Berhasil Mengkonfirmasi Pembayaran"

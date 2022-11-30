@@ -230,7 +230,7 @@ Hormat kami,
 
 
 Panitia PPDB SMK MADINATULQURAN";
-            if ($wa->wablas($dtUser->phone,$message)) {
+            if ($wa->wablas($dtUser->phone,$message, false)) {
                 $dtUser->wa_count = (int)$dtUser->wa_count + 1;
                 if ($dtUser->save()) {
                     return response()->json([

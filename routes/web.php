@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\{PaymentController, WaControllers};
 use App\Http\Controllers\admin\UserController;
 
 /*
@@ -25,3 +25,4 @@ Route::get('/login', function () {
 Route::get('/tugasDWBI', [UserController::class,'TugasKuliah']);
 
 Route::get('test/payment',[PaymentController::class,'testPayment']);
+// Route::get('kirimGrup',[WaControllers::class,'tesGrup']);
