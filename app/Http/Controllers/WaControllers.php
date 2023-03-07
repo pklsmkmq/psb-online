@@ -132,4 +132,49 @@ Panitia PPDB SMK MADINATULQURAN";
         $message = "Testing from waBlas iTCorps";
         $this->wablas("6285720470284-1628656923", $message, true);
     }
+
+    public function blasKouta(Request $request)
+    {
+        $message = "Bismillahirrahmanirrahim,SEAT KUOTA MASIH ADA...!!!
+Pendaftaran Penerimaan Peserta Didik Baru (PPDB) TA. 2023/2024 SMK MADINATUL QURAN khusus untuk Ikhwan.
+Program Unggulan :
+📘 English & Tahfidz Camp
+Program Pendidikan :
+🕌 Diniyah & Umum
+💻 Teknik Komputer & Jaringan (TKJ)
+💻 Rekayasa Perangkat Lunak (RPL)
+Keunggulan SMK MQ :
+🕌 Pesantren IT Berlandaskan Al quran dan As Sunnah
+♻️ Lingkungan yang Asri
+📘 Kurikulum Sesuai dengan Perkembangan Industri
+
+Ayoo... DAFTAR SEKARANG juga...!!!,
+Mumpung Masih ada SEAT  tersisa...!
+🔎 Pendaftaran hanya via Online :
+Melalui: https://ppdb.smkmadinatulquran.sch.id
+Web : https://smkmadinatulquran.sch.id
+Link Brosur: s.id/brosur-smk-mq
+NARAHUBUNG / INFORMASI:
+SMK MQ Jonggol Ikhwan
+PPDB : wa.me/628126900457
+Alamat :
+Kp.Kebon Kelapa, RT.02/RW.011, Singasari, Kec. Jonggol, Bogor, Jawa Barat 16830";
+
+        // $this->wablas("6287851258850",$message, false); 
+
+        $hp = "";
+        
+        for ($i=0; $i < count($request->nomorhp); $i++) {
+            if ($hp == "") {
+                $hp = $request->nomorhp[$i];
+            } else {
+                $hp = $hp . "," . $request->nomorhp[$i];
+            }
+        }
+        $this->wablas($hp,$message, false); 
+        return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Mengirim WA BLAST Kouta'
+            ]);
+    }
 }

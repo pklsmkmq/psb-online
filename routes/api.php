@@ -110,6 +110,9 @@ Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
 
         //Tes Masuk
         Route::get('hapusNilaiTes', [TesMasukController::class, "hapusNilai"]);
+
+        //Wa
+        Route::post('/wablastkouta',[WaControllers::class,'blasKouta']);
      });
 
     //  Fitur User

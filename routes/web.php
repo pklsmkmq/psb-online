@@ -25,4 +25,3 @@ Route::get('/login', function () {
 Route::get('/tugasDWBI', [UserController::class,'TugasKuliah']);
 
 Route::get('test/payment',[PaymentController::class,'testPayment']);
-// Route::get('kirimGrup',[WaControllers::class,'tesGrup']);
