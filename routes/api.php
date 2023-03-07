@@ -26,6 +26,8 @@ Route::get("/ihsan", function(){
     MessageCreated::dispatch("ihsan");
     return "ok";
 });
+Route::get('/wa1',[WaControllers::class,'wa1']);
+Route::post('/wablastkouta',[WaControllers::class,'blasKouta']);
 Route::get('/wates', [WaControllers::class,'nyobaWa']);
 // Route::get('/getF', [WaControllers::class,'bla']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -112,7 +114,7 @@ Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
         Route::get('hapusNilaiTes', [TesMasukController::class, "hapusNilai"]);
 
         //Wa
-        Route::post('/wablastkouta',[WaControllers::class,'blasKouta']);
+        // Route::post('/wablastkouta',[WaControllers::class,'blasKouta']);
      });
 
     //  Fitur User

@@ -50,11 +50,34 @@ class WaControllers extends Controller
                 'isGroup' => true
             ];
         } else {
-            if (substr($hpFix, 0, 1) == "0") {
-                $hp = "62" . substr($hp, 1);
-            } else if(substr($hpFix2, 0, 3) == "+62"){
-                $hp = substr($hp, 1);
+            if (str_contains($hpFix, ",")) {
+                $arrayHp = explode(",",$hpFix);
+                $hpp = "";
+                for ($i=0; $i < count($arrayHp); $i++) {
+                    $nomor = $arrayHp[$i]; 
+                    if (substr($nomor, 0, 1) == "0") {
+                        if ($hpp == "") {
+                            $hpp = "62" . substr($arrayHp[$i], 1);    
+                        } else {
+                            $hpp = $hpp . "," . "62" . substr($arrayHp[$i], 1);
+                        }
+                    } else if(substr($nomor, 0, 3) == "+62"){
+                        if ($hpp == "") {
+                            $hpp = substr($arrayHp[$i], 1);
+                        } else {
+                            $hpp = $hpp . "," . substr($arrayHp[$i], 1);
+                        }
+                    }    
+                }
+                $hp = $hpp;
+            } else {
+                if (substr($hpFix, 0, 1) == "0") {
+                    $hp = "62" . substr($hp, 1);
+                } else if(substr($hpFix2, 0, 3) == "+62"){
+                    $hp = substr($hp, 1);
+                }    
             }
+            
             $postInput = [
                 'phone' => $hp,
                 'message' => $message
@@ -131,6 +154,15 @@ Panitia PPDB SMK MADINATULQURAN";
     {
         $message = "Testing from waBlas iTCorps";
         $this->wablas("6285720470284-1628656923", $message, true);
+    }
+
+    public function wa1()
+    {
+        $this->wablas("087851258850","Bismillah", false); 
+        return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Mengirim WA BLAST Kouta'
+            ]);
     }
 
     public function blasKouta(Request $request)
