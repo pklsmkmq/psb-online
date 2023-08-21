@@ -87,7 +87,7 @@ class TesDiniyyahController extends Controller
 Ada yang ingin melakukan tes, berikut detailnya
 Nama : $dtSiswa->name_siswa
 Tanggal : $request->tanggal
-Metode : $request->namaMetode
+Metode : $namaMetode
 Catatan : $request->catatan
 
 Untuk detailnya cek kembali website PPDB SMK MadinatulQuran
