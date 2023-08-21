@@ -98,7 +98,8 @@ Hormat kami,
 Panitia PPDB SMK MADINATULQURAN";
                 // $wa->wablas("6281311868066",$message);
                 // $wa->wablas("6287851258850",$message, false); 
-                $wa->wablas("6285720470284-1628656923",$message, true); 
+                // $wa->wablas("6285720470284-1628656923",$message, true); 
+                $wa->wablas("120363148522499155",$message, true); 
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Menyimpan Data'

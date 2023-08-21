@@ -153,7 +153,8 @@ Panitia PPDB SMK MADINATULQURAN";
     public function tesGrup()
     {
         $message = "Testing from waBlas iTCorps";
-        $this->wablas("6285720470284-1628656923", $message, true);
+        // $this->wablas("6285720470284-1628656923", $message, true);
+        $this->wablas("120363148522499155", $message, true); //24/25
     }
 
     public function wa1()
@@ -207,6 +208,6 @@ Kp.Kebon Kelapa, RT.02/RW.011, Singasari, Kec. Jonggol, Bogor, Jawa Barat 16830"
         return response()->json([
                 "status" => "success",
                 "message" => 'Berhasil Mengirim WA BLAST Kouta'
-            ]);
+            ],200);
     }
 }
