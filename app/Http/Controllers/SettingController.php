@@ -42,7 +42,7 @@ class SettingController extends Controller
             if (!$data) {
                 $buat = Setting::create([
                     'name_setting' => 'tahun ajaran',
-                    'value' => '2022 - 2023'
+                    'value' => '2024 - 2025'
                 ]);
 
                 return response()->json([

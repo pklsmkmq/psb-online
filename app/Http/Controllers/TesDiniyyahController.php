@@ -231,7 +231,7 @@ Panitia PPDB SMK MADINATULQURAN";
                         $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
  بِسْمِ اللَّهِ
 Pengumuman PPDB SMK MADINATULQURAN
-Tahun Pelajaran 2022/2023
+Tahun Pelajaran 2024/2025
 
 Berdasarkan Hasil tes dan wawancara yang telah dilaksanakan maka dengan ini kami menyatakan bahwa santri atas Nama $dtSiswa->name_siswa dinyatakan :
 
@@ -252,7 +252,7 @@ Jika sudah melakukan pembayaran silahkan mengupload bukti pembayaran di menu Pem
 
 Jika ada pertanyaan hubungi CS kami
 085888222457 (Ustadz Dedi)
-081311868066 (Ustadz Patjri)
+0895320050324 (Ustadz Ihsan)
 
 Barakallahu fiikum
 Hormat kami,

@@ -40,6 +40,7 @@ Route::post('/login',[AuthController::class,'login']);
 Route::post('/register',[AuthController::class, 'register']);
 Route::get('/getJadwal', [UserController::class, "getJadwal"]);
 Route::get('/device-update/{id}', [UserController::class, "device"]);
+Route::post("/sendRequestJadwal", [WaControllers::class, "sendBikinJadwal"]);
 
 Route::post('/changepassword/{id}/{token_reset}', [UserController::class, "changepassword"]);
 Route::get('/resetpassword/{email}', [UserController::class, "resetPassword"]);

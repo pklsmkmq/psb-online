@@ -283,7 +283,7 @@ Adapun waktu/jam nya akan kami informasikan.
 
 Jika ada pertanyaan hubungi CS kami
 085888222457 (Ustadz Dedi)
-081311868066 (Ustadz Patjri)
+0895320050324 (Ustadz Ihsan)
 
 Barakallahu fiikum
 Hormat kami,
@@ -562,7 +562,7 @@ Panitia PPDB SMK MADINATULQURAN";
             $rolesss = ["user"];
             $users = User::whereHas('roles', function($q) use ($rolesss){
                 $q->whereIn('name', $rolesss);
-            })->update(['tahun_ajar' => "2022-2023"]);
+            })->update(['tahun_ajar' => "2024-2025"]);
 
             return response()->json([
                 "status" => "success",

@@ -106,7 +106,7 @@ class WaControllers extends Controller
         $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
  بِسْمِ اللَّهِ
 Pengumuman PPDB SMK MADINATULQURAN
-Tahun Pelajaran 2022/2023
+Tahun Pelajaran 2024/2025
 
 Berdasarkan Hasil tes dan wawancara yang telah dilaksanakan maka dengan ini kami menyatakan bahwa santri atas Nama $nama dinyatakan :
 
@@ -127,7 +127,7 @@ Jika sudah melakukan pembayaran silahkan mengupload bukti pembayaran di menu Pem
 
 Jika ada pertanyaan hubungi CS kami
 085888222457 (Ustadz Dedi)
-081311868066 (Ustadz Patjri)
+0895320050324 (Ustadz Ihsan)
 
 Barakallahu fiikum
 Hormat kami,
@@ -169,7 +169,7 @@ Panitia PPDB SMK MADINATULQURAN";
     public function blasKouta(Request $request)
     {
         $message = "Bismillahirrahmanirrahim,SEAT KUOTA MASIH ADA...!!!
-Pendaftaran Penerimaan Peserta Didik Baru (PPDB) TA. 2023/2024 SMK MADINATUL QURAN khusus untuk Ikhwan.
+Pendaftaran Penerimaan Peserta Didik Baru (PPDB) TA. 2024/2025 SMK MADINATUL QURAN khusus untuk Ikhwan.
 Program Unggulan :
 📘 English & Tahfidz Camp
 Program Pendidikan :
@@ -209,5 +209,38 @@ Kp.Kebon Kelapa, RT.02/RW.011, Singasari, Kec. Jonggol, Bogor, Jawa Barat 16830"
                 "status" => "success",
                 "message" => 'Berhasil Mengirim WA BLAST Kouta'
             ],200);
+    }
+
+    public function sendBikinJadwal(Request $request)
+    {
+        $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
+
+ بِسْمِ اللَّهِ
+
+Terima kasih telah mendaftar di PPDB Smk Madinatul Quran, Proses pendaftaran tinggal sedikit lagi untuk menjadi santri SMK Madinatul Qur'an. Silahkan jadwalkan tes Diniyah, Umum, dan juga Wawancara pada website https://ppdb.smkmadinatulquran.sch.id
+
+Jika ada pertanyaan hubungi CS kami
+085888222457 (Ustadz Dedi)
+0895320050324 (Ustadz Ihsan)
+
+Barakallahu fiikum
+Hormat kami,
+
+
+Panitia PPDB SMK MADINATULQURAN";
+
+        try {
+            $this->wablas($request->hp,$message, false);   
+            return response()->json([
+                "status" => "success",
+                "message" => "Berhasil Mengirim Chat Whatsapp"
+            ]); 
+        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => "failed",
+                "message" => "Gagal Mengirim Chat Whatsapp"
+            ]);
+        }
+        
     }
 }

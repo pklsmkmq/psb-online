@@ -223,7 +223,7 @@ Jika sudah melakukan pembayaran silahkan mengupload bukti pembayaran di menu Pem
 
 Jika ada pertanyaan hubungi CS kami
 085888222457 (Ustadz Dedi)
-081311868066 (Ustadz Patjri)
+0895320050324 (Ustadz Ihsan)
 
 Barakallahu fiikum
 Hormat kami,
