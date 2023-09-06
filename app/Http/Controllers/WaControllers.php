@@ -54,10 +54,10 @@ class WaControllers extends Controller
                 $arrayHp = explode(",",$hpFix);
                 $hpp = "";
                 for ($i=0; $i < count($arrayHp); $i++) {
-                    $nomor = $arrayHp[$i]; 
+                    $nomor = $arrayHp[$i];
                     if (substr($nomor, 0, 1) == "0") {
                         if ($hpp == "") {
-                            $hpp = "62" . substr($arrayHp[$i], 1);    
+                            $hpp = "62" . substr($arrayHp[$i], 1);
                         } else {
                             $hpp = $hpp . "," . "62" . substr($arrayHp[$i], 1);
                         }
@@ -67,7 +67,7 @@ class WaControllers extends Controller
                         } else {
                             $hpp = $hpp . "," . substr($arrayHp[$i], 1);
                         }
-                    }    
+                    }
                 }
                 $hp = $hpp;
             } else {
@@ -75,9 +75,9 @@ class WaControllers extends Controller
                     $hp = "62" . substr($hp, 1);
                 } else if(substr($hpFix2, 0, 3) == "+62"){
                     $hp = substr($hp, 1);
-                }    
+                }
             }
-            
+
             $postInput = [
                 'phone' => $hp,
                 'message' => $message
@@ -94,9 +94,9 @@ class WaControllers extends Controller
         $statusCode = $response->status();
         $responseBody = json_decode($response->getBody(), true);
 
-        echo $statusCode;  // status code
+        // echo $statusCode;  // status code
 
-        dd($responseBody);
+        // dd($responseBody);
     }
 
     public function nyobaWa()
@@ -159,7 +159,7 @@ Panitia PPDB SMK MADINATULQURAN";
 
     public function wa1()
     {
-        $this->wablas("087851258850","Bismillah", false); 
+        $this->wablas("087851258850","Bismillah", false);
         return response()->json([
                 "status" => "success",
                 "message" => 'Berhasil Mengirim WA BLAST Kouta'
@@ -193,10 +193,10 @@ PPDB : wa.me/628126900457
 Alamat :
 Kp.Kebon Kelapa, RT.02/RW.011, Singasari, Kec. Jonggol, Bogor, Jawa Barat 16830";
 
-        // $this->wablas("6287851258850",$message, false); 
+        // $this->wablas("6287851258850",$message, false);
 
         $hp = "";
-        
+
         for ($i=0; $i < count($request->nomorhp); $i++) {
             if ($hp == "") {
                 $hp = $request->nomorhp[$i];
@@ -204,7 +204,7 @@ Kp.Kebon Kelapa, RT.02/RW.011, Singasari, Kec. Jonggol, Bogor, Jawa Barat 16830"
                 $hp = $hp . "," . $request->nomorhp[$i];
             }
         }
-        $this->wablas($hp,$message, false); 
+        $this->wablas($hp,$message, false);
         return response()->json([
                 "status" => "success",
                 "message" => 'Berhasil Mengirim WA BLAST Kouta'
@@ -230,17 +230,18 @@ Hormat kami,
 Panitia PPDB SMK MADINATULQURAN";
 
         try {
-            $this->wablas($request->hp,$message, false);   
+            $this->wablas($request->hp,$message, false);
+            // echo "tes sehabis jalanin pesan";
             return response()->json([
                 "status" => "success",
                 "message" => "Berhasil Mengirim Chat Whatsapp"
-            ]); 
+            ],200);
         } catch (\Throwable $th) {
             return response()->json([
                 "status" => "failed",
                 "message" => "Gagal Mengirim Chat Whatsapp"
-            ]);
+            ],500);
         }
-        
+
     }
 }
