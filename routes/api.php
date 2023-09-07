@@ -18,7 +18,7 @@ use App\Http\Controllers\{
     WaControllers
 };
 use App\Http\Controllers\admin\{
-    UserController, 
+    UserController,
 };
 
 use App\Events\MessageCreated;
@@ -41,6 +41,7 @@ Route::post('/register',[AuthController::class, 'register']);
 Route::get('/getJadwal', [UserController::class, "getJadwal"]);
 Route::get('/device-update/{id}', [UserController::class, "device"]);
 Route::post("/sendRequestJadwal", [WaControllers::class, "sendBikinJadwal"]);
+Route::post("/sendKepastian", [WaControllers::class, "sendKepastian"]);
 
 Route::post('/changepassword/{id}/{token_reset}', [UserController::class, "changepassword"]);
 Route::get('/resetpassword/{email}', [UserController::class, "resetPassword"]);
@@ -55,7 +56,7 @@ Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
  Route::middleware('role:admin')->group(function () {
         // User crud
         Route::resource('user', UserController::class);
-        
+
         Route::delete('user', [UserController::class, "destroy"]);
         Route::get('users/updateStatus/{id}', [UserController::class, "updateStatus"]);
         Route::get('users/tahunAjar', [UserController::class, "updateTahun"]);
@@ -126,7 +127,7 @@ Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
             Route::get('nilai', [UserController::class,"getSingleListNilai"]);
             Route::get('semua', [UserController::class, "getAll"]);
         });
-        
+
         Route::prefix('dataPendidikan')->group(function () {
             Route::post('save', [PendidikanSebelumnyaController::class, "saveData"]);
             Route::get('detail', [PendidikanSebelumnyaController::class, "showData"]);
@@ -140,7 +141,7 @@ Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
             Route::get('detail/{id}', [DataAyahController::class, "show"]);
             Route::put('update/{id}', [DataAyahController::class, "update"]);
         });
-        
+
         Route::prefix('dataIbu')->group(function () {
             Route::post('save', [DataIbuController::class, "store"]);
             Route::get('detail/{id}', [DataIbuController::class, "show"]);
@@ -182,7 +183,7 @@ Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
         Route::resource('tesDiniyah', TesDiniyyahController::class);
         Route::prefix('tesDiniyahSaya')->group(function () {
             Route::get('tes-saya', [ TesDiniyyahController::class, "tesSaya"]);
-           
+
         });
 
         Route::prefix('tesMasuk')->group(function () {

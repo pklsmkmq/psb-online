@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\KelulusanController;
+use App\Models\calonSiswa;
 use env;
 
 class WaControllers extends Controller
@@ -218,6 +219,43 @@ Kp.Kebon Kelapa, RT.02/RW.011, Singasari, Kec. Jonggol, Bogor, Jawa Barat 16830"
  بِسْمِ اللَّهِ
 
 Terima kasih telah mendaftar di PPDB Smk Madinatul Quran, Proses pendaftaran tinggal sedikit lagi untuk menjadi santri SMK Madinatul Qur'an. Silahkan jadwalkan tes Diniyah, Umum, dan juga Wawancara pada website https://ppdb.smkmadinatulquran.sch.id
+
+Jika ada pertanyaan hubungi CS kami
+085888222457 (Ustadz Dedi)
+0895320050324 (Ustadz Ihsan)
+
+Barakallahu fiikum
+Hormat kami,
+
+
+Panitia PPDB SMK MADINATULQURAN";
+
+        try {
+            $this->wablas($request->hp,$message, false);
+            // echo "tes sehabis jalanin pesan";
+            return response()->json([
+                "status" => "success",
+                "message" => "Berhasil Mengirim Chat Whatsapp"
+            ],200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => "failed",
+                "message" => "Gagal Mengirim Chat Whatsapp"
+            ],500);
+        }
+
+    }
+
+    public function sendKepastian(Request $request)
+    {
+        $siswa = calonSiswa::where('user_id',$request->user_id)->first();
+        $message = "بِسْمِ اللَّهِ
+
+Kami mengucapkan terima kasih atas niat baik dan keinginan mendaftarkan ananda *$siswa->name_siswa* untuk bergabung dalam lingkungan SMK Madinatulquran.Namun, saat ini kami masih belum menemukan bukti pendaftaran.
+
+Kami memahami bahwa mungkin masih ada rasa keraguan dalam memutuskan. Apabila ada pertanyaan atau membutuhkan informasi lebih lanjut tentang SMK Madinatulquran, anda dapat menghubungi Kontak PPDB Di bawah ini.
+
+Terima kasih atas minat dan niat baik anda untuk bergabung dengan kami. Semoga perjalanan ini membawa kebaikan dan manfaat yang berlimpah bagi anda dan keluarga.
 
 Jika ada pertanyaan hubungi CS kami
 085888222457 (Ustadz Dedi)
