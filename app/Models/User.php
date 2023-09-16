@@ -27,8 +27,7 @@ class User extends Authenticatable
         'device',
         'tahun_ajar',
         'token_reset',
-        'wa_count',
-        'is_batal`
+        'wa_count'
     ];
 
     /**
