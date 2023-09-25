@@ -576,7 +576,7 @@ Panitia PPDB SMK MADINATULQURAN";
         }
     }
 
-    public function updateBatal($id)
+    public function updateBatal($id, Request $request)
     {
         $user = User::where('id', $id)->first();
 
