@@ -96,6 +96,7 @@ Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
         Route::get('kirimChat/{id}', [PendaftaranController::class, "WaPendaftaran"]);
 
         Route::get('/getKel', [UserController::class, "getKelulusan"]);
+        Route::post('/updateBatal/{id}', [UserController::class, "updateBatal"]);
         // Update Kelulusan
         Route::post('/updateStatus', [TesDiniyyahController::class, "updateStatusTes"]);
         Route::put('/updateJamTes', [TesDiniyyahController::class, "jamTes"]);

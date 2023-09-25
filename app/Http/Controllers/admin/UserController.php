@@ -63,7 +63,7 @@ class UserController extends Controller
             'perpage' => $request->perpage,
             'role' => $request->role,
             'message' => 'sukses menampilkan data',
-            'data' => $users 
+            'data' => $users
         ]);
     }
 
@@ -93,7 +93,7 @@ class UserController extends Controller
         //     'role' => 'required',
         //     'status' => 'required'
         // ]);
-        
+
         // if(ManagemenUser::create($users)){
         //     return response()->json([
         //         "status" => "success",
@@ -105,15 +105,15 @@ class UserController extends Controller
         //         "message" => 'Gagal Menyimpan Data'
         //     ]);
         // }
-        
+
     }
-    /*        
+    /*
      * @param  \App\Models\Managemen  $managemen
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $users = User::where('id', $id)->first(); 
+        $users = User::where('id', $id)->first();
 
         return response()->json([
             'status' => 'success',
@@ -130,7 +130,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $users = User::where('id', $id)->first(); 
+        $users = User::where('id', $id)->first();
 
         return response()-> json([
             'status' => 'success',
@@ -163,7 +163,7 @@ class UserController extends Controller
                 "status" => "failed",
                 "message" => 'Gagal Menyimpan Data'
             ]);
-        }        
+        }
     }
 
     /**
@@ -190,7 +190,7 @@ class UserController extends Controller
                  "message" => 'id tidak ditemukan'
              ]);
          }
-         
+
     }
 
     public function export()
@@ -215,7 +215,7 @@ class UserController extends Controller
 
     public function delete(Request $request)
     {
-       
+
         // return $request->id[1];
         try {
            for($i = 0 ; $i < count($request->id) ; $i++){
@@ -233,7 +233,7 @@ class UserController extends Controller
                 "message" => 'id tidak ditemukan | ' . $th
             ]);
         }
-        
+
         $users = User::where('id', $request->id)->first();
         $users->status = '1';
         if($users->save()){
@@ -246,12 +246,12 @@ class UserController extends Controller
                 "status" => "failed",
                 "message" => 'Gagal Mengubah status'
             ]);
-        }   
+        }
     }
 
     public function updateStatus($id)
     {
-        $bukti = bukti::where('user_id', $id)->first(); 
+        $bukti = bukti::where('user_id', $id)->first();
         $uploader = User::where('id' ,  Auth::user()->id)->first();
         if ($bukti->status == 0 || $bukti->status == false) {
             $bukti->status = 1;
@@ -265,7 +265,7 @@ class UserController extends Controller
                     'name' => $siswa->name_siswa,
                     'materi'  => "Matematika, Diniyyah, Logika"
                 ];
-                
+
                 // \Mail::to($user->email)->send(new \App\Mail\konf_pembayaran($details));
                 // \Mail::to($user->email)->send(new \App\Mail\konfirmasi($details));
 
@@ -347,7 +347,7 @@ Panitia PPDB SMK MADINATULQURAN";
             'status' => 'success',
             'perpage' => $request->perpage,
             'message' => 'sukses menampilkan data',
-            'data' => $users 
+            'data' => $users
         ]);
     }
 
@@ -371,12 +371,12 @@ Panitia PPDB SMK MADINATULQURAN";
                     'users.phone',
                     'users.created_at'
                 ]);
-                
+
         return response()->json([
             'status' => 'success',
             'perpage' => $request->perpage,
             'message' => 'sukses menampilkan data',
-            'data' => $users 
+            'data' => $users
         ]);
     }
 
@@ -386,11 +386,11 @@ Panitia PPDB SMK MADINATULQURAN";
                  ->with('calonSiswa')
                  ->with('TesMasuk')
                  ->first();
-                
+
         return response()->json([
             'status' => 'success',
             'message' => 'sukses menampilkan data',
-            'data' => $users 
+            'data' => $users
         ]);
     }
 
@@ -415,7 +415,7 @@ Panitia PPDB SMK MADINATULQURAN";
 
         $tes = TesDiniyyah::get();
         $tesMasuk = TesMasuk::get();
-        // 
+        //
         foreach ($tes as $key2) {
             foreach ($users as $key) {
                 if ($key->user_id == $key2->user_id) {
@@ -433,8 +433,8 @@ Panitia PPDB SMK MADINATULQURAN";
                 }
             }
         }
-        
-        
+
+
 
         return response()->json([
             'status' => 'success',
@@ -472,7 +472,7 @@ Panitia PPDB SMK MADINATULQURAN";
         return response()->json([
             'status' => 'success',
             'message' => 'sukses menampilkan data',
-            'data' => $data 
+            'data' => $data
         ]);
     }
 
@@ -515,7 +515,7 @@ Panitia PPDB SMK MADINATULQURAN";
                     "message" => 'Gagal Mengirim Email'
                 ]);
             }
-            
+
         } else {
             return response()->json([
                 "status" => "Failed",
@@ -536,7 +536,7 @@ Panitia PPDB SMK MADINATULQURAN";
                 $user->password = bcrypt("12345678");
                 $user->token_reset = null;
             }
-            
+
             if($user->save()){
                 return response()->json([
                     "status" => "success",
@@ -572,6 +572,31 @@ Panitia PPDB SMK MADINATULQURAN";
             return response()->json([
                 "status" => "failed",
                 "message" => 'Gagal update tahun ajaran'
+            ]);
+        }
+    }
+
+    public function updateBatal($id)
+    {
+        $user = User::where('id', $id)->first();
+
+        if ($user) {
+            $user->is_batal = $request->is_batal;
+            if($user->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Merubah Is Batal'
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
+        }else{
+            return response()->json([
+                "status" => "failed",
+                "message" => 'Data Tidak Ditemukan'
             ]);
         }
     }
