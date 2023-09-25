@@ -55,6 +55,7 @@ class UserController extends Controller
                     'users.device',
                     'users.phone',
                     'users.tahun_ajar',
+                    'users.is_batal',
                     'users.created_at'
                 ]);
 
@@ -405,7 +406,7 @@ Panitia PPDB SMK MADINATULQURAN";
                     ->leftJoin('pendidikan_sebelumnya', 'bukti.user_id', '=' , 'pendidikan_sebelumnya.user_id')
                     ->with('User')
                     // ->where('bukti.nominal', "=" , 350000)
-                    ->Where('bukti.nominal', "<" , 450001);
+                    ->Where('bukti.nominala', "<" , 450001);
         if ($request->tahun_ajar) {
             $users = $users->whereHas('user', function($q) use ($request){
                 $q->where('tahun_ajar', $request->tahun_ajar);
