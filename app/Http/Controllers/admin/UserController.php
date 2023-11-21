@@ -601,4 +601,49 @@ Panitia PPDB SMK MADINATULQURAN";
             ]);
         }
     }
+
+    public function getSudahBayar(Request $request)
+    {
+        $request->page;
+        $rolesss = [$request->role];
+        $nominal = 450000;
+        $users = User::whereHas('roles', function($q) use ($rolesss){
+                    $q->whereIn('name', $rolesss);
+                 });
+        if ($request->keywords) {
+            $users = $users->where('name','like', "%".strtolower($request->keywords)."%")
+            ->orWhere('email','like', "%".strtolower($request->keywords)."%");
+        }
+
+        if ($request->tahun_ajar) {
+            $users = $users->where('tahun_ajar', $request->tahun_ajar);
+        }
+
+        $users = $users->whereHas('bukti', function($n) use ($nominal){
+            $n->where('nominal', '>=', $nominal);
+        });
+
+        $users = $users->orderBy("created_at", 'desc')
+                ->with('roles')
+                ->with('bukti')
+                ->with('tesDiniyyah')
+                ->paginate($request->perpage, [
+                    'users.id',
+                    'users.name',
+                    'users.email',
+                    'users.device',
+                    'users.phone',
+                    'users.tahun_ajar',
+                    'users.is_batal',
+                    'users.created_at'
+                ]);
+
+        return response()->json([
+            'status' => 'success',
+            'perpage' => $request->perpage,
+            'role' => $request->role,
+            'message' => 'sukses menampilkan data',
+            'data' => $users
+        ]);
+    }
 }

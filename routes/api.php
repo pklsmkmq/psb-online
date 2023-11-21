@@ -26,6 +26,7 @@ Route::get("/ihsan", function(){
     MessageCreated::dispatch("ihsan");
     return "ok";
 });
+
 Route::get('/wates', [WaControllers::class,'nyobaWa']);
 // Route::get('/getF', [WaControllers::class,'bla']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -51,7 +52,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::get('/authme', [AuthController::class ,'authMe']);
 // tes mail
 Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
-
 //Fitur admin
  Route::middleware('role:admin')->group(function () {
         // User crud
@@ -60,6 +60,7 @@ Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
         Route::delete('user', [UserController::class, "destroy"]);
         Route::get('users/updateStatus/{id}', [UserController::class, "updateStatus"]);
         Route::get('users/tahunAjar', [UserController::class, "updateTahun"]);
+        Route::get('/getsudahbayar', [UserController::class,'getSudahBayar']);
 
         // Calon Siswa crud
         Route::resource('calonSiswa', CalonSiswaController::class);
