@@ -34,7 +34,7 @@ class PendaftaranController extends Controller
             'perpage' => $request->perpage,
             'role' => $request->role,
             'message' => 'sukses menampilkan data',
-            'data' => $users 
+            'data' => $users
         ]);
     }
 
@@ -89,7 +89,7 @@ class PendaftaranController extends Controller
                 'jadwal_tes' => $tanggal,
                 'jenis_tes' => $request->jenis_tes,
             ]);
-    
+
             return response()->json([
                 "status" => "success",
                 "message" => 'Berhasil Menyimpan Data'
@@ -105,7 +105,7 @@ class PendaftaranController extends Controller
      */
     public function show($id)
     {
-        $pendaftaran = pendaftaran::where('no_pendaftaran', $id)->first(); 
+        $pendaftaran = pendaftaran::where('no_pendaftaran', $id)->first();
 
         return response()->json([
             'status' => 'success',
@@ -122,7 +122,7 @@ class PendaftaranController extends Controller
      */
     public function edit($id)
     {
-        $pendaftaran = pendaftaran::where('no_pendaftaran', $id)->first(); 
+        $pendaftaran = pendaftaran::where('no_pendaftaran', $id)->first();
 
         return response()->json([
             'status' => 'success',
@@ -188,7 +188,7 @@ class PendaftaranController extends Controller
     {
         try {
            for($i = 0 ; $i < count($request->no_pendaftaran) ; $i++){
-            
+
             $delete = pendaftaran::find($request->no_pendaftaran[$i]);
             $delete -> delete();
            }
@@ -214,7 +214,11 @@ class PendaftaranController extends Controller
 
  بِسْمِ اللَّهِ
 
-Alhamdulillah akun telah berhasil terbuat, untuk menyelesaikan proses pendaftaran silahkan transfer uang sejumlah *Rp. 450.000* untuk biaya pendaftaran masuk & tes ke rekening berikut
+Alhamdulillah Selamat kepada ananda *$dtUser->name* telah berhasil melakukan pendaftaran sebagai calon santri SMK MADINATULQURAN tahun pelajaran 2025/2026.
+
+Untuk langkah selanjutnya adalah melakukan pembayaran biaya pendaftaran sejumlah *Rp. 450.000* agar bisa melakukan Tes Umum , Tes Diniyah dan Wawancara.
+
+Untuk pembayarannya dapat di bayarkan ke rekening berikut
 Nomor Rekening : 3310006100
 Kode Bank : (147) Bank Muamalat
 Atas Nama : Yayasan Wisata Al Islam
@@ -243,14 +247,14 @@ Panitia PPDB SMK MADINATULQURAN";
                         "message" => "Gagal Mengirim Chat Whatsapp"
                     ]);
                 }
-                
+
             } else {
                 return response()->json([
                     "status" => "failed",
                     "message" => "Gagal Mengirim Chat Whatsapp"
                 ]);
             }
-            
+
         }
     }
 }

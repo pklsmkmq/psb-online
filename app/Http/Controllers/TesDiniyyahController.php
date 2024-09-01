@@ -19,7 +19,7 @@ class TesDiniyyahController extends Controller
      */
     public function index()
     {
-       
+
     }
 
     /**
@@ -29,7 +29,7 @@ class TesDiniyyahController extends Controller
      */
     public function create()
     {
-       
+
     }
 
     /**
@@ -48,14 +48,14 @@ class TesDiniyyahController extends Controller
             $id = Auth::user()->id;
             $cek = Validator::make($request->all(),$rules);
             $dtSiswa = calonSiswa::where('user_id',$id)->first();
-    
+
             if($cek->fails()){
                 $errorString = implode(",",$cek->messages()->all());
                 return response()->json([
                     'message' => $errorString
                 ], 401);
             }else{
-               
+
                 $jadwaltes = TesDiniyyah::create([
                     'user_id' => Auth::user()->id,
                     'tanggal' => $request->tanggal,
@@ -71,13 +71,13 @@ class TesDiniyyahController extends Controller
                 } else {
                     $namaMetode = "Online";
                 }
-                
-    
+
+
                 // $details = [
                 //     'name' => Auth::user()->name,
                 //     'bukti' => $response
                 // ];
-    
+
                 // \Mail::to("psbsmkmq@gmail.com")->send(new \App\Mail\BayarMail($details));
                 $wa = new WaControllers();
                 $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
@@ -96,10 +96,7 @@ Hormat kami,
 
 
 Panitia PPDB SMK MADINATULQURAN";
-                // $wa->wablas("6281311868066",$message);
-                // $wa->wablas("6287851258850",$message, false); 
-                // $wa->wablas("6285720470284-1628656923",$message, true); 
-                $wa->wablas("120363148522499155",$message, true); 
+                $wa->wablas("120363148522499155",$message, true);
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Menyimpan Data'
@@ -154,8 +151,8 @@ Panitia PPDB SMK MADINATULQURAN";
     }
 
     public function tesSaya(Request $request){
-       
-        $tes = TesDiniyyah::where('user_id', Auth::user()->id)->orderBy('id','DESC')->get(); 
+
+        $tes = TesDiniyyah::where('user_id', Auth::user()->id)->orderBy('id','DESC')->get();
 
         return response()->json([
             'status' => 'success',
@@ -166,8 +163,8 @@ Panitia PPDB SMK MADINATULQURAN";
 
     public function updateStatusTes(Request $request)
     {
-     
-       
+
+
         $rules = array(
             'status' => 'required',
             'laporan' => 'required',
@@ -279,13 +276,13 @@ Panitia PPDB SMK MADINATULQURAN";
                 ]);
             }
         }
-    } 
+    }
 
     public function jamTes(Request $request){
-       
+
         $rules = array(
             'jam' => 'required',
-            
+
         );
         $cek = Validator::make($request->all(),$rules);
         $user = User::find(Auth::user()->id);
@@ -297,10 +294,10 @@ Panitia PPDB SMK MADINATULQURAN";
             ], 401);
         }else{
             $data = TesDiniyyah::where('user_id',$request->id)->first();
-          
+
             $data->jam_tes = $request->jam;
             $data->dibuat_oleh = $user->name;
-           
+
 
             if($data->save()){
                 $dtTes = TesDiniyyah::where('user_id',$request->id)->first();

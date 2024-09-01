@@ -160,7 +160,7 @@ Panitia PPDB SMK MADINATULQURAN";
 
     public function wa1()
     {
-        $this->wablas("087851258850","Bismillah", false);
+        $this->wablas("085794120637","Bismillah", false);
         return response()->json([
                 "status" => "success",
                 "message" => 'Berhasil Mengirim WA BLAST Kouta'

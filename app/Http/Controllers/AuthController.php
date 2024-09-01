@@ -21,15 +21,14 @@ use Hash;
 
 class AuthController extends Controller
 {
-    
-    
+
+
     public function register(Request $request)
     {
         $rules = array(
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users,email',
             'phone' => 'required|string',
-            // 'phone' => 'required|string',
             'password' => 'required|string|min:6|confirmed',
             'role' => 'required|max:1',
         );
@@ -51,11 +50,10 @@ class AuthController extends Controller
                     'nama' => $request->name,
                     'hp' => $request->phone
                 ];
-                
+
 
                 if ($request->role == 2) {
                     \Mail::to($request->email)->send(new \App\Mail\SenderMail($details));
-                    // \Mail::to("psbsmkmq@gmail.com")->send(new \App\Mail\AdminNotif($details));
                 }
             } catch (\Throwable $th) {
                 return response()->json([
@@ -65,7 +63,7 @@ class AuthController extends Controller
             }
 
             $tahunAwal = ((int)date("m") > 7) ? (int)date("Y") + 1 : (int)date("Y");
-            $tahunAkhir = ((int)date("m") > 7) ? (int)date("Y") + 2 : (int)date("Y") + 1; 
+            $tahunAkhir = ((int)date("m") > 7) ? (int)date("Y") + 2 : (int)date("Y") + 1;
             $tahunAjar = $tahunAwal . "-" . $tahunAkhir;
 
             $user = User::create([
@@ -75,7 +73,7 @@ class AuthController extends Controller
                 'phone' => $request->phone,
                 'tahun_ajar' => $tahunAjar
             ]);
-            
+
             if ($request->role == 2) {
                 $user->assignRole('user');
                 $role = "user";
@@ -83,12 +81,26 @@ class AuthController extends Controller
                 return response()->json([
                     'status'       => 'Failed',
                     'message'      => 'gagal',
-                    
+
                 ], 422);
             }
-            
+
             $token = $user->createToken('token-name')->plainTextToken;
 
+            $wa = new WaControllers();
+            $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
+
+بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
+
+Alhamdulillah Wa Sholatu wa salamu a'la Rasulillah Ama ba'ad
+Alhamdulillah ada calon santri baru yang mendaftar atas nama *$request->name* dengan nomor telepon *$request->phone*
+Jazakumullahu Khairan Wa Barakallahu fiikum
+
+Hormat kami,
+
+
+Panitia PPDB SMK MADINATULQURAN";
+            $wa->wablas("120363148522499155",$message, true);
             return response()->json([
                 'status'       => 'Success',
                 'message'      => 'Berhasil Membuat Akun',
@@ -121,15 +133,15 @@ class AuthController extends Controller
                     'message' => 'Unaouthorized'
                 ], 401);
             }
-            
+
             $token = $user->createToken('token-name')->plainTextToken;
             $roles = $user->getRoleNames();
-            
+
             $identitas = $this->cekData($user->id);
 
             $bayar = $this->cekBayar($user->id);
-          
-         
+
+
             if($roles[0] == 'user'){
                 $tes = TesDiniyyah::where('user_id',$user->id)->first();
                 if(is_null($tes)){
@@ -139,13 +151,13 @@ class AuthController extends Controller
                     $dataKelulusan = $tes->kelulusan;
                     $dataTes = $tes->status;
                 }
-               
+
             }else{
                 $dataTes = null;
                 $dataKelulusan = null;
             }
-            
-          
+
+
             return response()->json([
                 'status'   => 'Success',
                 'message'     => 'Berhasil Login',
@@ -166,7 +178,7 @@ class AuthController extends Controller
         $token= $request->user()->createToken('token-name')->plainTextToken;
         $user = $request->user();
         $roles = $user->getRoleNames();
-          
+
         $identitas = $this->cekData($user->id);
         $bayar = $this->cekBayar($user->id);
         if($roles[0] == 'user'){
@@ -178,12 +190,12 @@ class AuthController extends Controller
                 $dataKelulusan = $tes->kelulusan;
                 $dataTes = $tes->status;
             }
-           
+
         }else{
             $dataTes = null;
             $dataKelulusan = null;
         }
-        
+
         return response()->json([
             'status'   => 'Success',
             'message'   => 'Berhasil cek data',
@@ -213,7 +225,7 @@ class AuthController extends Controller
         }
         return $bayar;
     }
-    
+
     public function cekData($id)
     {
         $data = [];

@@ -8,7 +8,7 @@ use App\Models\{
     calonSiswa,
     pendidikanSebelumnya,
     dataAyah,
-    
+
 };
 use Illuminate\Http\Request;
 use App\Http\Controllers\WaControllers;
@@ -42,7 +42,7 @@ class BuktiController extends Controller
             'perpage' => $request->perpage,
             'role' => $request->role,
             'message' => 'sukses menampilkan data',
-            'data' => $users 
+            'data' => $users
         ]);
     }
 
@@ -98,7 +98,7 @@ class BuktiController extends Controller
                     'upload_ulang' => 0,
                 ]);
             }
-            
+
 
             $details = [
                 'name' => Auth::user()->name,
@@ -112,7 +112,7 @@ class BuktiController extends Controller
                 "status" => "success",
                 "message" => 'Berhasil Menyimpan Data'
             ]);
-        }    
+        }
     }
 
     public function buktiAdmin(Request $request)
@@ -149,7 +149,7 @@ class BuktiController extends Controller
                     'upload_ulang' => 0,
                 ]);
             }
-            
+
             $dataUser = User::find($request->user_id);
 
             $details = [
@@ -164,7 +164,7 @@ class BuktiController extends Controller
                 "status" => "success",
                 "message" => 'Berhasil Menyimpan Data'
             ]);
-        }    
+        }
     }
 
     /**
@@ -175,7 +175,7 @@ class BuktiController extends Controller
      */
     public function show(bukti $bukti)
     {
-        $bukti = bukti::where('user_id', Auth::user()->id)->first(); 
+        $bukti = bukti::where('user_id', Auth::user()->id)->first();
 return $bukti;
         return response()->json([
             'status' => 'success',
@@ -192,7 +192,7 @@ return $bukti;
      */
     public function edit(bukti $bukti)
     {
-        $bukti = bukti::where('user_id', Auth::user()->id)->first(); 
+        $bukti = bukti::where('user_id', Auth::user()->id)->first();
 
         return response()->json([
             'status' => 'success',
@@ -221,14 +221,14 @@ return $bukti;
                 'message' => $errorString
             ], 401);
         }else{
-            $bukti = bukti::where('user_id', Auth::user()->id)->first(); 
+            $bukti = bukti::where('user_id', Auth::user()->id)->first();
             if ($request->file('url_img')) {
                 $gambar = $request->file('url_img');
-                $response = cloudinary()->upload($gambar->path())->getSecurePath();    
+                $response = cloudinary()->upload($gambar->path())->getSecurePath();
             }else{
                 $response = $bukti->url_img;
             }
-            
+
             $bukti->user_id = Auth::user()->id;
             $bukti->url_img = $response;
             $bukti->status = $request->status;
@@ -249,7 +249,7 @@ return $bukti;
 
     public function updateStatus()
     {
-        $bukti = bukti::where('user_id', Auth::user()->id)->first(); 
+        $bukti = bukti::where('user_id', Auth::user()->id)->first();
          return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Merubah Status'
@@ -285,7 +285,7 @@ return $bukti;
     {
         try {
             for($i = 0 ; $i < count($request->id) ; $i++){
-             
+
              $delete = bukti::find($request->id[$i]);
              $delete->delete();
             }
@@ -304,7 +304,7 @@ return $bukti;
 
     public function getBuktiUser()
     {
-        $bukti = bukti::where('user_id', Auth::user()->id)->get(); 
+        $bukti = bukti::where('user_id', Auth::user()->id)->get();
         return response()->json([
             'status' => 'success',
             'message' => 'sukses menampilkan data',
@@ -314,7 +314,7 @@ return $bukti;
 
     public function getAllBukti(Request $request)
     {
-        
+
 
         $bukti = Bukti::leftJoin('users','bukti.user_id','=','users.id')
         ->leftJoin('calon_siswa', 'bukti.user_id','=','calon_siswa.user_id')
@@ -339,9 +339,9 @@ return $bukti;
             "approved_by" => "bukti.approved_by",
             "created_at" => "bukti.created_at",
             "device" => "users.device"
-        
+
         ]);
-        
+
            return response()->json([
             'status' => 'Success',
             'message' => 'sukses menampilkan data',
@@ -378,7 +378,7 @@ Hormat kami,
 
 
 Panitia PPDB SMK MADINATULQURAN";
-            
+
             if ($wa->wablas($user->phone,$message, false)) {
                 return response()->json([
                     "status" => "Success",
