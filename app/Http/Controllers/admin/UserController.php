@@ -283,7 +283,7 @@ Untuk yang memilih tes online bisa menjadwalkan tesnya di hari *Sabtu atau Ahad*
 Adapun waktu/jam nya akan kami informasikan.
 
 Jika ada pertanyaan hubungi CS kami
-085888222457 (Ustadz Dedi)
+082113165990 (Ustadz Raihan)
 0895320050324 (Ustadz Ihsan)
 
 Barakallahu fiikum

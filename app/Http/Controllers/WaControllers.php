@@ -127,7 +127,7 @@ Tahap 4 - Rp. 3.500.000
 Jika sudah melakukan pembayaran silahkan mengupload bukti pembayaran di menu Pembayaran pada website atau bisa klik link ini https://ppdb.smkmadinatulquran.sch.id/ppdb/pembayaran
 
 Jika ada pertanyaan hubungi CS kami
-085888222457 (Ustadz Dedi)
+082113165990 (Ustadz Raihan)
 0895320050324 (Ustadz Ihsan)
 
 Barakallahu fiikum
@@ -221,7 +221,7 @@ Kp.Kebon Kelapa, RT.02/RW.011, Singasari, Kec. Jonggol, Bogor, Jawa Barat 16830"
 Terima kasih telah mendaftar di PPDB Smk Madinatul Quran, Proses pendaftaran tinggal sedikit lagi untuk menjadi santri SMK Madinatul Qur'an. Silahkan jadwalkan tes Diniyah, Umum, dan juga Wawancara pada website https://ppdb.smkmadinatulquran.sch.id
 
 Jika ada pertanyaan hubungi CS kami
-085888222457 (Ustadz Dedi)
+082113165990 (Ustadz Raihan)
 0895320050324 (Ustadz Ihsan)
 
 Barakallahu fiikum
@@ -258,7 +258,7 @@ Kami memahami bahwa mungkin masih ada rasa keraguan dalam memutuskan. Apabila ad
 Terima kasih atas minat dan niat baik anda untuk bergabung dengan kami. Semoga perjalanan ini membawa kebaikan dan manfaat yang berlimpah bagi anda dan keluarga.
 
 Jika ada pertanyaan hubungi CS kami
-085888222457 (Ustadz Dedi)
+082113165990 (Ustadz Raihan)
 0895320050324 (Ustadz Ihsan)
 
 Barakallahu fiikum

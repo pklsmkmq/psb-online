@@ -226,7 +226,7 @@ Atas Nama : Yayasan Wisata Al Islam
 Jika sudah melakukan pembayaran silahkan mengupload bukti pembayaran di menu Pembayaran pada website atau bisa klik link ini https://ppdb.smkmadinatulquran.sch.id/ppdb/pembayaran
 
 Jika ada pertanyaan hubungi CS kami
-085888222457 (Ustadz Dedi)
+082113165990 (Ustadz Raihan)
 0895320050324 (Ustadz Ihsan)
 
 Barakallahu fiikum
