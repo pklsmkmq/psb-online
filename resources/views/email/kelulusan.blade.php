@@ -2,7 +2,7 @@
 
 @section('content')
     <h3 style="text-align: center; color: black;">Pengumuman PPDB SMK MADINATULQURAN</h3>
-    <h4 style="text-align: center; color: black; font-weight: bold;">Tahun Pelajaran 2024/2025</h4>
+    <h4 style="text-align: center; color: black; font-weight: bold;">Tahun Pelajaran 2025/2026</h4>
     <br>
     <p style="text-align: justify">Berdasarkan Hasil tes dan wawancara yang telah dilaksanakan maka dengan ini kami menyatakan bahwa santri atas Nama <b>{{ $details['name'] }}</b> dinyatakan :</p>
     <h3 style="text-align: center; color: black;">LULUS</h3>
@@ -46,12 +46,12 @@
         <tr>
             <td>3</td>
             <td>Rp. 5.000.000,00</td>
-            <td>28 Februari 2024</td>
+            <td>28 Februari 2025</td>
         </tr>
         <tr>
             <td>4</td>
             <td>Rp. 3.500.000,00</td>
-            <td>31 Mei 2024</td>
+            <td>31 Mei 2025</td>
         </tr>
     </table>
     <p>Jika sudah melakukan pembayaran silahkan mengupload bukti pembayaran di menu Pembayaran pada website atau bisa <a style="color: black; text-decoration: none;" href="https://ppdb.smkmadinatulquran.sch.id/ppdb/pembayaran"><b>KLIK DISINI</b></a></p>

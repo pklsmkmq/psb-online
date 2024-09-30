@@ -27,3 +27,4 @@ Route::get('/tugasDWBI', [UserController::class,'TugasKuliah']);
 Route::get('test/payment',[PaymentController::class,'testPayment']);
 
 Route::get('test/wa',[WaControllers::class,'wa1']);
+Route::get('bulan',[WaControllers::class,'nyobaWa']);

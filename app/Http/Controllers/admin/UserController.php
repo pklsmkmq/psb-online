@@ -563,7 +563,7 @@ Panitia PPDB SMK MADINATULQURAN";
             $rolesss = ["user"];
             $users = User::whereHas('roles', function($q) use ($rolesss){
                 $q->whereIn('name', $rolesss);
-            })->update(['tahun_ajar' => "2024-2025"]);
+            })->update(['tahun_ajar' => "2025-2026"]);
 
             return response()->json([
                 "status" => "success",

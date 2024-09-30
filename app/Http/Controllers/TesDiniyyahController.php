@@ -198,6 +198,43 @@ Panitia PPDB SMK MADINATULQURAN";
 
     public function updateKelulusan(Request $request, $id)
     {
+        $currentMonth = Carbon::now()->month;
+
+        // Inisialisasi variabel
+        $totalHarga = "";
+        $nominal = "";
+        $tahap1 = "";
+        $tahap2 = "";
+        $tahap3 = "";
+        $tahap4 = "";
+
+        // Logika berdasarkan bulan
+        if ($currentMonth >= 8 && $currentMonth <= 12) {
+            // Agustus - Desember
+            $totalHarga = "Rp. 14.500.000";
+            $nominal = "Empat Belas Juta Lima Ratus Ribu Rupiah";
+            $tahap1 = "Rp. 5.000.000";
+            $tahap2 = "Rp. 5.000.000";
+            $tahap3 = "Rp. 4.500.000";
+            $tahap4 = "";
+        } elseif ($currentMonth >= 1 && $currentMonth <= 3) {
+            // Januari - Maret
+            $totalHarga = "Rp. 16.500.000";
+            $nominal = "Enam Belas Juta Lima Ratus Ribu Rupiah";
+            $tahap1 = "Rp. 5.000.000";
+            $tahap2 = "Rp. 5.000.000";
+            $tahap3 = "Rp. 5.000.000";
+            $tahap4 = "Tahap 4 - Rp. 1.500.000";
+        } elseif ($currentMonth >= 4 && $currentMonth <= 6) {
+            // April - Juni
+            $totalHarga = "Rp. 18.500.000";
+            $nominal = "Delapan Belas Juta Lima Ratus Ribu Rupiah";
+            $tahap1 = "Rp. 5.000.000";
+            $tahap2 = "Rp. 5.000.000";
+            $tahap3 = "Rp. 5.000.000";
+            $tahap4 = "Tahap 4 - Rp. 3.500.000";
+        }
+
         $rules = array(
             'kelulusan' => 'required'
         );
@@ -228,22 +265,22 @@ Panitia PPDB SMK MADINATULQURAN";
                         $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
  بِسْمِ اللَّهِ
 Pengumuman PPDB SMK MADINATULQURAN
-Tahun Pelajaran 2024/2025
+Tahun Pelajaran 2025/2026
 
 Berdasarkan Hasil tes dan wawancara yang telah dilaksanakan maka dengan ini kami menyatakan bahwa santri atas Nama $dtSiswa->name_siswa dinyatakan :
 
                         *LULUS*
 
-Untuk tahapan selanjutnya, wali santri bisa langsung melakukan pembayaran ke rekening di bawah ini sejumlah *Rp. 18.500.000* (Delapan Belas Juta Lima Ratus Ribu Rupiah). Berikut ini nomor rekeningnya:
+Untuk tahapan selanjutnya, wali santri bisa langsung melakukan pembayaran ke rekening di bawah ini sejumlah *$totalHarga* ($nominal). Berikut ini nomor rekeningnya:
 Nomor Rekening : 3310006100
 Kode Bank : (147) Bank Muamalat
-Atas Nama : Yayasan Wisata Al Islam
+Atas Nama : Ponpes Madinatulquran (Yayasan Wisata Al Islam)
 
 Untuk pembayaran dapat di bayar secara tunai ataupun dicicil. berikut ini adalah tahapan pembayarannya:
-Tahap 1 - Rp. 5.000.000
-Tahap 2 - Rp. 5.000.000
-Tahap 3 - Rp. 5.000.000
-Tahap 4 - Rp. 3.500.000
+Tahap 1 - $tahap1
+Tahap 2 - $tahap2
+Tahap 3 - $tahap3
+$tahap4
 
 Jika sudah melakukan pembayaran silahkan mengupload bukti pembayaran di menu Pembayaran pada website atau bisa klik link ini https://ppdb.smkmadinatulquran.sch.id/ppdb/pembayaran
 
