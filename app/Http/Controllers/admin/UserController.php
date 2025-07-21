@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\admin;
+
 use App\Http\Controllers\Controller;
 use App\Models\{
     User,
@@ -32,12 +33,12 @@ class UserController extends Controller
     {
         $request->page;
         $rolesss = [$request->role];
-        $users = User::whereHas('roles', function($q) use ($rolesss){
-                    $q->whereIn('name', $rolesss);
-                 });
+        $users = User::whereHas('roles', function ($q) use ($rolesss) {
+            $q->whereIn('name', $rolesss);
+        });
         if ($request->keywords) {
-            $users = $users->where('name','like', "%".strtolower($request->keywords)."%")
-            ->orWhere('email','like', "%".strtolower($request->keywords)."%");
+            $users = $users->where('name', 'like', "%" . strtolower($request->keywords) . "%")
+                ->orWhere('email', 'like', "%" . strtolower($request->keywords) . "%");
         }
 
         if ($request->tahun_ajar) {
@@ -45,19 +46,19 @@ class UserController extends Controller
         }
 
         $users = $users->orderBy("created_at", 'desc')
-                ->with('roles')
-                ->with('bukti')
-                ->with('tesDiniyyah')
-                ->paginate($request->perpage, [
-                    'users.id',
-                    'users.name',
-                    'users.email',
-                    'users.device',
-                    'users.phone',
-                    'users.tahun_ajar',
-                    'users.is_batal',
-                    'users.created_at'
-                ]);
+            ->with('roles')
+            ->with('bukti')
+            ->with('tesDiniyyah')
+            ->paginate($request->perpage, [
+                'users.id',
+                'users.name',
+                'users.email',
+                'users.device',
+                'users.phone',
+                'users.tahun_ajar',
+                'users.is_batal',
+                'users.created_at'
+            ]);
 
         return response()->json([
             'status' => 'success',
@@ -133,7 +134,7 @@ class UserController extends Controller
     {
         $users = User::where('id', $id)->first();
 
-        return response()-> json([
+        return response()->json([
             'status' => 'success',
             'message' => 'sukses menampilkan data',
             'data' => $users
@@ -154,12 +155,12 @@ class UserController extends Controller
         $users->email = $request->email;
         $users->phone = $request->phone;
         $users->password = bcrypt($request->password);
-        if($users->save()){
+        if ($users->save()) {
             return response()->json([
                 "status" => "success",
                 "message" => 'Berhasil Menyimpan Data'
             ]);
-        }else{
+        } else {
             return response()->json([
                 "status" => "failed",
                 "message" => 'Gagal Menyimpan Data'
@@ -176,22 +177,21 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         try {
-            for($i = 0 ; $i < count($request->id) ; $i++){
-             $delete = User::find($request->id[$i]);
-             $delete -> delete();
+            for ($i = 0; $i < count($request->id); $i++) {
+                $delete = User::find($request->id[$i]);
+                $delete->delete();
             }
             return response()->json([
-             "status" => "success",
-             "message" => 'Berhasil Menyimpan Status'
-         ]);
-         } catch (\Throwable $th) {
-             //throw $th;
-             return response()->json([
-                 "status" => "faild",
-                 "message" => 'id tidak ditemukan'
-             ]);
-         }
-
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Status'
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                "status" => "faild",
+                "message" => 'id tidak ditemukan'
+            ]);
+        }
     }
 
     public function export()
@@ -203,11 +203,11 @@ class UserController extends Controller
     {
         $data = Excel::import(new UsersImport, $request->file('file')->store('temp'));
 
-        if($data){
+        if ($data) {
             return response()->json([
                 'message'   => 'Success',
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message'   => 'Gagal',
             ], 200);
@@ -219,14 +219,14 @@ class UserController extends Controller
 
         // return $request->id[1];
         try {
-           for($i = 0 ; $i < count($request->id) ; $i++){
-            $delete = User::find($request->id[$i]);
-            $delete -> delete();
-           }
-           return response()->json([
-            "status" => "success",
-            "message" => 'Berhasil Menyimpan Status'
-        ]);
+            for ($i = 0; $i < count($request->id); $i++) {
+                $delete = User::find($request->id[$i]);
+                $delete->delete();
+            }
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Status'
+            ]);
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json([
@@ -237,12 +237,12 @@ class UserController extends Controller
 
         $users = User::where('id', $request->id)->first();
         $users->status = '1';
-        if($users->save()){
+        if ($users->save()) {
             return response()->json([
                 "status" => "success",
                 "message" => 'Berhasil Menyimpan Status'
             ]);
-        }else{
+        } else {
             return response()->json([
                 "status" => "failed",
                 "message" => 'Gagal Mengubah status'
@@ -253,14 +253,14 @@ class UserController extends Controller
     public function updateStatus($id)
     {
         $bukti = bukti::where('user_id', $id)->first();
-        $uploader = User::where('id' ,  Auth::user()->id)->first();
+        $uploader = User::where('id',  Auth::user()->id)->first();
         if ($bukti->status == 0 || $bukti->status == false) {
             $bukti->status = 1;
             $bukti->approved_by = $uploader->name;
 
-            if($bukti->save()){
-                $user = User::where('id',$id)->with('tesDiniyyah')->first();
-                $siswa = calonSiswa::where('user_id',$id)->first();
+            if ($bukti->save()) {
+                $user = User::where('id', $id)->with('tesDiniyyah')->first();
+                $siswa = calonSiswa::where('user_id', $id)->first();
                 $details = [
                     'nominal' => $bukti->nominal,
                     'name' => $siswa->name_siswa,
@@ -292,18 +292,18 @@ Hormat kami,
 
 Panitia PPDB SMK MADINATULQURAN";
 
-                if ($wa->wablas($user->phone,$message, false)) {
+                if ($wa->wablas($user->phone, $message, false)) {
                     return response()->json([
                         "status" => "Success",
                         "message" => "Berhasil Mengkonfirmasi Pembayaran"
                     ]);
-                }else{
+                } else {
                     return response()->json([
                         "status" => "failed",
                         "message" => "Gagal Mengkonfirmasi Pembayaran"
                     ]);
                 }
-            }else{
+            } else {
                 return response()->json([
                     "status" => "failed",
                     "message" => 'Gagal Merubah Status'
@@ -320,29 +320,29 @@ Panitia PPDB SMK MADINATULQURAN";
     {
         $request->keywords;
         $request->page;
-        if($request->sort){
+        if ($request->sort) {
             $sort = $request->sort;
             // echo $sort;
-        }else{
+        } else {
             $sort = "desc";
         }
         $array = ["user"];
-        $users = User::where('name', 'like', '%'.strtolower($request->keywords)."%")
-                 ->with('roles')
-                 ->whereHas('roles', function($q) use ($array){
-                     $q->whereIn('name', $array);
-                 })
-                 ->with('calonSiswa')
-                 ->with(['tesDiniyyah' => function($query) use ($sort){
-                    $query->orderBy('tanggal', $sort);
-                 }])
-                 ->paginate($request->perpage, [
-                    'users.id',
-                    'users.name',
-                    'users.email',
-                    'users.phone',
-                    'users.created_at'
-                ]);
+        $users = User::where('name', 'like', '%' . strtolower($request->keywords) . "%")
+            ->with('roles')
+            ->whereHas('roles', function ($q) use ($array) {
+                $q->whereIn('name', $array);
+            })
+            ->with('calonSiswa')
+            ->with(['tesDiniyyah' => function ($query) use ($sort) {
+                $query->orderBy('tanggal', $sort);
+            }])
+            ->paginate($request->perpage, [
+                'users.id',
+                'users.name',
+                'users.email',
+                'users.phone',
+                'users.created_at'
+            ]);
 
         return response()->json([
             'status' => 'success',
@@ -358,20 +358,20 @@ Panitia PPDB SMK MADINATULQURAN";
         $request->page;
         $array = ["user"];
 
-        $users = User::where('name', 'like', '%'.strtolower($request->keywords)."%")
-                 ->with('roles')
-                 ->whereHas('roles', function($q) use ($array){
-                     $q->whereIn('name', $array);
-                 })
-                 ->with('calonSiswa')
-                 ->with('TesMasuk')
-                 ->paginate($request->perpage, [
-                    'users.id',
-                    'users.name',
-                    'users.email',
-                    'users.phone',
-                    'users.created_at'
-                ]);
+        $users = User::where('name', 'like', '%' . strtolower($request->keywords) . "%")
+            ->with('roles')
+            ->whereHas('roles', function ($q) use ($array) {
+                $q->whereIn('name', $array);
+            })
+            ->with('calonSiswa')
+            ->with('TesMasuk')
+            ->paginate($request->perpage, [
+                'users.id',
+                'users.name',
+                'users.email',
+                'users.phone',
+                'users.created_at'
+            ]);
 
         return response()->json([
             'status' => 'success',
@@ -384,9 +384,9 @@ Panitia PPDB SMK MADINATULQURAN";
     public function getSingleListNilai()
     {
         $users = User::where('id', Auth::user()->id)
-                 ->with('calonSiswa')
-                 ->with('TesMasuk')
-                 ->first();
+            ->with('calonSiswa')
+            ->with('TesMasuk')
+            ->first();
 
         return response()->json([
             'status' => 'success',
@@ -401,16 +401,16 @@ Panitia PPDB SMK MADINATULQURAN";
         $request->page;
         $rolesss = ["user"];
         $jadwal = $request->jadwal;
-        $users = Bukti::leftJoin('users','bukti.user_id','=','users.id')
-                    ->leftJoin('calon_siswa', 'bukti.user_id','=','calon_siswa.user_id')
-                    ->leftJoin('pendidikan_sebelumnya', 'bukti.user_id', '=' , 'pendidikan_sebelumnya.user_id')
-                    ->with('User')
-                    // ->where('bukti.nominal', "=" , 350000)
-                    ->Where('bukti.nominal', "<" , 450001);
+        $users = Bukti::leftJoin('users', 'bukti.user_id', '=', 'users.id')
+            ->leftJoin('calon_siswa', 'bukti.user_id', '=', 'calon_siswa.user_id')
+            ->leftJoin('pendidikan_sebelumnya', 'bukti.user_id', '=', 'pendidikan_sebelumnya.user_id')
+            ->with('User')
+            // ->where('bukti.nominal', "=" , 350000)
+            ->Where('bukti.nominal', "<", 450001);
         if ($request->tahun_ajar) {
-            $users = $users->whereHas('user', function($q) use ($request){
+            $users = $users->whereHas('user', function ($q) use ($request) {
                 $q->where('tahun_ajar', $request->tahun_ajar);
-             });
+            });
         }
         $users = $users->get();
 
@@ -428,7 +428,7 @@ Panitia PPDB SMK MADINATULQURAN";
         foreach ($tesMasuk as $key2) {
             foreach ($users as $key) {
                 if ($key->user_id == $key2->user_id) {
-                    $hasilTes = TesMasuk::where('user_id' , "=" , $key2->user_id)->get();
+                    $hasilTes = TesMasuk::where('user_id', "=", $key2->user_id)->get();
                     $key['tes_umum'] = $hasilTes;
                     break;
                 }
@@ -449,25 +449,25 @@ Panitia PPDB SMK MADINATULQURAN";
 
     public function getAll(Request $request)
     {
-        if($request->user_id){
-            $data = User::where('id',$request->user_id)
-                    ->with('calonSiswa')
-                    ->with('pendidikanSebelumnya')
-                    ->with('dataAyah')
-                    ->with('dataIbu')
-                    ->with('dataWali')
-                    ->with('prestasiBelajar')
-                    ->with('prestasiSmp')
-                    ->first();
-        }else{
+        if ($request->user_id) {
+            $data = User::where('id', $request->user_id)
+                ->with('calonSiswa')
+                ->with('pendidikanSebelumnya')
+                ->with('dataAyah')
+                ->with('dataIbu')
+                ->with('dataWali')
+                ->with('prestasiBelajar')
+                ->with('prestasiSmp')
+                ->first();
+        } else {
             $data = User::with('calonSiswa')
-                    ->with('pendidikanSebelumnya')
-                    ->with('dataAyah')
-                    ->with('dataIbu')
-                    ->with('dataWali')
-                    ->with('prestasiBelajar')
-                    ->with('prestasiSmp')
-                    ->get();
+                ->with('pendidikanSebelumnya')
+                ->with('dataAyah')
+                ->with('dataIbu')
+                ->with('dataWali')
+                ->with('prestasiBelajar')
+                ->with('prestasiSmp')
+                ->get();
         }
 
         return response()->json([
@@ -477,7 +477,8 @@ Panitia PPDB SMK MADINATULQURAN";
         ]);
     }
 
-    public function device(Request $request, $id){
+    public function device(Request $request, $id)
+    {
 
         $user = User::find($id);
         $user->device = $request->token;
@@ -516,7 +517,6 @@ Panitia PPDB SMK MADINATULQURAN";
                     "message" => 'Gagal Mengirim Email'
                 ]);
             }
-
         } else {
             return response()->json([
                 "status" => "Failed",
@@ -538,18 +538,18 @@ Panitia PPDB SMK MADINATULQURAN";
                 $user->token_reset = null;
             }
 
-            if($user->save()){
+            if ($user->save()) {
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Merubah Password'
                 ]);
-            }else{
+            } else {
                 return response()->json([
                     "status" => "failed",
                     "message" => 'Gagal Menyimpan Data'
                 ]);
             }
-        }else{
+        } else {
             return response()->json([
                 "status" => "failed",
                 "message" => 'Data Tidak Ditemukan'
@@ -561,9 +561,9 @@ Panitia PPDB SMK MADINATULQURAN";
     {
         try {
             $rolesss = ["user"];
-            $users = User::whereHas('roles', function($q) use ($rolesss){
+            $users = User::whereHas('roles', function ($q) use ($rolesss) {
                 $q->whereIn('name', $rolesss);
-            })->update(['tahun_ajar' => "2025-2026"]);
+            })->update(['tahun_ajar' => "2026-2027"]);
 
             return response()->json([
                 "status" => "success",
@@ -583,18 +583,18 @@ Panitia PPDB SMK MADINATULQURAN";
 
         if ($user) {
             $user->is_batal = $request->is_batal;
-            if($user->save()){
+            if ($user->save()) {
                 return response()->json([
                     "status" => "success",
                     "message" => 'Berhasil Merubah Is Batal'
                 ]);
-            }else{
+            } else {
                 return response()->json([
                     "status" => "failed",
                     "message" => 'Gagal Menyimpan Data'
                 ]);
             }
-        }else{
+        } else {
             return response()->json([
                 "status" => "failed",
                 "message" => 'Data Tidak Ditemukan'
@@ -607,36 +607,36 @@ Panitia PPDB SMK MADINATULQURAN";
         $request->page;
         $rolesss = [$request->role];
         $nominal = 450000;
-        $users = User::whereHas('roles', function($q) use ($rolesss){
-                    $q->whereIn('name', $rolesss);
-                 });
+        $users = User::whereHas('roles', function ($q) use ($rolesss) {
+            $q->whereIn('name', $rolesss);
+        });
         if ($request->keywords) {
-            $users = $users->where('name','like', "%".strtolower($request->keywords)."%")
-            ->orWhere('email','like', "%".strtolower($request->keywords)."%");
+            $users = $users->where('name', 'like', "%" . strtolower($request->keywords) . "%")
+                ->orWhere('email', 'like', "%" . strtolower($request->keywords) . "%");
         }
 
         if ($request->tahun_ajar) {
             $users = $users->where('tahun_ajar', $request->tahun_ajar);
         }
 
-        $users = $users->whereHas('bukti', function($n) use ($nominal){
+        $users = $users->whereHas('bukti', function ($n) use ($nominal) {
             $n->where('nominal', '>=', $nominal);
         });
 
         $users = $users->orderBy("created_at", 'desc')
-                ->with('roles')
-                ->with('bukti')
-                ->with('tesDiniyyah')
-                ->paginate($request->perpage, [
-                    'users.id',
-                    'users.name',
-                    'users.email',
-                    'users.device',
-                    'users.phone',
-                    'users.tahun_ajar',
-                    'users.is_batal',
-                    'users.created_at'
-                ]);
+            ->with('roles')
+            ->with('bukti')
+            ->with('tesDiniyyah')
+            ->paginate($request->perpage, [
+                'users.id',
+                'users.name',
+                'users.email',
+                'users.device',
+                'users.phone',
+                'users.tahun_ajar',
+                'users.is_batal',
+                'users.created_at'
+            ]);
 
         return response()->json([
             'status' => 'success',

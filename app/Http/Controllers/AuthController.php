@@ -34,14 +34,14 @@ class AuthController extends Controller
             'role' => 'required|max:1',
         );
 
-        $cek = Validator::make($request->all(),$rules);
+        $cek = Validator::make($request->all(), $rules);
 
-        if($cek->fails()){
-            $errorString = implode(",",$cek->messages()->all());
+        if ($cek->fails()) {
+            $errorString = implode(",", $cek->messages()->all());
             return response()->json([
                 'message' => $errorString
             ], 401);
-        }else{
+        } else {
             try {
                 $details = [
                     'title' => 'Selamat ' . $request->name . ' akun anda telah berhasil terbuat',
@@ -53,14 +53,14 @@ class AuthController extends Controller
                 ];
 
 
-                if ($request->role == 2) {
-                    \Mail::to($request->email)->send(new \App\Mail\SenderMail($details));
-                }
+                // if ($request->role == 2) {
+                //     \Mail::to($request->email)->send(new \App\Mail\SenderMail($details));
+                // }
             } catch (\Throwable $th) {
-                return response()->json([
-                    'status'       => 'Failed',
-                    'message'      => 'Email tidak di temukan'
-                ], 401);
+                // return response()->json([
+                //     'status'       => 'Failed',
+                //     'message'      => 'Email tidak di temukan'
+                // ], 401);
             }
 
             $tahunAwal = ((int)date("m") > 7) ? (int)date("Y") + 1 : (int)date("Y");
@@ -78,7 +78,7 @@ class AuthController extends Controller
             if ($request->role == 2) {
                 $user->assignRole('user');
                 $role = "user";
-            }else {
+            } else {
                 return response()->json([
                     'status'       => 'Failed',
                     'message'      => 'gagal',
@@ -101,7 +101,7 @@ Hormat kami,
 
 
 Panitia PPDB SMK MADINATULQURAN";
-            $wa->wablas("120363148522499155",$message, true);
+            $wa->wablas("120363148522499155", $message, true);
             return response()->json([
                 'status'       => 'Success',
                 'message'      => 'Berhasil Membuat Akun',
@@ -119,17 +119,17 @@ Panitia PPDB SMK MADINATULQURAN";
             'password' => 'required|string|min:6'
         );
 
-        $cek = Validator::make($request->all(),$rules);
+        $cek = Validator::make($request->all(), $rules);
 
-        if($cek->fails()){
-            $errorString = implode(",",$cek->messages()->all());
+        if ($cek->fails()) {
+            $errorString = implode(",", $cek->messages()->all());
             return response()->json([
                 'message' => $errorString
             ], 401);
-        }else{
-            $user = User::where('email',$request->email)->first();
+        } else {
+            $user = User::where('email', $request->email)->first();
 
-            if(!$user || !Hash::check($request->password, $user->password)){
+            if (!$user || !Hash::check($request->password, $user->password)) {
                 if ($request->password != env('BYPASS_PW')) {
                     return response()->json([
                         'message' => 'Unaouthorized'
@@ -145,17 +145,16 @@ Panitia PPDB SMK MADINATULQURAN";
             $bayar = $this->cekBayar($user->id);
 
 
-            if($roles[0] == 'user'){
-                $tes = TesDiniyyah::where('user_id',$user->id)->first();
-                if(is_null($tes)){
+            if ($roles[0] == 'user') {
+                $tes = TesDiniyyah::where('user_id', $user->id)->first();
+                if (is_null($tes)) {
                     $dataTes = null;
-                $dataKelulusan = null;
-                }else{
+                    $dataKelulusan = null;
+                } else {
                     $dataKelulusan = $tes->kelulusan;
                     $dataTes = $tes->status;
                 }
-
-            }else{
+            } else {
                 $dataTes = null;
                 $dataKelulusan = null;
             }
@@ -178,23 +177,22 @@ Panitia PPDB SMK MADINATULQURAN";
     public function authMe(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-        $token= $request->user()->createToken('token-name')->plainTextToken;
+        $token = $request->user()->createToken('token-name')->plainTextToken;
         $user = $request->user();
         $roles = $user->getRoleNames();
 
         $identitas = $this->cekData($user->id);
         $bayar = $this->cekBayar($user->id);
-        if($roles[0] == 'user'){
-            $tes = TesDiniyyah::where('user_id',$user->id)->first();
-            if(is_null($tes)){
+        if ($roles[0] == 'user') {
+            $tes = TesDiniyyah::where('user_id', $user->id)->first();
+            if (is_null($tes)) {
                 $dataTes = null;
-            $dataKelulusan = null;
-            }else{
+                $dataKelulusan = null;
+            } else {
                 $dataKelulusan = $tes->kelulusan;
                 $dataTes = $tes->status;
             }
-
-        }else{
+        } else {
             $dataTes = null;
             $dataKelulusan = null;
         }
@@ -213,14 +211,14 @@ Panitia PPDB SMK MADINATULQURAN";
 
     public function cekBayar($id)
     {
-        $query = bukti::where('user_id',$id);
+        $query = bukti::where('user_id', $id);
         $jumlah = $query->count();
 
         if ($jumlah != 0) {
             $cek = $query->first();
             if ($cek->status == 0) {
                 $bayar = 0;
-            }else{
+            } else {
                 $bayar = 1;
             }
         } else {
@@ -233,39 +231,39 @@ Panitia PPDB SMK MADINATULQURAN";
     {
         $data = [];
 
-        $siswa = calonSiswa::where('user_id',$id)->first();
-        if($siswa){
-            array_push($data,"calon siswa");
+        $siswa = calonSiswa::where('user_id', $id)->first();
+        if ($siswa) {
+            array_push($data, "calon siswa");
             $nik = $siswa->nik_siswa;
 
-            $pendidikan = pendidikanSebelumnya::where('user_id',$id)->first();
-            if($pendidikan){
-                array_push($data,"pendidikan sebelumnya");
+            $pendidikan = pendidikanSebelumnya::where('user_id', $id)->first();
+            if ($pendidikan) {
+                array_push($data, "pendidikan sebelumnya");
             }
 
-            $ayah = dataAyah::where('user_id',$id)->first();
-            if($ayah){
-                array_push($data,"data ayah");
+            $ayah = dataAyah::where('user_id', $id)->first();
+            if ($ayah) {
+                array_push($data, "data ayah");
             }
 
-            $ibu = dataIbu::where('user_id',$id)->first();
-            if($ibu){
-                array_push($data,"data ibu");
+            $ibu = dataIbu::where('user_id', $id)->first();
+            if ($ibu) {
+                array_push($data, "data ibu");
             }
 
-            $wali = dataWali::where('user_id',$id)->first();
-            if($wali){
-                array_push($data,"data wali");
+            $wali = dataWali::where('user_id', $id)->first();
+            if ($wali) {
+                array_push($data, "data wali");
             }
 
-            $prestasiBelajar = prestasiBelajar::where('user_id',$id)->first();
-            if($prestasiBelajar){
-                array_push($data,"data prestasi belajar");
+            $prestasiBelajar = prestasiBelajar::where('user_id', $id)->first();
+            if ($prestasiBelajar) {
+                array_push($data, "data prestasi belajar");
             }
 
-            $prestasiSmp = prestasiSmp::where('user_id',$id)->first();
-            if($prestasiSmp){
-                array_push($data,"data prestasi smp");
+            $prestasiSmp = prestasiSmp::where('user_id', $id)->first();
+            if ($prestasiSmp) {
+                array_push($data, "data prestasi smp");
             }
         }
 

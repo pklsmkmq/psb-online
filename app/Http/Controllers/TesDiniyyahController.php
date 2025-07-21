@@ -266,7 +266,7 @@ Panitia PPDB SMK MADINATULQURAN";
                         $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
  بِسْمِ اللَّهِ
 Pengumuman PPDB SMK MADINATULQURAN
-Tahun Pelajaran 2025/2026
+Tahun Pelajaran 2026/2027
 
 Berdasarkan Hasil tes dan wawancara yang telah dilaksanakan maka dengan ini kami menyatakan bahwa santri atas Nama $dtSiswa->name_siswa dinyatakan :
 

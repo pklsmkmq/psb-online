@@ -145,7 +145,7 @@ class WaControllers extends Controller
         $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
  بِسْمِ اللَّهِ
 Pengumuman PPDB SMK MADINATULQURAN
-Tahun Pelajaran 2025/2026
+Tahun Pelajaran 2026/2027
 
 Berdasarkan Hasil tes dan wawancara yang telah dilaksanakan maka dengan ini kami menyatakan bahwa santri atas Nama $nama dinyatakan :
 
@@ -208,7 +208,7 @@ Panitia PPDB SMK MADINATULQURAN";
     public function blasKouta(Request $request)
     {
         $message = "Bismillahirrahmanirrahim,SEAT KUOTA MASIH ADA...!!!
-Pendaftaran Penerimaan Peserta Didik Baru (PPDB) TA. 2025/2026 SMK MADINATUL QURAN khusus untuk Ikhwan.
+Pendaftaran Penerimaan Peserta Didik Baru (PPDB) TA. 2026/2027 SMK MADINATUL QURAN khusus untuk Ikhwan.
 Program Unggulan :
 📘 English & Tahfidz Camp
 Program Pendidikan :

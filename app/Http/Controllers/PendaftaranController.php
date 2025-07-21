@@ -214,7 +214,7 @@ class PendaftaranController extends Controller
 
  بِسْمِ اللَّهِ
 
-Alhamdulillah Selamat kepada ananda *$dtUser->name* telah berhasil melakukan pendaftaran sebagai calon santri SMK MADINATULQURAN tahun pelajaran 2025/2026.
+Alhamdulillah Selamat kepada ananda *$dtUser->name* telah berhasil melakukan pendaftaran sebagai calon santri SMK MADINATULQURAN tahun pelajaran 2026/2027.
 
 Untuk langkah selanjutnya adalah melakukan pembayaran biaya pendaftaran sejumlah *Rp. 450.000* agar bisa melakukan Tes Umum , Tes Diniyah dan Wawancara.
 
