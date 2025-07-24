@@ -72,7 +72,7 @@ class AuthController extends Controller
                 'password' => bcrypt($request->password),
                 'email' => $request->email,
                 'phone' => $request->phone,
-                'tahun_ajar' => $tahunAjar
+                'tahun_ajar' => "2026-2027"
             ]);
 
             if ($request->role == 2) {
