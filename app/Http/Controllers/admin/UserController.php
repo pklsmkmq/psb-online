@@ -29,26 +29,40 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-   public function index()
+   public function index(Request $request)
 {
-    $users = User::where('tahun_ajar', '2026-2027')
-                ->orderBy('created_at', 'desc')
-                ->with(['roles', 'bukti', 'tesDiniyyah'])
-                ->get([
-                    'users.id',
-                    'users.name',
-                    'users.email',
-                    'users.device',
-                    'users.phone',
-                    'users.tahun_ajar',
-                    'users.is_batal',
-                    'users.created_at'
-                ]);
+    // Default role = 'user' jika tidak ada request->role
+    $role = $request->role ?? 'user';
+    $rolesFilter = [$role]; // Format array untuk whereIn
+
+    // Default tahun_ajar = '2026-2027' jika tidak ada request->tahun_ajar
+    $tahunAjar = $request->tahun_ajar ?? '2026-2027';
+
+    $users = User::whereHas('roles', function ($q) use ($rolesFilter) {
+            $q->whereIn('name', $rolesFilter); // Filter berdasarkan role
+        })
+        ->where('tahun_ajar', $tahunAjar) // Filter tahun_ajar (dinamis)
+        ->orderBy('created_at', 'desc')
+        ->with(['roles', 'bukti', 'tesDiniyyah'])
+        ->get([
+            'users.id',
+            'users.name',
+            'users.email',
+            'users.device',
+            'users.phone',
+            'users.tahun_ajar',
+            'users.is_batal',
+            'users.created_at'
+        ]);
 
     return response()->json([
         'status' => 'success',
-        'message' => 'sukses menampilkan data',
-        'data' => $users
+        'message' => 'Data berhasil ditampilkan',
+        'data' => $users,
+        'filters' => [
+            'role' => $role,
+            'tahun_ajar' => $tahunAjar
+        ]
     ]);
 }
 
