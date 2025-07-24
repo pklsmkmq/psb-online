@@ -29,47 +29,28 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        $request->page;
-        $rolesss = [$request->role];
-        $users = User::whereHas('roles', function ($q) use ($rolesss) {
-            $q->whereIn('name', $rolesss);
-        });
-        if ($request->keywords) {
-            $users = $users->where('name', 'like', "%" . strtolower($request->keywords) . "%")
-                ->orWhere('email', 'like', "%" . strtolower($request->keywords) . "%");
-        }
+   public function index()
+{
+    $users = User::where('tahun_ajar', '2026-2027')
+                ->orderBy('created_at', 'desc')
+                ->with(['roles', 'bukti', 'tesDiniyyah'])
+                ->get([
+                    'users.id',
+                    'users.name',
+                    'users.email',
+                    'users.device',
+                    'users.phone',
+                    'users.tahun_ajar',
+                    'users.is_batal',
+                    'users.created_at'
+                ]);
 
-        if ($request->tahun_ajar) {
-            $users = $users->where('tahun_ajar', "2026-2027");
-        }
-
-        $users = $users->orderBy("created_at", 'desc')
-            ->with('roles')
-            ->with('bukti')
-            ->with('tesDiniyyah')
-            ->paginate($request->perpage, [
-                'users.id',
-                'users.name',
-                'users.email',
-                'users.device',
-                'users.phone',
-                'users.tahun_ajar',
-                'users.is_batal',
-                'users.created_at'
-            ]);
-
-
-
-        return response()->json([
-            'status' => 'success',
-            'perpage' => 200,
-            'role' => "user",
-            'message' => 'sukses menampilkan data',
-            'data' => $users
-        ]);
-    }
+    return response()->json([
+        'status' => 'success',
+        'message' => 'sukses menampilkan data',
+        'data' => $users
+    ]);
+}
 
     /**
      * Show the form for creating a new resource.
