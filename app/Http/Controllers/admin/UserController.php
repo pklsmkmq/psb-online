@@ -42,7 +42,7 @@ class UserController extends Controller
         }
 
         if ($request->tahun_ajar) {
-            $users = $users->where('tahun_ajar', $request->tahun_ajar);
+            $users = $users->where('tahun_ajar', "2026-2027");
         }
 
         $users = $users->orderBy("created_at", 'desc')
