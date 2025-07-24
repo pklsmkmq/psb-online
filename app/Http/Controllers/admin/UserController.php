@@ -405,7 +405,7 @@ Panitia PPDB SMK MADINATULQURAN";
             ->Where('bukti.nominal', "<", 450001);
         if ($request->tahun_ajar) {
             $users = $users->whereHas('user', function ($q) use ($request) {
-                $q->where('tahun_ajar', $request->tahun_ajar);
+                $q->where('tahun_ajar', "2027-2027");
             });
         }
         $users = $users->get();
