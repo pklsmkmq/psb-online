@@ -64,10 +64,10 @@ class UserController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'perpage' => $request->perpage,
-            'role' => $request->role,
-            'message' => 'sukses menampilkan data',
-            'data' => $users
+            // 'perpage' => $request->perpage,
+            // 'role' => $request->role,
+            // 'message' => 'sukses menampilkan data',
+            // 'data' => $users
         ]);
     }
 
