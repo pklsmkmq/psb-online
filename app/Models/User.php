@@ -28,7 +28,8 @@ class User extends Authenticatable
         'tahun_ajar',
         'token_reset',
         'wa_count',
-        'is_batal'
+        'is_batal',
+        'informasi'
     ];
 
     /**

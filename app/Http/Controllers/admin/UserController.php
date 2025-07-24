@@ -48,7 +48,7 @@ class UserController extends Controller
             'users.id',
             'users.name',
             'users.email',
-            'users.device',
+            'users.informasi',
             'users.phone',
             'users.tahun_ajar',
             'users.is_batal',

@@ -32,6 +32,7 @@ class AuthController extends Controller
             'phone' => 'required|string',
             'password' => 'required|string|min:6|confirmed',
             'role' => 'required|max:1',
+            'informasi' => 'required',
         );
 
         $cek = Validator::make($request->all(), $rules);
@@ -72,6 +73,7 @@ class AuthController extends Controller
                 'password' => bcrypt($request->password),
                 'email' => $request->email,
                 'phone' => $request->phone,
+                'informasi' => $request->informasi,
                 'tahun_ajar' => "2026-2027"
             ]);
 
