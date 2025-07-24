@@ -60,7 +60,7 @@ class UserController extends Controller
                 'users.created_at'
             ]);
 
-            
+
 
         return response()->json([
             'status' => 'success',
@@ -271,7 +271,6 @@ class UserController extends Controller
 
                 // \Mail::to($user->email)->send(new \App\Mail\konf_pembayaran($details));
                 // \Mail::to($user->email)->send(new \App\Mail\konfirmasi($details));
-
                 $wa = new WaControllers();
                 $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
 
