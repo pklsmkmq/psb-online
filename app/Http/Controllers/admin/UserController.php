@@ -64,8 +64,8 @@ class UserController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'perpage' => $request->perpage,
-            'role' => $request->role,
+            'perpage' => 200,
+            'role' => "user",
             'message' => 'sukses menampilkan data',
             'data' => $users
         ]);
