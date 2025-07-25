@@ -29,8 +29,32 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public function detailSantri($id)
+    {
+
+          $data = User::where('id', $id)
+                ->with('calonSiswa')
+                ->with('pendidikanSebelumnya')
+                ->with('dataAyah')
+                ->with('dataIbu')
+                ->with('dataWali')
+                ->with('prestasiBelajar')
+                ->with('prestasiSmp')
+                ->with("tesMasuk")
+                ->with("tesDiniyyah")
+                ->with("bukti")
+                ->first();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'sukses menampilkan data',
+            'data' => $data
+        ]);
+    }
+
    public function index(Request $request)
-{
+{ 
     // Default role = 'user' jika tidak ada request->role
     $role = $request->role ?? 'user';
     $rolesFilter = [$role]; // Format array untuk whereIn
@@ -43,7 +67,7 @@ class UserController extends Controller
         })
         ->where('tahun_ajar', $tahunAjar) // Filter tahun_ajar (dinamis)
         ->orderBy('created_at', 'desc')
-        ->with(['roles', 'bukti', 'tesDiniyyah'])
+        ->with(['roles', 'bukti'])
         ->get([
             'users.id',
             'users.name',

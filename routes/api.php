@@ -61,6 +61,7 @@ Route::get('/tesMail/{email}', [AuthController::class ,'tesMail']);
         Route::get('users/updateStatus/{id}', [UserController::class, "updateStatus"]);
         Route::get('users/tahunAjar', [UserController::class, "updateTahun"]);
         Route::get('/getsudahbayar', [UserController::class,'getSudahBayar']);
+         Route::get('/user/detail/{id}', [UserController::class,'detailSantri']);
 
         // Calon Siswa crud
         Route::resource('calonSiswa', CalonSiswaController::class);
