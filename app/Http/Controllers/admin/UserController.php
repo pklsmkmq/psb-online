@@ -288,41 +288,16 @@ class UserController extends Controller
                     'materi'  => "Matematika, Diniyyah, Logika"
                 ];
 
-                // \Mail::to($user->email)->send(new \App\Mail\konf_pembayaran($details));
-                // \Mail::to($user->email)->send(new \App\Mail\konfirmasi($details));
-                $wa = new WaControllers();
-                $message = "*Chat Otomatis PPDB SMK MQ (Jangan Dibalas)*
-
-بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
-Alhamdulillah Wa Sholatu wa salamu a'la Rasulillah Ama ba'ad
-
-Jazakumullahu Khairan kami telah menerima pembayaran untuk biaya pendaftaran
-Untuk tahap selanjutnya nya silahkan mengerjakan *Tes Umum secara online* dan jadwalkan hari untuk *Tes Membaca Alquran serta wawancara*.
-Adapun tes membaca Alquran bisa memilih online atau bisa datang langsung ke SMK MADINATULQURAN.
-Untuk yang memilih tes online bisa menjadwalkan tesnya di hari *Sabtu atau Ahad* & untuk yang memilih datang langsung bisa memilih jadwal tesnya di hari *Ahad*
-Adapun waktu/jam nya akan kami informasikan.
-
-Jika ada pertanyaan hubungi CS kami
-082113165990 (Ustadz Raihan)
-0895320050324 (Ustadz Ihsan)
-
-Barakallahu fiikum
-Hormat kami,
-
-
-Panitia PPDB SMK MADINATULQURAN";
-
-                if ($wa->wablas($user->phone, $message, false)) {
-                    return response()->json([
+                 return response()->json([
                         "status" => "Success",
                         "message" => "Berhasil Mengkonfirmasi Pembayaran"
                     ]);
-                } else {
-                    return response()->json([
-                        "status" => "failed",
-                        "message" => "Gagal Mengkonfirmasi Pembayaran"
-                    ]);
-                }
+
+                // \Mail::to($user->email)->send(new \App\Mail\konf_pembayaran($details));
+                // \Mail::to($user->email)->send(new \App\Mail\konfirmasi($details));
+
+
+
             } else {
                 return response()->json([
                     "status" => "failed",
