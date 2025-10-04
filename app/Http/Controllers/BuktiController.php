@@ -321,11 +321,10 @@ return $bukti;
         ->leftJoin('pendidikan_sebelumnya', 'bukti.user_id', '=' , 'pendidikan_sebelumnya.user_id')
         ->leftJoin('data_ayah', 'bukti.user_id', '=' , 'data_ayah.user_id')
         ->with('User')->with('user')->whereHas('user' , function($query) use($request){
-            if ($request->tahun_ajar) {
-                return $query -> where('name' , 'like' , "%".strtolower($request->keywords)."%")->where('tahun_ajar', "2026-2027");;
-            } else {
-                return $query -> where('name' , 'like' , "%".strtolower($request->keywords)."%");
-            }
+
+                return $query -> where('name' , 'like' , "%".strtolower($request->keywords)."%")->where('tahun_ajar', "2026-2027");
+
+
         }) ->orderBy("bukti.created_at", 'desc')->paginate($request->perpage, [
             "id" => "bukti.id",
             "name_siswa" => "calon_siswa.name_siswa",
