@@ -363,6 +363,11 @@ return $bukti;
                 'name' => $siswa->name_siswa,
             ];
 
+
+              return response()->json([
+                    "status" => "Success",
+                    "message" => "Berhasil Mengkonfirmasi Pembayaran"
+                ]);
             // \Mail::to($user->email)->send(new \App\Mail\konf_pembayaran($details));
 
             $wa = new WaControllers();
