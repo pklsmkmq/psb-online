@@ -67,7 +67,7 @@ class UserController extends Controller
         })
         ->where('tahun_ajar', $tahunAjar) // Filter tahun_ajar (dinamis)
         ->orderBy('created_at', 'desc')
-        ->with(['roles', 'bukti', 'tes_diniyyah'])
+        ->with(['roles', 'bukti', 'tesDiniyyah'])
         ->get([
             'users.id',
             'users.name',
