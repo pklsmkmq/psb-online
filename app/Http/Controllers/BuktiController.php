@@ -322,7 +322,7 @@ return $bukti;
         ->leftJoin('data_ayah', 'bukti.user_id', '=' , 'data_ayah.user_id')
         ->with('User')->with('user')->whereHas('user' , function($query) use($request){
             if ($request->tahun_ajar) {
-                return $query -> where('name' , 'like' , "%".strtolower($request->keywords)."%")->where('tahun_ajar', $request->tahun_ajar);;
+                return $query -> where('name' , 'like' , "%".strtolower($request->keywords)."%")->where('tahun_ajar', "2026-2027");;
             } else {
                 return $query -> where('name' , 'like' , "%".strtolower($request->keywords)."%");
             }
