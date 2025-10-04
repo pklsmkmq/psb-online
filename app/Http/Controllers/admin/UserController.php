@@ -54,7 +54,7 @@ class UserController extends Controller
     }
 
    public function index(Request $request)
-{ 
+{
     // Default role = 'user' jika tidak ada request->role
     $role = $request->role ?? 'user';
     $rolesFilter = [$role]; // Format array untuk whereIn
@@ -429,7 +429,7 @@ Panitia PPDB SMK MADINATULQURAN";
             ->Where('bukti.nominal', "<", 450001);
         if (true) {
             $users = $users->whereHas('user', function ($q) use ($request) {
-                $q->where('tahun_ajar', "2027-2027");
+                $q->where('tahun_ajar', "2026-2027");
             });
         }
         $users = $users->get();
